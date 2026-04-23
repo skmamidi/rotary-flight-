@@ -223,45 +223,107 @@ const QuizEngine = {
     else App.addXP(5);
   },
 
-  // Quick Check mini quiz
+  // Quick Check mini quiz — one question at a time with randomization
   renderQuickCheck(containerId, questions) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Randomize each quick-check question and shuffle order
+    // Randomize each question's answer choices and shuffle question order
     let qs = questions.map(q => this.randomizeQuestion(q));
     qs = this.shuffleArray(qs);
 
-    let html = `<div class="quick-check"><div class="quick-check-title">🧠 Quick Check</div>`;
-    qs.forEach((q, i) => {
-      html += `
-        <div class="quick-check-question" data-qindex="${i}">${i+1}. ${q.question}</div>
-        <div class="quick-check-options" data-qindex="${i}">
-          ${q.options.map((opt, j) => `<div class="quick-check-option" data-index="${j}">${opt}</div>`).join('')}
-        </div>
-        <div class="feedback-box" id="qc-feedback-${i}"></div>
-      `;
-    });
-    html += `</div>`;
-    container.innerHTML = html;
+    const state = {
+      questions: qs,
+      index: 0,
+      score: 0,
+      container: container
+    };
 
-    qs.forEach((q, i) => {
-      const opts = container.querySelectorAll(`.quick-check-options[data-qindex="${i}"] .quick-check-option`);
-      opts.forEach(opt => {
+    const render = () => {
+      if (state.index >= state.questions.length) {
+        container.innerHTML = `
+          <div class="quick-check">
+            <div class="quick-check-title">🎉 Quick Check Complete</div>
+            <div class="text-center mt-4">
+              <p style="font-size:1.25rem;font-weight:700">Score: ${state.score} / ${state.questions.length}</p>
+              <button class="btn btn-primary mt-3" onclick="location.reload()">Try Again</button>
+            </div>
+          </div>
+        `;
+        if (state.score === state.questions.length) App.addXP(10);
+        return;
+      }
+
+      const q = state.questions[state.index];
+      const progressPct = ((state.index) / state.questions.length) * 100;
+
+      container.innerHTML = `
+        <div class="quick-check">
+          <div class="quick-check-title">🧠 Quick Check</div>
+          <div class="quiz-header">
+            <div class="quiz-progress">
+              <span>Question ${state.index + 1} of ${state.questions.length}</span>
+              <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progressPct}%"></div></div>
+            </div>
+          </div>
+          <div class="question-text mt-3"><span class="question-number">${state.index + 1}</span>${q.question}</div>
+          <div class="answer-options mt-3">
+            ${q.options.map((opt, i) => `
+              <label class="answer-option" data-index="${i}">
+                <input type="radio" name="qc-opt" value="${i}">
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="feedback-box" id="qc-feedback"></div>
+          <div class="flex gap-3 mt-4">
+            <button class="btn btn-primary" id="qc-submit">Submit Answer</button>
+            <button class="btn btn-secondary hidden" id="qc-next">Next →</button>
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('.answer-option').forEach(opt => {
         opt.addEventListener('click', () => {
-          const idx = parseInt(opt.dataset.index);
-          const isCorrect = idx === q.correct;
-          opts.forEach(o => o.classList.remove('correct', 'incorrect'));
-          if (isCorrect) {
-            opt.classList.add('correct');
-            document.getElementById(`qc-feedback-${i}`).innerHTML = `<div class="feedback-box show feedback-correct"><div>✅ Correct!</div></div>`;
-          } else {
-            opt.classList.add('incorrect');
-            opts[q.correct].classList.add('correct');
-            document.getElementById(`qc-feedback-${i}`).innerHTML = `<div class="feedback-box show feedback-incorrect"><div>❌ The correct answer is: ${q.options[q.correct]}</div></div>`;
-          }
+          container.querySelectorAll('.answer-option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          opt.querySelector('input').checked = true;
         });
       });
-    });
+
+      container.querySelector('#qc-submit').addEventListener('click', () => {
+        const sel = container.querySelector('.answer-option.selected input');
+        const selected = sel ? parseInt(sel.value) : -1;
+        const isCorrect = selected === q.correct;
+        if (isCorrect) state.score++;
+
+        const fb = container.querySelector('#qc-feedback');
+        fb.className = `feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+        fb.innerHTML = `
+          <div style="font-size:1.5rem">${isCorrect ? '✅' : '❌'}</div>
+          <div>
+            <strong>${isCorrect ? 'Correct!' : 'Not quite.'}</strong>
+            ${q.explanation ? `<p class="mt-2">${q.explanation}</p>` : ''}
+            ${!isCorrect ? `<p class="mt-2">The correct answer is: <strong>${q.options[q.correct]}</strong></p>` : ''}
+          </div>
+        `;
+
+        container.querySelectorAll('.answer-option').forEach((opt, i) => {
+          if (i === q.correct) opt.classList.add('correct');
+          else if (i === selected && !isCorrect) opt.classList.add('incorrect');
+          opt.style.pointerEvents = 'none';
+        });
+
+        container.querySelector('#qc-submit').classList.add('hidden');
+        container.querySelector('#qc-next').classList.remove('hidden');
+      });
+
+      container.querySelector('#qc-next').addEventListener('click', () => {
+        state.index++;
+        render();
+      });
+    };
+
+    render();
   }
 };
