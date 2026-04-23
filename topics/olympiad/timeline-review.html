@@ -61,9 +61,9 @@
                     .interactive-node:hover .timeline-connector,
                     .interactive-node.active .timeline-connector { stroke: #e11d48; stroke-dasharray: none; stroke-width: 4; }
                     .interactive-node:hover .timeline-node,
-                    .interactive-node.active .timeline-node { stroke: #e11d48; stroke-width: 6; }
+                    .interactive-node.active .timeline-node { stroke: #e11d48; stroke-width: 6; transform: scale(1.2); }
                     .interactive-node:hover .node-center,
-                    .interactive-node.active .node-center { fill: #e11d48; }
+                    .interactive-node.active .node-center { fill: #e11d48; transform: scale(1.2); }
                     .interactive-node:hover .event-title,
                     .interactive-node.active .event-title { fill: #e11d48; font-size: 15px; }
                     .interactive-node:hover .event-date,
@@ -102,15 +102,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="100" cy="400" r="12" class="timeline-node" />
-                      <circle cx="100" cy="400" r="4" class="node-center" />
+                      <circle cx="100" cy="400" r="12" class="timeline-node" style="transform-origin: 100px 400px;" />
+                      <circle cx="100" cy="400" r="4" class="node-center" style="transform-origin: 100px 400px;" />
                       <text x="100" y="140" class="event-date">Prehistory</text>
                       <text x="100" y="160" class="event-title"><tspan x="100" dy="0">Ancient</tspan><tspan x="100" dy="16">Observations</tspan></text>
                     </g>
                     <g id="group-flying-top" class="interactive-node" data-event="flying-top">
-                      <rect x="168" y="400" width="130" height="320" fill="transparent" />
-                      <line x1="233" y1="400" x2="233" y2="540" class="timeline-connector" />
-                      <g transform="translate(233, 580)">
+                      <rect x="155" y="400" width="130" height="320" fill="transparent" />
+                      <line x1="220" y1="400" x2="220" y2="540" class="timeline-connector" />
+                      <g transform="translate(220, 580)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -120,15 +120,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="233" cy="400" r="12" class="timeline-node" />
-                      <circle cx="233" cy="400" r="4" class="node-center" />
-                      <text x="233" y="650" class="event-date">c. 400 BC</text>
-                      <text x="233" y="670" class="event-title"><tspan x="233" dy="0">Chinese</tspan><tspan x="233" dy="16">Flying Top</tspan></text>
+                      <circle cx="220" cy="400" r="12" class="timeline-node" style="transform-origin: 220px 400px;" />
+                      <circle cx="220" cy="400" r="4" class="node-center" style="transform-origin: 220px 400px;" />
+                      <text x="220" y="650" class="event-date">c. 400 BC</text>
+                      <text x="220" y="670" class="event-title"><tspan x="220" dy="0">Chinese</tspan><tspan x="220" dy="16">Flying Top</tspan></text>
                     </g>
                     <g id="group-da-vinci" class="interactive-node" data-event="da-vinci">
-                      <rect x="301" y="100" width="130" height="300" fill="transparent" />
-                      <line x1="366" y1="400" x2="366" y2="260" class="timeline-connector" />
-                      <g transform="translate(366, 220)">
+                      <rect x="275" y="100" width="130" height="300" fill="transparent" />
+                      <line x1="340" y1="400" x2="340" y2="260" class="timeline-connector" />
+                      <g transform="translate(340, 220)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -137,15 +137,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="366" cy="400" r="12" class="timeline-node" />
-                      <circle cx="366" cy="400" r="4" class="node-center" />
-                      <text x="366" y="140" class="event-date">1489</text>
-                      <text x="366" y="160" class="event-title"><tspan x="366" dy="0">Da Vinci's</tspan><tspan x="366" dy="16">Aerial Screw</tspan></text>
+                      <circle cx="340" cy="400" r="12" class="timeline-node" style="transform-origin: 340px 400px;" />
+                      <circle cx="340" cy="400" r="4" class="node-center" style="transform-origin: 340px 400px;" />
+                      <text x="340" y="140" class="event-date">1489</text>
+                      <text x="340" y="160" class="event-title"><tspan x="340" dy="0">Da Vinci's</tspan><tspan x="340" dy="16">Aerial Screw</tspan></text>
                     </g>
                     <g id="group-lomonosov" class="interactive-node" data-event="lomonosov">
-                      <rect x="435" y="400" width="130" height="320" fill="transparent" />
-                      <line x1="500" y1="400" x2="500" y2="540" class="timeline-connector" />
-                      <g transform="translate(500, 580)">
+                      <rect x="395" y="400" width="130" height="320" fill="transparent" />
+                      <line x1="460" y1="400" x2="460" y2="540" class="timeline-connector" />
+                      <g transform="translate(460, 580)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -156,15 +156,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="500" cy="400" r="12" class="timeline-node" />
-                      <circle cx="500" cy="400" r="4" class="node-center" />
-                      <text x="500" y="650" class="event-date">1754</text>
-                      <text x="500" y="670" class="event-title"><tspan x="500" dy="0">Lomonosov's</tspan><tspan x="500" dy="16">Rotor</tspan></text>
+                      <circle cx="460" cy="400" r="12" class="timeline-node" style="transform-origin: 460px 400px;" />
+                      <circle cx="460" cy="400" r="4" class="node-center" style="transform-origin: 460px 400px;" />
+                      <text x="460" y="650" class="event-date">1754</text>
+                      <text x="460" y="670" class="event-title"><tspan x="460" dy="0">Lomonosov's</tspan><tspan x="460" dy="16">Rotor</tspan></text>
                     </g>
                     <g id="group-cornu" class="interactive-node" data-event="cornu">
-                      <rect x="568" y="100" width="130" height="300" fill="transparent" />
-                      <line x1="633" y1="400" x2="633" y2="260" class="timeline-connector" />
-                      <g transform="translate(633, 220)">
+                      <rect x="515" y="100" width="130" height="300" fill="transparent" />
+                      <line x1="580" y1="400" x2="580" y2="260" class="timeline-connector" />
+                      <g transform="translate(580, 220)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -176,15 +176,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="633" cy="400" r="12" class="timeline-node" />
-                      <circle cx="633" cy="400" r="4" class="node-center" />
-                      <text x="633" y="140" class="event-date">1907</text>
-                      <text x="633" y="160" class="event-title"><tspan x="633" dy="0">Cornu's</tspan><tspan x="633" dy="16">First Hover</tspan></text>
+                      <circle cx="580" cy="400" r="12" class="timeline-node" style="transform-origin: 580px 400px;" />
+                      <circle cx="580" cy="400" r="4" class="node-center" style="transform-origin: 580px 400px;" />
+                      <text x="580" y="140" class="event-date">1907</text>
+                      <text x="580" y="160" class="event-title"><tspan x="580" dy="0">Cornu's</tspan><tspan x="580" dy="16">First Hover</tspan></text>
                     </g>
                     <g id="group-autogyro" class="interactive-node" data-event="autogyro">
-                      <rect x="701" y="400" width="130" height="320" fill="transparent" />
-                      <line x1="766" y1="400" x2="766" y2="540" class="timeline-connector" />
-                      <g transform="translate(766, 580)">
+                      <rect x="635" y="400" width="130" height="320" fill="transparent" />
+                      <line x1="700" y1="400" x2="700" y2="540" class="timeline-connector" />
+                      <g transform="translate(700, 580)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -195,15 +195,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="766" cy="400" r="12" class="timeline-node" />
-                      <circle cx="766" cy="400" r="4" class="node-center" />
-                      <text x="766" y="650" class="event-date">1923</text>
-                      <text x="766" y="670" class="event-title"><tspan x="766" dy="0">Cierva's</tspan><tspan x="766" dy="16">Autogyro</tspan></text>
+                      <circle cx="700" cy="400" r="12" class="timeline-node" style="transform-origin: 700px 400px;" />
+                      <circle cx="700" cy="400" r="4" class="node-center" style="transform-origin: 700px 400px;" />
+                      <text x="700" y="650" class="event-date">1923</text>
+                      <text x="700" y="670" class="event-title"><tspan x="700" dy="0">Cierva's</tspan><tspan x="700" dy="16">Autogyro</tspan></text>
                     </g>
                     <g id="group-fw-61" class="interactive-node" data-event="fw-61">
-                      <rect x="835" y="100" width="130" height="300" fill="transparent" />
-                      <line x1="900" y1="400" x2="900" y2="260" class="timeline-connector" />
-                      <g transform="translate(900, 220)">
+                      <rect x="755" y="100" width="130" height="300" fill="transparent" />
+                      <line x1="820" y1="400" x2="820" y2="260" class="timeline-connector" />
+                      <g transform="translate(820, 220)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -215,15 +215,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="900" cy="400" r="12" class="timeline-node" />
-                      <circle cx="900" cy="400" r="4" class="node-center" />
-                      <text x="900" y="140" class="event-date">1936</text>
-                      <text x="900" y="160" class="event-title"><tspan x="900" dy="0">Focke-Wulf</tspan><tspan x="900" dy="16">Fw 61</tspan></text>
+                      <circle cx="820" cy="400" r="12" class="timeline-node" style="transform-origin: 820px 400px;" />
+                      <circle cx="820" cy="400" r="4" class="node-center" style="transform-origin: 820px 400px;" />
+                      <text x="820" y="140" class="event-date">1936</text>
+                      <text x="820" y="160" class="event-title"><tspan x="820" dy="0">Focke-Wulf</tspan><tspan x="820" dy="16">Fw 61</tspan></text>
                     </g>
                     <g id="group-vs-300" class="interactive-node" data-event="vs-300">
-                      <rect x="968" y="400" width="130" height="320" fill="transparent" />
-                      <line x1="1033" y1="400" x2="1033" y2="540" class="timeline-connector" />
-                      <g transform="translate(1033, 580)">
+                      <rect x="875" y="400" width="130" height="320" fill="transparent" />
+                      <line x1="940" y1="400" x2="940" y2="540" class="timeline-connector" />
+                      <g transform="translate(940, 580)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -235,15 +235,35 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="1033" cy="400" r="12" class="timeline-node" />
-                      <circle cx="1033" cy="400" r="4" class="node-center" />
-                      <text x="1033" y="650" class="event-date">1939</text>
-                      <text x="1033" y="670" class="event-title"><tspan x="1033" dy="0">Sikorsky</tspan><tspan x="1033" dy="16">VS-300</tspan></text>
+                      <circle cx="940" cy="400" r="12" class="timeline-node" style="transform-origin: 940px 400px;" />
+                      <circle cx="940" cy="400" r="4" class="node-center" style="transform-origin: 940px 400px;" />
+                      <text x="940" y="650" class="event-date">1939</text>
+                      <text x="940" y="670" class="event-title"><tspan x="940" dy="0">Sikorsky</tspan><tspan x="940" dy="16">VS-300</tspan></text>
+                    </g>
+                    <g id="group-r-4" class="interactive-node" data-event="r-4">
+                      <rect x="995" y="100" width="130" height="300" fill="transparent" />
+                      <line x1="1060" y1="400" x2="1060" y2="260" class="timeline-connector" />
+                      <g transform="translate(1060, 220)">
+                        <g class="icon-scale-wrapper">
+                          <circle cx="0" cy="0" r="24" class="event-icon" />
+                          <g class="icon-path">
+                            <path d="M -8 8 L -8 2 L 6 2 L 6 8 Z" />
+                            <line x1="-1" y1="2" x2="-1" y2="-4" />
+                            <line x1="-12" y1="-4" x2="10" y2="-4" />
+                            <line x1="6" y1="4" x2="16" y2="4" />
+                            <line x1="16" y1="0" x2="16" y2="8" />
+                          </g>
+                        </g>
+                      </g>
+                      <circle cx="1060" cy="400" r="12" class="timeline-node" style="transform-origin: 1060px 400px;" />
+                      <circle cx="1060" cy="400" r="4" class="node-center" style="transform-origin: 1060px 400px;" />
+                      <text x="1060" y="140" class="event-date">1942</text>
+                      <text x="1060" y="160" class="event-title"><tspan x="1060" dy="0">Sikorsky R-4</tspan><tspan x="1060" dy="16">Mass Prod.</tspan></text>
                     </g>
                     <g id="group-bell-47" class="interactive-node" data-event="bell-47">
-                      <rect x="1101" y="100" width="130" height="300" fill="transparent" />
-                      <line x1="1166" y1="400" x2="1166" y2="260" class="timeline-connector" />
-                      <g transform="translate(1166, 220)">
+                      <rect x="1115" y="400" width="130" height="320" fill="transparent" />
+                      <line x1="1180" y1="400" x2="1180" y2="540" class="timeline-connector" />
+                      <g transform="translate(1180, 580)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -255,15 +275,15 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="1166" cy="400" r="12" class="timeline-node" />
-                      <circle cx="1166" cy="400" r="4" class="node-center" />
-                      <text x="1166" y="140" class="event-date">1946</text>
-                      <text x="1166" y="160" class="event-title"><tspan x="1166" dy="0">Bell 47</tspan><tspan x="1166" dy="16">Certified</tspan></text>
+                      <circle cx="1180" cy="400" r="12" class="timeline-node" style="transform-origin: 1180px 400px;" />
+                      <circle cx="1180" cy="400" r="4" class="node-center" style="transform-origin: 1180px 400px;" />
+                      <text x="1180" y="650" class="event-date">1946</text>
+                      <text x="1180" y="670" class="event-title"><tspan x="1180" dy="0">Bell 47</tspan><tspan x="1180" dy="16">Certified</tspan></text>
                     </g>
                     <g id="group-v-22" class="interactive-node" data-event="v-22">
-                      <rect x="1235" y="400" width="130" height="320" fill="transparent" />
-                      <line x1="1300" y1="400" x2="1300" y2="540" class="timeline-connector" />
-                      <g transform="translate(1300, 580)">
+                      <rect x="1235" y="100" width="130" height="300" fill="transparent" />
+                      <line x1="1300" y1="400" x2="1300" y2="260" class="timeline-connector" />
+                      <g transform="translate(1300, 220)">
                         <g class="icon-scale-wrapper">
                           <circle cx="0" cy="0" r="24" class="event-icon" />
                           <g class="icon-path">
@@ -276,10 +296,10 @@
                           </g>
                         </g>
                       </g>
-                      <circle cx="1300" cy="400" r="12" class="timeline-node" />
-                      <circle cx="1300" cy="400" r="4" class="node-center" />
-                      <text x="1300" y="650" class="event-date">1989</text>
-                      <text x="1300" y="670" class="event-title"><tspan x="1300" dy="0">V-22</tspan><tspan x="1300" dy="16">Osprey</tspan></text>
+                      <circle cx="1300" cy="400" r="12" class="timeline-node" style="transform-origin: 1300px 400px;" />
+                      <circle cx="1300" cy="400" r="4" class="node-center" style="transform-origin: 1300px 400px;" />
+                      <text x="1300" y="140" class="event-date">1989</text>
+                      <text x="1300" y="160" class="event-title"><tspan x="1300" dy="0">V-22</tspan><tspan x="1300" dy="16">Osprey</tspan></text>
                     </g>
                   </g>
                   <g id="info-panel" transform="translate(200, 730)" filter="url(#shadow)">
@@ -369,6 +389,7 @@
         'autogyro': { title: 'Juan de la Cierva\'s Autogyro', date: 'January 9, 1923', desc: 'Cierva successfully flew the C.4 Autogyro. By using a standard airplane propeller for forward thrust and allowing the top rotor to spin freely in the wind (autorotation), he solved the devastating issue of dissymmetry of lift.' },
         'fw-61': { title: 'Focke-Wulf Fw 61', date: 'June 26, 1936', desc: 'Designed by Henrich Focke, this was the world\'s first practical, fully controllable helicopter. It featured twin side-by-side rotors and demonstrated precise hovering, forward, backward, and sideways flight.' },
         'vs-300': { title: 'Vought-Sikorsky VS-300', date: 'September 14, 1939', desc: 'Igor Sikorsky successfully tether-flew his VS-300. This groundbreaking aircraft pioneered the now-standard configuration: a single main lifting rotor to fly, and a single vertical tail rotor to counteract torque.' },
+        'r-4': { title: 'Sikorsky R-4 Mass Production', date: '1942', desc: 'The Sikorsky R-4 became the world\'s first large-scale mass-produced helicopter and the first helicopter to enter service with the United States military, establishing the foundation of the modern rotorcraft industry.' },
         'bell-47': { title: 'Bell 47 Commercial Certification', date: 'March 8, 1946', desc: 'Designed by Arthur M. Young and featuring his revolutionary stabilizing bar, the Bell 47 received the first-ever commercial helicopter certification. It pioneered medical evacuation, news broadcasting, and civilian rotary flight.' },
         'v-22': { title: 'Bell Boeing V-22 Osprey', date: 'March 19, 1989', desc: 'The V-22 Osprey became the first successful production tiltrotor aircraft. By physically tilting its wing-mounted proprotors, it combines the vertical takeoff and hover capabilities of a helicopter with the speed and range of a fixed-wing turboprop airplane.' }
       };
