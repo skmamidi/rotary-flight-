@@ -1,0 +1,420 @@
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" style="user-select: none; -webkit-user-select: none;">
+    <style>
+        .bg { fill: #0f172a; }
+        
+        /* Typography */
+        text { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; }
+        .title { font-size: 32px; font-weight: 900; fill: #f8fafc; letter-spacing: 1px; }
+        .subtitle { font-size: 16px; font-weight: 600; fill: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
+        
+        /* Graphics */
+        .airfoil { fill: #cbd5e1; stroke: #f8fafc; stroke-width: 3; stroke-linejoin: round; }
+        .chord-line { stroke: #fbbf24; stroke-width: 2; stroke-dasharray: 6 6; }
+        .wind-stream { fill: none; stroke: #38bdf8; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 15 25; opacity: 0.7; }
+        .turbulent-stream { fill: none; stroke: #f43f5e; stroke-width: 5; stroke-linecap: round; opacity: 0.8; }
+        
+        /* Vectors */
+        .vector-lift { stroke: #10b981; stroke-width: 8; stroke-linecap: round; fill: none; marker-end: url(#arrow-lift); transition: stroke-width 0.2s; }
+        .vector-drag { stroke: #f97316; stroke-width: 8; stroke-linecap: round; fill: none; marker-end: url(#arrow-drag); transition: stroke-width 0.2s; }
+        .vector-wind { stroke: #38bdf8; stroke-width: 4; stroke-linecap: round; fill: none; marker-end: url(#arrow-wind); }
+        
+        /* Panels and Sliders */
+        .panel { fill: #1e293b; stroke: #334155; stroke-width: 2; rx: 12; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
+        .slider-hitbox { fill: transparent; cursor: pointer; }
+        .slider-track { stroke: #334155; stroke-width: 10; stroke-linecap: round; }
+        .slider-fill { stroke-width: 10; stroke-linecap: round; pointer-events: none; }
+        .slider-thumb { fill: #f8fafc; stroke-width: 3; pointer-events: none; }
+
+        /* Alerts */
+        .stall-text { font-size: 48px; font-weight: 900; fill: #ef4444; letter-spacing: 4px; text-anchor: middle; opacity: 0; }
+    </style>
+
+    <defs>
+        <!-- Arrow Markers -->
+        <marker id="arrow-lift" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" /></marker>
+        <marker id="arrow-drag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f97316" /></marker>
+        <marker id="arrow-wind" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" /></marker>
+        
+        <!-- Airflow Defs -->
+        <path id="wind-straight" d="M -400,0 L 400,0" />
+    </defs>
+
+    <!-- Background -->
+    <rect width="100%" height="100%" class="bg" />
+
+    <!-- Header Section -->
+    <g transform="translate(50, 50)">
+        <text x="0" y="0" class="title">Angle of Attack AND Stall Simulator</text>
+        <text x="0" y="25" class="subtitle">Interactive Wind Tunnel Aerodynamics</text>
+    </g>
+
+    <!-- SIMULATION AREA (LEFT) -->
+    <clipPath id="sim-clip">
+        <rect x="50" y="110" width="670" height="520" rx="12" />
+    </clipPath>
+    <rect x="50" y="110" width="670" height="520" class="panel" />
+
+    <g clip-path="url(#sim-clip)" transform="translate(50, 110)">
+        
+        <!-- Wind Tunnel Grid Background -->
+        <g stroke="#334155" stroke-width="1" opacity="0.5">
+            <line x1="0" y1="130" x2="670" y2="130" />
+            <line x1="0" y1="260" x2="670" y2="260" />
+            <line x1="0" y1="390" x2="670" y2="390" />
+            <line x1="167.5" y1="0" x2="167.5" y2="520" />
+            <line x1="335" y1="0" x2="335" y2="520" />
+            <line x1="502.5" y1="0" x2="502.5" y2="520" />
+        </g>
+
+        <!-- STALL WARNING OVERLAY -->
+        <text id="stall-warning-text" x="335" y="100" class="stall-text">STALL WARNING</text>
+
+        <!-- WIND TUNNEL CENTER -->
+        <g transform="translate(335, 260)">
+            
+            <!-- Wind Streams (Animated via JS) -->
+            <g id="wind-group">
+                <use href="#wind-straight" y="-150" class="wind-stream" />
+                <use href="#wind-straight" y="-100" class="wind-stream" />
+                
+                <!-- Top stream (Becomes turbulent in stall) -->
+                <path id="wind-top-smooth" d="M -400,-50 L 400,-50" class="wind-stream" />
+                <path id="wind-turbulent-1" d="M 0,0" class="turbulent-stream" display="none" />
+                <path id="wind-turbulent-2" d="M 0,0" class="turbulent-stream" display="none" stroke="#fb923c" />
+
+                <use href="#wind-straight" y="50" class="wind-stream" />
+                <use href="#wind-straight" y="100" class="wind-stream" />
+                <use href="#wind-straight" y="150" class="wind-stream" />
+            </g>
+
+            <!-- Angle Indicators & Relative Wind Reference -->
+            <g id="angle-references">
+                <line x1="-250" y1="0" x2="0" y2="0" class="vector-wind" />
+                <text x="-260" y="5" font-size="14" font-weight="800" fill="#38bdf8" text-anchor="end">RELATIVE WIND</text>
+                
+                <!-- Dynamic AoA Arc -->
+                <path id="aoa-arc" d="M -150,0 A 150 150 0 0 1 -140,-50" fill="none" stroke="#fbbf24" stroke-width="4" />
+                <text id="aoa-label" x="-170" y="-30" font-size="16" font-weight="800" fill="#fbbf24">AoA</text>
+            </g>
+
+            <!-- Airfoil Model -->
+            <g id="airfoil-model">
+                <!-- Chord Line Reference -->
+                <line x1="-180" y1="0" x2="180" y2="0" class="chord-line" />
+                <text x="190" y="5" font-size="14" font-weight="800" fill="#fbbf24">CHORD LINE</text>
+                
+                <!-- The Blade Shape -->
+                <!-- Asymmetrical Airfoil: Thicker on top, flatter on bottom -->
+                <path d="M -150,0 C -150,-45 -20,-60 150,0 C -20,15 -150,15 -150,0 Z" class="airfoil" />
+                
+                <!-- Center of Pressure / Lift Origin -->
+                <circle cx="-50" cy="0" r="8" fill="#f8fafc" />
+                
+                <!-- Force Vectors -->
+                <g transform="translate(-50, 0)">
+                    <!-- Lift (Perpendicular to relative wind, which is horizontal) -->
+                    <!-- To keep it simple, lift goes straight UP relative to the wind tunnel -->
+                    <g id="vec-lift-group" transform="rotate(0)">
+                        <line id="vec-lift" x1="0" y1="0" x2="0" y2="-100" class="vector-lift" />
+                        <text id="lbl-lift" x="15" y="-105" font-size="18" font-weight="900" fill="#10b981">LIFT</text>
+                    </g>
+
+                    <!-- Drag (Parallel to relative wind) -->
+                    <!-- Drag goes straight BACK relative to the wind tunnel -->
+                    <g id="vec-drag-group" transform="rotate(0)">
+                        <line id="vec-drag" x1="0" y1="0" x2="100" y2="0" class="vector-drag" />
+                        <text id="lbl-drag" x="110" y="25" font-size="18" font-weight="900" fill="#f97316">DRAG</text>
+                    </g>
+                </g>
+            </g>
+
+        </g>
+    </g>
+
+    <!-- CONTROLS AREA (RIGHT) -->
+    <rect x="740" y="110" width="410" height="520" class="panel" />
+    
+    <g transform="translate(770, 150)">
+        <text x="0" y="0" font-size="24" font-weight="900" fill="#f8fafc" letter-spacing="1">FLIGHT CONTROLS</text>
+        <text x="0" y="25" font-size="14" fill="#94a3b8">Push the pitch past 15° to trigger a stall.</text>
+
+        <!-- PITCH SLIDER -->
+        <g transform="translate(0, 80)">
+            <text x="0" y="0" font-size="16" font-weight="800" fill="#fbbf24">BLADE PITCH (AoA)</text>
+            <text id="slider-val-pitch" x="350" y="0" font-size="16" font-weight="800" fill="#fde68a" text-anchor="end">10°</text>
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'pitch')">
+                <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
+                <line id="track-pitch" x1="0" y1="0" x2="140" y2="0" class="slider-fill" stroke="#fbbf24" />
+                <circle id="thumb-pitch" cx="140" cy="0" r="12" class="slider-thumb" stroke="#fbbf24" />
+                <!-- Critical Angle Marker -->
+                <line x1="210" y1="-10" x2="210" y2="10" stroke="#ef4444" stroke-width="4" stroke-linecap="round" />
+                <text x="210" y="-15" font-size="12" font-weight="800" fill="#ef4444" text-anchor="middle">STALL</text>
+                <rect x="-10" y="-20" width="370" height="40" class="slider-hitbox" />
+            </g>
+            <text x="0" y="45" font-size="12" font-weight="600" fill="#64748b">0° (Flat)</text>
+            <text x="350" y="45" font-size="12" font-weight="600" fill="#64748b" text-anchor="end">25° (Extreme)</text>
+        </g>
+
+        <!-- WIND SPEED SLIDER -->
+        <g transform="translate(0, 190)">
+            <text x="0" y="0" font-size="16" font-weight="800" fill="#38bdf8">RELATIVE WIND SPEED</text>
+            <text id="slider-val-speed" x="350" y="0" font-size="16" font-weight="800" fill="#bae6fd" text-anchor="end">100 mph</text>
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'speed')">
+                <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
+                <line id="track-speed" x1="0" y1="0" x2="175" y2="0" class="slider-fill" stroke="#38bdf8" />
+                <circle id="thumb-speed" cx="175" cy="0" r="12" class="slider-thumb" stroke="#38bdf8" />
+                <rect x="-10" y="-20" width="370" height="40" class="slider-hitbox" />
+            </g>
+            <text x="0" y="45" font-size="12" font-weight="600" fill="#64748b">0 mph</text>
+            <text x="350" y="45" font-size="12" font-weight="600" fill="#64748b" text-anchor="end">200 mph</text>
+        </g>
+
+        <!-- LIVE METRICS BOX -->
+        <rect x="0" y="280" width="350" height="180" fill="#0f172a" stroke="#334155" stroke-width="2" rx="8" />
+        <text x="20" y="310" font-size="12" font-weight="800" fill="#94a3b8" letter-spacing="1">AERODYNAMIC TELEMETRY</text>
+        
+        <text x="20" y="345" font-size="14" font-weight="700" fill="#cbd5e1">Angle of Attack:</text>
+        <text id="metric-aoa" x="330" y="345" font-size="18" font-weight="900" fill="#fbbf24" text-anchor="end">10°</text>
+        
+        <text x="20" y="380" font-size="14" font-weight="700" fill="#cbd5e1">Lift Force Generated:</text>
+        <text id="metric-lift" x="330" y="380" font-size="18" font-weight="900" fill="#10b981" text-anchor="end">2450 lbs</text>
+
+        <text x="20" y="415" font-size="14" font-weight="700" fill="#cbd5e1">Drag (Resistance):</text>
+        <text id="metric-drag" x="330" y="415" font-size="18" font-weight="900" fill="#f97316" text-anchor="end">300 lbs</text>
+
+        <text x="20" y="450" font-size="14" font-weight="700" fill="#cbd5e1">Airflow State:</text>
+        <text id="metric-state" x="330" y="450" font-size="18" font-weight="900" fill="#38bdf8" text-anchor="end">SMOOTH / ATTACHED</text>
+    </g>
+
+    <!-- INFO PANEL BOTTOM -->
+    <rect x="50" y="650" width="1100" height="150" class="panel" />
+    <foreignObject x="80" y="670" width="1040" height="110">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, sans-serif;">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span id="info-badge" style="background-color: #ef4444; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 14px; margin-right: 15px; letter-spacing: 0.5px; text-transform: uppercase;">CRITICAL FLIGHT DYNAMICS</span>
+                <h3 id="info-title" style="margin: 0; font-size: 22px; font-weight: 800; color: #f8fafc;">Flow Separation and Stalls</h3>
+            </div>
+            <p id="info-desc" style="margin: 0; font-size: 16px; color: #94a3b8; line-height: 1.5;">
+                The <strong>Angle of Attack (AoA)</strong> is the angle between the blade's chord line and the oncoming relative wind. As you increase AoA, lift increases—up to a point. If you exceed the <strong>Critical Angle (usually around 15°)</strong>, the air can no longer smoothly follow the top curve of the blade. The airflow separates, becoming violently turbulent. This is a <strong>Stall</strong>: Lift drops dramatically, and drag instantly spikes!
+            </p>
+        </div>
+    </foreignObject>
+
+    <!-- JAVASCRIPT ANIMATION AND PHYSICS ENGINE -->
+    <script type="text/javascript">
+        <![CDATA[
+        // Physics Variables
+        let state = {
+            'pitch': 10,   // 0 to 25 degrees
+            'speed': 100   // 0 to 200 mph
+        };
+
+        // Animation States
+        let lastTime = 0;
+        let windOffset = 0;
+        let isStalled = false;
+
+        // Slider Configurations
+        const SLIDER_WIDTH = 350;
+        let activeSlider = null;
+        
+        const sliderConfig = {
+            'pitch': { min: 0, max: 25 },
+            'speed': { min: 0, max: 200 }
+        };
+
+        const CRITICAL_ANGLE = 15;
+
+        function initSimulation() {
+            updateVisuals();
+            requestAnimationFrame(animationLoop);
+        }
+
+        // Drag Handling
+        function startDrag(evt, id) {
+            activeSlider = id;
+            updateDrag(evt);
+        }
+
+        function onMouseMove(evt) {
+            if (activeSlider) {
+                updateDrag(evt);
+            }
+        }
+
+        function onMouseUp(evt) {
+            activeSlider = null;
+        }
+
+        function updateDrag(evt) {
+            const svg = document.getElementById('main-svg');
+            const pt = svg.createSVGPoint();
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+            const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+            
+            // Sliders track starts at x=770
+            let localX = svgP.x - 770;
+            if (localX < 0) localX = 0;
+            if (localX > SLIDER_WIDTH) localX = SLIDER_WIDTH;
+            
+            const conf = sliderConfig[activeSlider];
+            state[activeSlider] = conf.min + (localX / SLIDER_WIDTH) * (conf.max - conf.min);
+            
+            // Update Slider Visuals
+            document.getElementById('track-' + activeSlider).setAttribute('x2', localX);
+            document.getElementById('thumb-' + activeSlider).setAttribute('cx', localX);
+            
+            let valSuffix = activeSlider === 'pitch' ? '°' : ' mph';
+            document.getElementById('slider-val-' + activeSlider).textContent = Math.round(state[activeSlider]) + valSuffix;
+            
+            updateVisuals();
+        }
+
+        function updateVisuals() {
+            const pitch = state.pitch;
+            const speed = state.speed;
+            
+            isStalled = pitch > CRITICAL_ANGLE;
+
+            // --- Physics Calculations ---
+            // Lift = Coefficient * V^2 * AoA
+            const speedFactor = speed / 100; // Normalized
+            let liftAmount = 0;
+            let dragAmount = 0;
+
+            if (!isStalled) {
+                // Normal Flight Regime
+                liftAmount = speedFactor * speedFactor * (pitch * 250);
+                dragAmount = speedFactor * speedFactor * (pitch * pitch * 3); // Parasitic + Induced drag
+            } else {
+                // STALLED Regime
+                // Lift drops sharply as angle increases past critical
+                const stallPenalty = Math.max(0.1, 1 - ((pitch - CRITICAL_ANGLE) * 0.15));
+                liftAmount = speedFactor * speedFactor * (CRITICAL_ANGLE * 250) * stallPenalty;
+                
+                // Drag spikes massively due to flow separation
+                const dragSpike = 1 + ((pitch - CRITICAL_ANGLE) * 1.5);
+                dragAmount = speedFactor * speedFactor * (CRITICAL_ANGLE * CRITICAL_ANGLE * 3) * dragSpike;
+            }
+
+            // Update UI Metrics
+            document.getElementById('metric-aoa').textContent = Math.round(pitch * 10)/10 + '°';
+            
+            if (isStalled) {
+                document.getElementById('metric-aoa').setAttribute('fill', '#ef4444');
+                document.getElementById('metric-lift').setAttribute('fill', '#ef4444');
+                document.getElementById('metric-state').textContent = "STALLED (SEPARATED)";
+                document.getElementById('metric-state').setAttribute('fill', '#ef4444');
+            } else {
+                document.getElementById('metric-aoa').setAttribute('fill', '#fbbf24');
+                document.getElementById('metric-lift').setAttribute('fill', '#10b981');
+                document.getElementById('metric-state').textContent = "SMOOTH / ATTACHED";
+                document.getElementById('metric-state').setAttribute('fill', '#38bdf8');
+            }
+
+            document.getElementById('metric-lift').textContent = Math.round(liftAmount) + ' lbs';
+            document.getElementById('metric-drag').textContent = Math.round(dragAmount) + ' lbs';
+
+            // --- Visual Updates ---
+            
+            // 1. Rotate Airfoil (Center of pressure is at x=-50, y=0)
+            document.getElementById('airfoil-model').setAttribute('transform', `rotate(${-pitch})`);
+
+            // 2. Draw Angle of Attack Arc
+            const rad = (pitch * Math.PI) / 180;
+            const arcX = -150 * Math.cos(rad);
+            const arcY = -150 * Math.sin(rad);
+            if (pitch > 0) {
+                document.getElementById('aoa-arc').setAttribute('d', `M -150,0 A 150 150 0 0 1 ${arcX},${arcY}`);
+            } else {
+                document.getElementById('aoa-arc').setAttribute('d', `M -150,0 L -150,0`); // Hide if 0
+            }
+            
+            // Move AoA label to follow the arc roughly
+            document.getElementById('aoa-label').setAttribute('y', Math.min(-20, arcY - 10));
+
+            // 3. Scale Vectors
+            // Because we rotate the whole model, we must un-rotate the vectors so Lift points perfectly UP 
+            // relative to the wind tunnel, and drag points perfectly BACK.
+            document.getElementById('vec-lift-group').setAttribute('transform', `rotate(${pitch})`);
+            document.getElementById('vec-drag-group').setAttribute('transform', `rotate(${pitch})`);
+
+            const liftPixels = Math.max(5, liftAmount * 0.025);
+            document.getElementById('vec-lift').setAttribute('y2', -liftPixels);
+            document.getElementById('lbl-lift').setAttribute('y', -liftPixels - 15);
+
+            const dragPixels = Math.max(5, dragAmount * 0.05);
+            document.getElementById('vec-drag').setAttribute('x2', dragPixels);
+            document.getElementById('lbl-drag').setAttribute('x', dragPixels + 15);
+        }
+
+        // 60fps Animation Loop
+        function animationLoop(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const dt = timestamp - lastTime || 16;
+            lastTime = timestamp;
+            
+            const timeSecs = timestamp / 1000;
+
+            // 1. Animate Wind Stream Flow
+            const windSpeed = (state.speed * 0.2) + 1; // Base flow even at 0 for visual tracking
+            windOffset -= windSpeed;
+            
+            const windStreams = document.getElementsByClassName('wind-stream');
+            for (let i = 0; i < windStreams.length; i++) {
+                windStreams[i].setAttribute('stroke-dashoffset', windOffset);
+            }
+
+            // 2. Handle Turbulence / Flow Separation
+            const topWindSmooth = document.getElementById('wind-top-smooth');
+            const topWindTurbulent1 = document.getElementById('wind-turbulent-1');
+            const topWindTurbulent2 = document.getElementById('wind-turbulent-2');
+            const stallWarning = document.getElementById('stall-warning-text');
+
+            if (isStalled) {
+                // Hide smooth top wind, show turbulent streams
+                topWindSmooth.setAttribute('display', 'none');
+                topWindTurbulent1.setAttribute('display', 'block');
+                topWindTurbulent2.setAttribute('display', 'block');
+
+                // Generate Chaotic paths math
+                // Flow hits the leading edge and then detaches upward in swirling vortices
+                
+                // Stream 1
+                const v1 = Math.sin(timeSecs * 15) * 40;
+                const v2 = Math.cos(timeSecs * 12) * 60;
+                const v3 = Math.sin(timeSecs * 8) * 80;
+                const path1 = `M -400,-50 L -120,-50 C -50,${-50 + v1} 50,${-100 + v2} 150,${-50 + v3} S 300,${-80 + v1} 400,-50`;
+                topWindTurbulent1.setAttribute('d', path1);
+                topWindTurbulent1.setAttribute('stroke-dashoffset', windOffset * 1.5); // Moves faster/erratic
+                topWindTurbulent1.setAttribute('stroke-dasharray', '20 40');
+
+                // Stream 2
+                const v4 = Math.cos(timeSecs * 18) * 50;
+                const v5 = Math.sin(timeSecs * 10) * 70;
+                const path2 = `M -400,-50 L -120,-50 C -20,${-80 + v4} 80,${-20 + v5} 180,${-100 + v4} S 350,${-40 + v5} 400,-100`;
+                topWindTurbulent2.setAttribute('d', path2);
+                topWindTurbulent2.setAttribute('stroke-dashoffset', windOffset * 1.2);
+                topWindTurbulent2.setAttribute('stroke-dasharray', '10 30');
+
+                // Flash STALL WARNING text
+                stallWarning.setAttribute('opacity', (Math.sin(timeSecs * 20) + 1) / 2);
+                
+            } else {
+                // Attached, smooth flow
+                topWindTurbulent1.setAttribute('display', 'none');
+                topWindTurbulent2.setAttribute('display', 'none');
+                stallWarning.setAttribute('opacity', 0);
+                topWindSmooth.setAttribute('display', 'block');
+                
+                // The smooth wind naturally deflects slightly downwards due to downwash
+                const downwash = state.pitch * 3;
+                topWindSmooth.setAttribute('d', `M -400,-50 C -100,-50 0,${-50 + downwash} 400,${-50 + downwash * 2}`);
+            }
+
+            requestAnimationFrame(animationLoop);
+        }
+        ]]>
+    </script>
+</svg>

@@ -1,0 +1,424 @@
+<svg id="aero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" style="user-select: none; -webkit-user-select: none;">
+    <style>
+        .bg { fill: #f8fafc; }
+        
+        /* Typography */
+        text { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; }
+        .title { font-size: 32px; font-weight: 900; fill: #0f172a; letter-spacing: 1px; }
+        .subtitle { font-size: 16px; font-weight: 600; fill: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+        
+        /* Tabs */
+        .tab { cursor: pointer; transition: all 0.2s ease; }
+        .tab-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; transition: all 0.2s ease; }
+        .tab-text { font-size: 16px; font-weight: 800; fill: #64748b; text-anchor: middle; transition: all 0.2s ease; pointer-events: none; }
+        
+        .tab:hover .tab-bg { stroke: #94a3b8; }
+        .tab-airfoil.active .tab-bg { fill: #3b82f6; stroke: #3b82f6; }
+        .tab-spin.active .tab-bg { fill: #8b5cf6; stroke: #8b5cf6; }
+        .tab.active .tab-text { fill: #ffffff; }
+
+        /* Graphics */
+        .airfoil { fill: #e2e8f0; stroke: #475569; stroke-width: 4; stroke-linejoin: round; }
+        .wind-stream { fill: none; stroke: #38bdf8; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 15 25; opacity: 0.6; }
+        .heli-body { fill: #cbd5e1; stroke: #475569; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+        .rotor-blade { fill: #f1f5f9; stroke: #334155; stroke-width: 3; }
+        
+        /* Vectors */
+        .vector-lift { stroke: #10b981; stroke-width: 8; stroke-linecap: round; fill: none; marker-end: url(#arrow-lift); }
+        .vector-vel { stroke: #f43f5e; stroke-width: 5; stroke-linecap: round; fill: none; marker-end: url(#arrow-vel); }
+        
+        /* Panels and Sliders */
+        .panel { fill: #ffffff; stroke: #e2e8f0; stroke-width: 2; rx: 12; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05)); }
+        .slider-hitbox { fill: transparent; cursor: pointer; }
+        .slider-track { stroke: #f1f5f9; stroke-width: 10; stroke-linecap: round; }
+        .slider-fill { stroke-width: 10; stroke-linecap: round; pointer-events: none; }
+        .slider-thumb { fill: #ffffff; stroke-width: 3; pointer-events: none; }
+    </style>
+
+    <defs>
+        <!-- Arrow Markers -->
+        <marker id="arrow-lift" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" /></marker>
+        <marker id="arrow-vel" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f43f5e" /></marker>
+        
+        <!-- Airflow Defs -->
+        <path id="wind-straight" d="M -350,0 L 350,0" />
+    </defs>
+
+    <!-- Background -->
+    <rect width="100%" height="100%" class="bg" />
+
+    <!-- Header Section -->
+    <g transform="translate(50, 50)">
+        <text x="0" y="0" class="title">Rotor Blade Aerodynamics</text>
+        <text x="0" y="25" class="subtitle">How Helicopters Generate Lift</text>
+    </g>
+
+    <!-- Mode Tabs -->
+    <g transform="translate(680, 40)">
+        <g id="tab-airfoil" class="tab tab-airfoil active" onclick="setView('airfoil')">
+            <rect x="0" y="0" width="220" height="40" class="tab-bg" />
+            <text x="110" y="26" class="tab-text">1. AIRFOIL CROSS-SECTION</text>
+        </g>
+        <g id="tab-spin" class="tab tab-spin" onclick="setView('spin')" transform="translate(240, 0)">
+            <rect x="0" y="0" width="220" height="40" class="tab-bg" />
+            <text x="110" y="26" class="tab-text">2. WHY SPINNING MATTERS</text>
+        </g>
+    </g>
+
+    <!-- SIMULATION AREA (LEFT) -->
+    <clipPath id="sim-clip">
+        <rect x="50" y="110" width="670" height="520" rx="12" />
+    </clipPath>
+    <rect x="50" y="110" width="670" height="520" class="panel" />
+
+    <g clip-path="url(#sim-clip)" transform="translate(50, 110)">
+        
+        <!-- 1. AIRFOIL VIEW -->
+        <g id="view-airfoil" display="block">
+            <text x="20" y="30" font-size="18" font-weight="900" fill="#3b82f6" letter-spacing="1">BLADE PROFILE &amp; RELATIVE WIND</text>
+            
+            <g transform="translate(335, 260)">
+                <!-- Wind Streams -->
+                <g id="wind-group" transform="translate(0, 0)">
+                    <use href="#wind-straight" y="-120" class="wind-stream" />
+                    <use href="#wind-straight" y="-80" class="wind-stream" />
+                    <use href="#wind-straight" y="-40" class="wind-stream" />
+                    <use href="#wind-straight" y="0" class="wind-stream" />
+                    <use href="#wind-straight" y="40" class="wind-stream" />
+                    <use href="#wind-straight" y="80" class="wind-stream" />
+                    <use href="#wind-straight" y="120" class="wind-stream" />
+                </g>
+
+                <!-- Airfoil Model -->
+                <g id="airfoil-model" transform="rotate(-10)">
+                    <!-- Chord Line -->
+                    <line x1="-150" y1="0" x2="180" y2="0" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 6" />
+                    
+                    <!-- Airfoil Shape -->
+                    <!-- Leading edge at -120, Trailing edge at 150. Aerodynamic center around -50 -->
+                    <path d="M -120,0 C -120,-45 0,-35 150,0 C 0,10 -120,15 -120,0 Z" class="airfoil" />
+                    
+                    <!-- Center of Pressure dot -->
+                    <circle cx="-50" cy="0" r="6" fill="#1e293b" />
+                    
+                    <!-- LIFT Vector (Perpendicular to relative wind, but effectively up here) -->
+                    <line id="vec-lift" x1="-50" y1="0" x2="-50" y2="-150" class="vector-lift" />
+                    <text id="lbl-lift" x="-60" y="-160" font-size="16" font-weight="800" fill="#10b981" text-anchor="end">LIFT</text>
+                </g>
+
+                <!-- Angle of Attack Indicator -->
+                <g id="aoa-indicator">
+                    <line x1="-200" y1="0" x2="0" y2="0" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4" />
+                    <path id="aoa-arc" d="M -100,0 A 100 100 0 0 1 -98,-17" fill="none" stroke="#f43f5e" stroke-width="3" />
+                    <text x="-140" y="-20" font-size="14" font-weight="800" fill="#f43f5e">AoA</text>
+                </g>
+            </g>
+        </g>
+
+        <!-- 2. SPINNING TOP-DOWN VIEW -->
+        <g id="view-spin" display="none">
+            <text x="20" y="30" font-size="18" font-weight="900" fill="#8b5cf6" letter-spacing="1">ROTATIONAL VELOCITY DYNAMICS</text>
+            
+            <g transform="translate(335, 260)">
+                <!-- Helicopter Fuselage (Top Down) -->
+                <ellipse cx="0" cy="0" rx="80" ry="35" class="heli-body" />
+                <ellipse cx="40" cy="0" rx="40" ry="20" fill="#bae6fd" stroke="#475569" stroke-width="3" />
+                <path d="M -70,0 L -220,-5 L -220,5 Z" class="heli-body" />
+                <rect x="-230" y="-25" width="20" height="50" class="heli-body" />
+                
+                <!-- Main Rotor Disc Boundary -->
+                <circle cx="0" cy="0" r="220" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="10 10" />
+
+                <!-- Spinning Rotor System -->
+                <g id="spin-system">
+                    <!-- Blades -->
+                    <path d="M -20,-10 L -220,-10 L -220,10 L -20,10 Z" class="rotor-blade" />
+                    <path d="M 20,-10 L 220,-10 L 220,10 L 20,10 Z" class="rotor-blade" />
+                    <circle cx="0" cy="0" r="25" fill="#334155" stroke="#1e293b" stroke-width="3" />
+                    
+                    <!-- Velocity Vectors on Advancing Blade (Right Side) -->
+                    <g id="vel-vectors">
+                        <!-- Root Vector (Slow) -->
+                        <line id="v1" x1="60" y1="-10" x2="60" y2="-40" class="vector-vel" />
+                        <!-- Mid Vector (Medium) -->
+                        <line id="v2" x1="140" y1="-10" x2="140" y2="-80" class="vector-vel" />
+                        <!-- Tip Vector (Fast) -->
+                        <line id="v3" x1="210" y1="-10" x2="210" y2="-130" class="vector-vel" />
+                    </g>
+                </g>
+
+                <!-- Formula Text -->
+                <g transform="translate(120, 180)">
+                    <text x="0" y="0" font-size="14" font-weight="700" fill="#64748b" text-anchor="middle">Velocity = RPM × Radius</text>
+                    <text x="0" y="25" font-size="12" font-weight="600" fill="#f43f5e" text-anchor="middle">The tip flies much faster than the root!</text>
+                </g>
+            </g>
+        </g>
+    </g>
+
+    <!-- CONTROLS AREA (RIGHT) -->
+    <rect x="740" y="110" width="410" height="520" class="panel" />
+    
+    <g transform="translate(770, 150)">
+        <text x="0" y="0" font-size="24" font-weight="900" fill="#0f172a" letter-spacing="1">ROTOR DYNAMICS</text>
+        <text x="0" y="25" font-size="14" fill="#64748b">Adjust the physics to see how lift changes.</text>
+
+        <!-- RPM SLIDER -->
+        <g transform="translate(0, 80)">
+            <text x="0" y="0" font-size="16" font-weight="800" fill="#3b82f6">ROTOR SPEED (RPM)</text>
+            <text id="slider-val-rpm" x="350" y="0" font-size="16" font-weight="800" fill="#1d4ed8" text-anchor="end">40%</text>
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'rpm')">
+                <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
+                <line id="track-rpm" x1="0" y1="0" x2="140" y2="0" class="slider-fill" stroke="#3b82f6" />
+                <circle id="thumb-rpm" cx="140" cy="0" r="12" class="slider-thumb" stroke="#3b82f6" />
+                <rect x="-10" y="-20" width="370" height="40" class="slider-hitbox" />
+            </g>
+            <text x="0" y="45" font-size="12" font-weight="600" fill="#94a3b8">0%</text>
+            <text x="350" y="45" font-size="12" font-weight="600" fill="#94a3b8" text-anchor="end">100%</text>
+        </g>
+
+        <!-- PITCH SLIDER -->
+        <g transform="translate(0, 190)">
+            <text x="0" y="0" font-size="16" font-weight="800" fill="#8b5cf6">BLADE PITCH (ANGLE)</text>
+            <text id="slider-val-pitch" x="350" y="0" font-size="16" font-weight="800" fill="#6d28d9" text-anchor="end">10°</text>
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'pitch')">
+                <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
+                <line id="track-pitch" x1="0" y1="0" x2="175" y2="0" class="slider-fill" stroke="#8b5cf6" />
+                <circle id="thumb-pitch" cx="175" cy="0" r="12" class="slider-thumb" stroke="#8b5cf6" />
+                <rect x="-10" y="-20" width="370" height="40" class="slider-hitbox" />
+            </g>
+            <text x="0" y="45" font-size="12" font-weight="600" fill="#94a3b8">0° (Flat)</text>
+            <text x="350" y="45" font-size="12" font-weight="600" fill="#94a3b8" text-anchor="end">20° (Steep)</text>
+        </g>
+
+        <!-- LIVE METRICS BOX -->
+        <rect x="0" y="320" width="350" height="140" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8" />
+        <text x="20" y="345" font-size="12" font-weight="800" fill="#94a3b8" letter-spacing="1">LIVE AERODYNAMIC METRICS</text>
+        
+        <text x="20" y="380" font-size="14" font-weight="700" fill="#475569">Relative Wind Speed:</text>
+        <text id="metric-wind" x="330" y="380" font-size="16" font-weight="800" fill="#3b82f6" text-anchor="end">High</text>
+        
+        <text x="20" y="410" font-size="14" font-weight="700" fill="#475569">Angle of Attack:</text>
+        <text id="metric-aoa" x="330" y="410" font-size="16" font-weight="800" fill="#8b5cf6" text-anchor="end">10°</text>
+
+        <text x="20" y="440" font-size="14" font-weight="700" fill="#475569">Total Lift Generated:</text>
+        <text id="metric-lift" x="330" y="440" font-size="16" font-weight="900" fill="#10b981" text-anchor="end">Normal</text>
+    </g>
+
+    <!-- INFO PANEL BOTTOM -->
+    <rect x="50" y="650" width="1100" height="150" class="panel" />
+    <foreignObject x="80" y="670" width="1040" height="110">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, sans-serif;">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span id="info-badge" style="background-color: #3b82f6; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 14px; margin-right: 15px; letter-spacing: 0.5px; text-transform: uppercase;">AERODYNAMIC CONCEPT</span>
+                <h3 id="info-title" style="margin: 0; font-size: 22px; font-weight: 800; color: #0f172a;">The Rotor Blade as an Airfoil</h3>
+            </div>
+            <p id="info-desc" style="margin: 0; font-size: 16px; color: #475569; line-height: 1.5;">
+                A rotor blade is fundamentally just a long, thin airplane wing (an airfoil). As relative wind strikes the leading edge, the blade's angled Pitch (Angle of Attack) forces air downward. By Newton's Third Law, this downward push creates an equal and opposite upward force called <strong>Lift</strong>.
+            </p>
+        </div>
+    </foreignObject>
+
+    <!-- JAVASCRIPT ANIMATION AND PHYSICS ENGINE -->
+    <script type="text/javascript">
+        <![CDATA[
+        // State Configuration
+        let currentView = 'airfoil';
+        
+        // Physics Variables
+        let state = {
+            'rpm': 40,    // 0 to 100
+            'pitch': 10   // 0 to 20
+        };
+
+        // Animation States
+        let lastTime = 0;
+        let windOffset = 0;
+        let spinAngle = 0;
+
+        // Slider Configurations
+        const SLIDER_WIDTH = 350;
+        let activeSlider = null;
+        
+        const sliderConfig = {
+            'rpm': { min: 0, max: 100 },
+            'pitch': { min: 0, max: 20 }
+        };
+
+        // View Data
+        const viewData = {
+            'airfoil': {
+                color: '#3b82f6',
+                title: 'The Rotor Blade as an Airfoil',
+                desc: 'A rotor blade is fundamentally just a long, thin airplane wing (an airfoil). As relative wind strikes the leading edge, the blade\'s angled Pitch (Angle of Attack) forces air downward. By Newton\'s Third Law and Bernoulli\'s principle, this creates an upward force called <strong>Lift</strong>.'
+            },
+            'spin': {
+                color: '#8b5cf6',
+                title: 'Why Spinning Matters (Relative Wind)',
+                desc: 'Fixed-wing airplanes must move their entire body forward to push air over their wings. Helicopters <strong>spin</strong> their wings instead! Spinning creates "Relative Wind" over the blades even when the helicopter is standing still. Notice how the blade tips travel much faster than the root.'
+            }
+        };
+
+        function initSimulation() {
+            setView('airfoil');
+            updateVisuals();
+            requestAnimationFrame(animationLoop);
+        }
+
+        // View Selection
+        function setView(viewId) {
+            currentView = viewId;
+            const data = viewData[viewId];
+
+            // Update Tabs
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + viewId).classList.add('active');
+
+            // Toggle SVG Groups
+            document.getElementById('view-airfoil').setAttribute('display', viewId === 'airfoil' ? 'block' : 'none');
+            document.getElementById('view-spin').setAttribute('display', viewId === 'spin' ? 'block' : 'none');
+
+            // Update Info Panel
+            document.getElementById('info-badge').style.backgroundColor = data.color;
+            document.getElementById('info-title').textContent = data.title;
+            document.getElementById('info-desc').innerHTML = data.desc;
+        }
+
+        // Drag Handling
+        function startDrag(evt, id) {
+            activeSlider = id;
+            updateDrag(evt);
+        }
+
+        function onMouseMove(evt) {
+            if (activeSlider) {
+                updateDrag(evt);
+            }
+        }
+
+        function onMouseUp(evt) {
+            activeSlider = null;
+        }
+
+        function updateDrag(evt) {
+            const svg = document.getElementById('aero-svg');
+            const pt = svg.createSVGPoint();
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+            const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+            
+            // Sliders track starts at x=770
+            let localX = svgP.x - 770;
+            if (localX < 0) localX = 0;
+            if (localX > SLIDER_WIDTH) localX = SLIDER_WIDTH;
+            
+            const conf = sliderConfig[activeSlider];
+            state[activeSlider] = conf.min + (localX / SLIDER_WIDTH) * (conf.max - conf.min);
+            
+            // Update Slider Visuals
+            document.getElementById('track-' + activeSlider).setAttribute('x2', localX);
+            document.getElementById('thumb-' + activeSlider).setAttribute('cx', localX);
+            
+            let valSuffix = activeSlider === 'rpm' ? '%' : '°';
+            document.getElementById('slider-val-' + activeSlider).textContent = Math.round(state[activeSlider]) + valSuffix;
+            
+            updateVisuals();
+        }
+
+        function updateVisuals() {
+            // --- 1. Calculate Lift ---
+            // Lift is proportional to RPM squared and Pitch
+            const rpmFactor = state.rpm / 100;
+            const pitchFactor = state.pitch / 20;
+            
+            // Stall penalty if pitch is extremely high and RPM is extremely low (Simplified)
+            let liftAmount = rpmFactor * rpmFactor * pitchFactor; 
+            
+            // Update Metrics Panel
+            document.getElementById('metric-wind').textContent = Math.round(state.rpm * 4) + ' mph';
+            document.getElementById('metric-aoa').textContent = Math.round(state.pitch) + '°';
+            
+            let liftStr = "Minimal";
+            let liftColor = "#475569";
+            if (liftAmount > 0.8) { liftStr = "MAXIMUM"; liftColor = "#10b981"; }
+            else if (liftAmount > 0.4) { liftStr = "High"; liftColor = "#3b82f6"; }
+            else if (liftAmount > 0.1) { liftStr = "Moderate"; liftColor = "#8b5cf6"; }
+            
+            // Visual stall warning
+            if (state.pitch > 16 && state.rpm < 40) {
+                liftStr = "STALL RISK";
+                liftColor = "#ef4444";
+                liftAmount *= 0.5; // Lift drops in a stall
+            }
+            
+            document.getElementById('metric-lift').textContent = liftStr;
+            document.getElementById('metric-lift').setAttribute('fill', liftColor);
+
+            // --- 2. Update Airfoil View ---
+            // Rotate the airfoil based on pitch angle (rotate around center of pressure)
+            const angle = state.pitch;
+            document.getElementById('airfoil-model').setAttribute('transform', `rotate(${-angle})`);
+            
+            // Draw Angle of Attack Arc dynamically
+            // Arc needs to go from (-100, 0) up to the rotated axis. 
+            // Math: x = -100 * cos(a), y = -100 * sin(a)
+            const rad = (angle * Math.PI) / 180;
+            const arcX = -100 * Math.cos(rad);
+            const arcY = -100 * Math.sin(rad);
+            if (angle > 0) {
+                document.getElementById('aoa-arc').setAttribute('d', `M -100,0 A 100 100 0 0 1 ${arcX},${arcY}`);
+            } else {
+                document.getElementById('aoa-arc').setAttribute('d', `M -100,0 L -100,0`); // Hide
+            }
+
+            // Scale Lift Vector
+            const liftPixels = Math.max(10, liftAmount * 180);
+            document.getElementById('vec-lift').setAttribute('y2', -liftPixels);
+            document.getElementById('lbl-lift').setAttribute('y', -(liftPixels + 10));
+
+            // Rotate the entire wind group slightly downwards (Downwash) based on lift
+            const downwashAngle = liftAmount * 10;
+            document.getElementById('wind-group').setAttribute('transform', `rotate(${downwashAngle})`);
+
+            // --- 3. Update Spinning View Vectors ---
+            // Velocity vectors scale directly with RPM (V = w * r)
+            const vScale = Math.max(0.1, state.rpm / 100);
+            document.getElementById('v1').setAttribute('y2', -10 - (30 * vScale));
+            document.getElementById('v2').setAttribute('y2', -10 - (70 * vScale));
+            document.getElementById('v3').setAttribute('y2', -10 - (120 * vScale));
+        }
+
+        // 60fps Animation Loop
+        function animationLoop(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const dt = timestamp - lastTime || 16;
+            lastTime = timestamp;
+            
+            // 1. Animate Wind Stream (Airfoil View)
+            // Speed is based on RPM
+            const windSpeed = (state.rpm * 0.15) + 1; // +1 so it moves slightly even at 0 rpm
+            windOffset -= windSpeed;
+            
+            const windStreams = document.getElementsByClassName('wind-stream');
+            for (let i = 0; i < windStreams.length; i++) {
+                windStreams[i].setAttribute('stroke-dashoffset', windOffset);
+            }
+
+            // 2. Animate Rotor Spin (Top-Down View)
+            const spinSpeed = (state.rpm * 0.3);
+            spinAngle = (spinAngle + spinSpeed) % 360;
+            document.getElementById('spin-system').setAttribute('transform', `rotate(${spinAngle})`);
+
+            // Vector visibility in top-down view (only show vectors on the right side where advancing)
+            // To make it look clean, we keep the vectors attached to the spin group but rotate them opposite so they always point "up" (forward).
+            document.getElementById('vel-vectors').setAttribute('transform', `rotate(${-spinAngle})`);
+            
+            // Optional: Fade vectors out if they are on the retreating side, but for this simplified educational view, we'll keep them pointing strictly forward along the blade line as if frozen in a strobe light, which actually means we DON'T counter-rotate them.
+            // Let's remove the counter-rotation so they spin with the blade to show exact local velocity direction!
+            document.getElementById('vel-vectors').setAttribute('transform', `rotate(0)`);
+
+            requestAnimationFrame(animationLoop);
+        }
+        ]]>
+    </script>
+</svg>

@@ -1,0 +1,431 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 850" style="background-color: #ffffff; font-family: system-ui, -apple-system, sans-serif; user-select: none;">
+  <defs>
+    <!-- Shadows & Filters -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000" flood-opacity="0.10" />
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Vector Markers -->
+    <marker id="arrowLift" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#0ea5e9" />
+    </marker>
+    <marker id="arrowDrag" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#ef4444" />
+    </marker>
+    <marker id="arrowWind" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#64748b" />
+    </marker>
+    <marker id="arrowTorque" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#f59e0b" />
+    </marker>
+
+    <!-- Stick Knob Gradient -->
+    <radialGradient id="knobGrad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#86efac" />
+    </radialGradient>
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(50, 60)">
+    <text x="0" y="0" fill="#059669" font-size="42" font-weight="800" style="text-shadow: 0 0 20px rgba(5, 150, 105, 0.2);">Rotary Aerodynamics: Collective Control</text>
+    <text x="0" y="35" fill="#475569" font-size="18">The collective pitch control changes the pitch angle of all main rotor blades simultaneously and equally.</text>
+    <text x="0" y="60" fill="#475569" font-size="18">This alters total aerodynamic lift, allowing the helicopter to climb or descend, while affecting drag and torque.</text>
+    <line x1="0" y1="90" x2="1200" y2="90" stroke="#86efac" stroke-width="2" />
+  </g>
+
+  <!-- ==================== LEFT COLUMN: CONTROLS ==================== -->
+  <g transform="translate(50, 180)">
+    <!-- Base Panel -->
+    <rect x="0" y="0" width="380" height="420" rx="20" fill="#ffffff" stroke="#86efac" stroke-width="3" filter="url(#shadow)"/>
+    <text x="25" y="40" fill="#0f172a" font-size="22" font-weight="bold">Collective Lever</text>
+    <text x="25" y="65" fill="#64748b" font-size="14">Drag the knob up to increase pitch.</text>
+
+    <!-- Reset Button -->
+    <rect id="resetBtnBg" x="250" y="18" width="105" height="30" rx="15" fill="#dcfce7" cursor="pointer" />
+    <text id="resetBtnText" x="302" y="38" fill="#166534" font-size="14" font-weight="600" text-anchor="middle" cursor="pointer">Lower fully</text>
+
+    <!-- Lever Area -->
+    <g transform="translate(190, 100)">
+      <!-- Track -->
+      <rect x="-15" y="0" width="30" height="250" rx="15" fill="#f0fdf4" stroke="#86efac" stroke-width="3" filter="url(#shadow)"/>
+      <line x1="0" y1="15" x2="0" y2="235" stroke="#bbf7d0" stroke-width="4" stroke-linecap="round" />
+      
+      <!-- Markings -->
+      <line x1="-25" y1="15" x2="-18" y2="15" stroke="#94a3b8" stroke-width="2" />
+      <text x="-35" y="20" fill="#64748b" font-size="12" font-weight="bold" text-anchor="end">MAX</text>
+      
+      <line x1="-25" y1="125" x2="-18" y2="125" stroke="#94a3b8" stroke-width="2" />
+      <text x="-35" y="130" fill="#64748b" font-size="12" font-weight="bold" text-anchor="end">HOVER</text>
+      
+      <line x1="-25" y1="235" x2="-18" y2="235" stroke="#94a3b8" stroke-width="2" />
+      <text x="-35" y="240" fill="#64748b" font-size="12" font-weight="bold" text-anchor="end">MIN</text>
+
+      <!-- The Knob -->
+      <g id="stickKnob" transform="translate(0, 235)" filter="url(#shadow)" cursor="ns-resize">
+        <rect x="-35" y="-15" width="70" height="30" rx="8" fill="url(#knobGrad)" stroke="#4ade80" stroke-width="2" />
+        <line x1="-15" y1="0" x2="15" y2="0" stroke="#bbf7d0" stroke-width="2" />
+      </g>
+
+      <!-- Hitbox -->
+      <rect id="stickHitbox" x="-50" y="0" width="100" height="250" fill="transparent" cursor="ns-resize" />
+    </g>
+
+    <!-- Readouts -->
+    <g transform="translate(25, 375)">
+      <!-- Pitch Readout -->
+      <rect x="0" y="-15" width="160" height="45" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="2" />
+      <text x="15" y="5" fill="#64748b" font-size="11" font-weight="bold">BLADE PITCH</text>
+      <text id="pitchValueText" x="15" y="22" fill="#0f172a" font-size="16" font-family="monospace">2.0°</text>
+
+      <!-- Lift Readout -->
+      <rect x="170" y="-15" width="160" height="45" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="2" />
+      <text x="185" y="5" fill="#64748b" font-size="11" font-weight="bold">TOTAL LIFT</text>
+      <text id="liftValueText" x="185" y="22" fill="#0ea5e9" font-size="16" font-family="monospace">15 %</text>
+    </g>
+  </g>
+
+  <!-- Educational Panel -->
+  <g transform="translate(50, 620)">
+    <rect x="0" y="0" width="380" height="180" rx="16" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+    <text x="25" y="35" fill="#047857" font-size="18" font-weight="bold">Aerodynamic Principles</text>
+    
+    <text x="25" y="65" fill="#0f172a" font-size="14">1. Raising collective increases the <tspan fill="#0ea5e9" font-weight="bold">Angle of Attack</tspan>.</text>
+    <text x="25" y="90" fill="#0f172a" font-size="14">2. Higher AoA generates more <tspan fill="#0ea5e9" font-weight="bold">Lift</tspan>, raising the craft.</text>
+    <text x="25" y="115" fill="#0f172a" font-size="14">3. However, higher AoA also generates more <tspan fill="#ef4444" font-weight="bold">Drag</tspan>.</text>
+    <text x="25" y="140" fill="#0f172a" font-size="14">4. More drag requires more engine power, creating</text>
+    <text x="25" y="160" fill="#0f172a" font-size="14">   a <tspan fill="#f59e0b" font-weight="bold">Torque reaction</tspan> on the fuselage.</text>
+  </g>
+
+  <!-- ==================== CENTER COLUMN: AIRFOIL SECTION ==================== -->
+  <g transform="translate(460, 180)">
+    <rect x="0" y="0" width="460" height="620" rx="20" fill="#ffffff" stroke="#93c5fd" stroke-width="3" filter="url(#shadow)"/>
+    <rect x="10" y="10" width="440" height="600" rx="12" fill="url(#grid)" />
+    
+    <text x="230" y="40" fill="#0f172a" font-size="22" font-weight="bold" text-anchor="middle">Blade Cross-Section (Airfoil)</text>
+
+    <!-- Legend -->
+    <rect x="20" y="570" width="12" height="12" fill="#0ea5e9" rx="2" />
+    <text x="40" y="581" fill="#475569" font-size="12" font-weight="bold">LIFT</text>
+    <rect x="100" y="570" width="12" height="12" fill="#ef4444" rx="2" />
+    <text x="120" y="581" fill="#475569" font-size="12" font-weight="bold">DRAG</text>
+    <rect x="180" y="570" width="12" height="12" fill="#64748b" rx="2" />
+    <text x="200" y="581" fill="#475569" font-size="12" font-weight="bold">RELATIVE WIND</text>
+
+    <g transform="translate(230, 310)">
+      
+      <!-- Relative Wind (Static Horizontal) -->
+      <line x1="-180" y1="0" x2="-80" y2="0" stroke="#64748b" stroke-width="4" marker-end="url(#arrowWind)" stroke-dasharray="8 4"/>
+      <line x1="-180" y1="30" x2="-60" y2="30" stroke="#64748b" stroke-width="4" marker-end="url(#arrowWind)" stroke-dasharray="8 4" opacity="0.5"/>
+      <line x1="-180" y1="-30" x2="-60" y2="-30" stroke="#64748b" stroke-width="4" marker-end="url(#arrowWind)" stroke-dasharray="8 4" opacity="0.5"/>
+      
+      <!-- Horizontal Reference Line -->
+      <line x1="-150" y1="0" x2="150" y2="0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 4" />
+
+      <!-- Rotating Airfoil System -->
+      <g id="airfoilSystem">
+        <!-- Chord Line -->
+        <line x1="-40" y1="0" x2="120" y2="0" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4 4" />
+        
+        <!-- Airfoil Shape (NACA-ish approximation) Pivot at roughly quarter chord (0,0) -->
+        <path d="M -40,0 C -40,-25 30,-25 120,0 C 30,5 -40,15 -40,0 Z" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" filter="url(#shadow)"/>
+        
+        <!-- Pitch Center Dot -->
+        <circle cx="0" cy="0" r="5" fill="#0f172a" />
+      </g>
+
+      <!-- Angle of Attack Arc -->
+      <path id="aoaArc" d="" fill="none" stroke="#0284c7" stroke-width="2" />
+      <text id="aoaText" x="-50" y="-15" fill="#0284c7" font-size="14" font-weight="bold">AoA</text>
+
+      <!-- Dynamic Physics Vectors -->
+      <!-- Lift (Perpendicular to relative wind, so pointing straight UP) -->
+      <line id="liftVector" x1="0" y1="0" x2="0" y2="-50" stroke="#0ea5e9" stroke-width="6" marker-end="url(#arrowLift)" filter="url(#glow)"/>
+      <text id="liftLabel" x="10" y="-60" fill="#0ea5e9" font-size="14" font-weight="bold">LIFT</text>
+
+      <!-- Drag (Parallel to relative wind, so pointing straight RIGHT) -->
+      <line id="dragVector" x1="0" y1="0" x2="40" y2="0" stroke="#ef4444" stroke-width="6" marker-end="url(#arrowDrag)" />
+      <text id="dragLabel" x="50" y="5" fill="#ef4444" font-size="14" font-weight="bold">DRAG</text>
+
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT COLUMN: HELICOPTER VIEWS ==================== -->
+  
+  <!-- 1. Altitude (Side View) -->
+  <g transform="translate(950, 180)">
+    <rect x="0" y="0" width="300" height="240" rx="16" fill="#ffffff" stroke="#86efac" stroke-width="3" filter="url(#shadow)"/>
+    <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Altitude Reaction</text>
+    <rect x="20" y="45" width="260" height="175" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+    
+    <!-- Ground -->
+    <rect x="20" y="200" width="260" height="20" fill="#bbf7d0" />
+    
+    <!-- Helicopter Side Wrapper (Moves Y) -->
+    <g transform="translate(60, 0)">
+      <g id="heliSide" transform="translate(0, 150)">
+        <path d="M 40 40 L 120 40" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+        <path d="M 60 20 L 50 40" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+        <path d="M 100 20 L 110 40" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+        <path d="M 30 10 C 20 10 20 -10 40 -20 C 60 -30 100 -30 110 -10 L 160 -10 L 170 -20 L 175 -20 L 175 0 L 160 -5 L 110 15 C 100 25 40 25 30 10 Z" fill="#3b82f6" />
+        <path d="M 35 5 C 28 5 28 -8 42 -15 C 55 -22 75 -22 85 -8 L 35 5 Z" fill="#93c5fd" opacity="0.8" />
+        <rect x="92" y="-40" width="4" height="20" fill="#475569" />
+        
+        <!-- Rotating Main Rotor (visual blur) -->
+        <ellipse cx="94" cy="-40" rx="70" ry="3" fill="#cbd5e1" opacity="0.6" />
+        <!-- Rotating Tail Rotor -->
+        <ellipse cx="172" cy="-10" rx="2" ry="12" fill="#cbd5e1" opacity="0.8" />
+      </g>
+    </g>
+  </g>
+
+  <!-- 2. Blade Coning (Front View) -->
+  <g transform="translate(950, 440)">
+    <rect x="0" y="0" width="300" height="160" rx="16" fill="#ffffff" stroke="#93c5fd" stroke-width="3" filter="url(#shadow)"/>
+    <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Blade Coning</text>
+    <rect x="20" y="45" width="260" height="95" rx="8" fill="#f0f9ff" stroke="#93c5fd" stroke-width="2" />
+    
+    <g transform="translate(150, 110)">
+      <!-- Mast -->
+      <rect x="-4" y="-40" width="8" height="40" fill="#64748b" />
+      <rect x="-10" y="-45" width="20" height="10" fill="#334155" rx="2"/>
+      
+      <!-- Left Blade -->
+      <g id="coneLeft" transform="rotate(0, -10, -40)">
+        <rect x="-100" y="-42" width="90" height="4" fill="#94a3b8" rx="2" />
+      </g>
+      <!-- Right Blade -->
+      <g id="coneRight" transform="rotate(0, 10, -40)">
+        <rect x="10" y="-42" width="90" height="4" fill="#94a3b8" rx="2" />
+      </g>
+
+      <path id="coneArc" d="" fill="none" stroke="#0ea5e9" stroke-width="1" stroke-dasharray="3 3"/>
+    </g>
+  </g>
+
+  <!-- 3. Torque & Tail Rotor (Top View) -->
+  <g transform="translate(950, 620)">
+    <rect x="0" y="0" width="300" height="180" rx="16" fill="#ffffff" stroke="#fcd34d" stroke-width="3" filter="url(#shadow)"/>
+    <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Torque Reaction</text>
+    <rect x="20" y="45" width="260" height="115" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="2" />
+    
+    <g transform="translate(150, 100)">
+      <!-- Fuselage Top Outline -->
+      <path d="M 0 -30 C -15 -30 -15 10 0 40 C 15 10 15 -30 0 -30 Z" fill="#3b82f6" />
+      <!-- Tail Boom -->
+      <rect x="-3" y="35" width="6" height="50" fill="#3b82f6" />
+      <rect x="-8" y="80" width="16" height="6" fill="#2563eb" />
+
+      <!-- Main Rotor Disc Outline -->
+      <circle cx="0" cy="0" r="45" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4" />
+      <!-- Rotation Direction Arrow -->
+      <path d="M -45 0 A 45 45 0 0 1 0 -45" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowWind)"/>
+      <text x="-35" y="-35" fill="#64748b" font-size="10" font-weight="bold">CCW</text>
+
+      <!-- Torque Reaction Indicator (Fuselage wants to spin opposite to rotor) -->
+      <path id="torqueArrow" d="M 30 10 A 30 30 0 0 1 0 40" fill="none" stroke="#f59e0b" stroke-width="4" marker-end="url(#arrowTorque)"/>
+      
+      <!-- Anti-Torque (Tail Rotor Thrust) -->
+      <line id="antiTorqueArrow" x1="-8" y1="83" x2="-30" y2="83" stroke="#10b981" stroke-width="4" marker-end="url(#arrowLift)"/>
+    </g>
+  </g>
+
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script type="text/javascript"><![CDATA[
+    // Core State
+    let collectiveInput = 0; // 0 (min) to 1 (max)
+    let isDragging = false;
+    
+    // Physics / Smoothing state
+    let currentAlt = 0; // mapped to Y offset for the helicopter side view
+
+    // Base physics constants
+    const BASE_PITCH = 2; // degrees
+    const PITCH_RANGE = 12; // max pitch = 14 degrees
+    
+    // Get Elements
+    const svgRoot = document.documentElement;
+    const stickHitbox = document.getElementById('stickHitbox');
+    const stickKnob = document.getElementById('stickKnob');
+    const resetBtnBg = document.getElementById('resetBtnBg');
+    const resetBtnText = document.getElementById('resetBtnText');
+    
+    const pitchValueText = document.getElementById('pitchValueText');
+    const liftValueText = document.getElementById('liftValueText');
+    
+    const airfoilSystem = document.getElementById('airfoilSystem');
+    const aoaArc = document.getElementById('aoaArc');
+    const liftVector = document.getElementById('liftVector');
+    const dragVector = document.getElementById('dragVector');
+    const liftLabel = document.getElementById('liftLabel');
+    const dragLabel = document.getElementById('dragLabel');
+
+    const heliSide = document.getElementById('heliSide');
+    const coneLeft = document.getElementById('coneLeft');
+    const coneRight = document.getElementById('coneRight');
+    const coneArc = document.getElementById('coneArc');
+    
+    const torqueArrow = document.getElementById('torqueArrow');
+    const antiTorqueArrow = document.getElementById('antiTorqueArrow');
+
+    // Geometry Helpers
+    function getArcPath(x, y, radius, startAngle, endAngle) {
+      const svgStart = (startAngle - 90) * Math.PI / 180.0;
+      const svgEnd = (endAngle - 90) * Math.PI / 180.0;
+      const startX = x + radius * Math.cos(svgStart);
+      const startY = y + radius * Math.sin(svgStart);
+      const endX = x + radius * Math.cos(svgEnd);
+      const endY = y + radius * Math.sin(svgEnd);
+      
+      // Determine if arc is > 180 degrees
+      const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+      return `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
+    }
+
+    // Input Handling
+    function getMouseY(e) {
+      let clientY = e.clientY;
+      if (e.touches && e.touches.length > 0) {
+        clientY = e.touches[0].clientY;
+      }
+      const pt = svgRoot.createSVGPoint();
+      pt.x = 0; pt.y = clientY;
+      const ctm = stickHitbox.getScreenCTM().inverse();
+      return pt.matrixTransform(ctm).y;
+    }
+
+    function startDrag(e) {
+      e.preventDefault();
+      isDragging = true;
+      updateLever(e);
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      updateLever(e);
+    }
+
+    function stopDrag() {
+      isDragging = false;
+    }
+
+    function resetLever() {
+      collectiveInput = 0;
+    }
+
+    function updateLever(e) {
+      let y = getMouseY(e);
+      // Track is from y=15 to y=235 (height 220)
+      // We map y=235 -> collective=0, y=15 -> collective=1
+      let val = 1 - ((y - 15) / 220);
+      collectiveInput = Math.max(0, Math.min(1, val));
+    }
+
+    // Attach Listeners
+    stickHitbox.addEventListener('mousedown', startDrag);
+    stickHitbox.addEventListener('touchstart', startDrag, {passive: false});
+    window.addEventListener('mousemove', drag);
+    window.addEventListener('touchmove', drag, {passive: false});
+    window.addEventListener('mouseup', stopDrag);
+    window.addEventListener('touchend', stopDrag);
+    
+    resetBtnBg.addEventListener('click', resetLever);
+    resetBtnText.addEventListener('click', resetLever);
+
+    // Main Update Loop
+    function animate() {
+      // 1. Calculate physics variables based on input
+      const currentPitch = BASE_PITCH + (collectiveInput * PITCH_RANGE);
+      
+      // Simplified lift model: lift increases linearly with pitch/collective.
+      // Offset by "weight" so it hovers around collective=0.4 (approx).
+      // We'll normalize "lift" for visual purposes: 0% to 100%.
+      const visualLift = (collectiveInput * 100); 
+      
+      // Drag increases quadratically with pitch (induced drag)
+      const baseDrag = 10;
+      const inducedDrag = Math.pow(currentPitch, 2) * 0.4;
+      const totalDrag = baseDrag + inducedDrag;
+
+      // Torque is proportional to drag
+      const torqueScale = totalDrag * 0.5;
+
+      // 2. Update UI Lever visual
+      const knobY = 235 - (collectiveInput * 220);
+      stickKnob.setAttribute('transform', `translate(0, ${knobY})`);
+
+      pitchValueText.textContent = currentPitch.toFixed(1) + '°';
+      liftValueText.textContent = visualLift.toFixed(0) + ' %';
+      // Change color based on "hover" threshold (approx 40%)
+      liftValueText.setAttribute('fill', visualLift > 40 ? '#0ea5e9' : '#94a3b8');
+
+      // 3. Update Airfoil Visuals
+      // Airfoil rotates CCW (negative angle in SVG) to pitch up
+      airfoilSystem.setAttribute('transform', `rotate(${-currentPitch})`);
+      
+      // Draw AoA arc between horizontal (0) and chord line (-currentPitch)
+      // Since SVG 0 is UP in getArcPath, horizontal is 90, pitched up is 90 - currentPitch
+      if (currentPitch > 0) {
+        aoaArc.setAttribute('d', getArcPath(0, 0, 80, 90 - currentPitch, 90));
+      } else {
+        aoaArc.setAttribute('d', '');
+      }
+
+      // Lift Vector (Grows vertically)
+      const liftLength = 20 + (collectiveInput * 140);
+      liftVector.setAttribute('y2', -liftLength);
+      liftLabel.setAttribute('y', -liftLength - 10);
+
+      // Drag Vector (Grows horizontally quadratically)
+      const dragLength = 20 + (collectiveInput * collectiveInput * 100);
+      dragVector.setAttribute('x2', dragLength);
+      dragLabel.setAttribute('x', dragLength + 10);
+
+      // 4. Update Helicopter Altitude View
+      // Target altitude: Y offset from 150 (ground) to 30 (max height)
+      // Hover is around Y=100
+      let targetAlt = 150;
+      if (collectiveInput > 0.3) {
+         // Map 0.3-1.0 to Y 150 to 20
+         let flyPercent = (collectiveInput - 0.3) / 0.7;
+         targetAlt = 150 - (flyPercent * 130);
+      }
+      // Smooth interpolation for realistic feeling
+      currentAlt += (targetAlt - currentAlt) * 0.05;
+      heliSide.setAttribute('transform', `translate(0, ${currentAlt})`);
+
+      // 5. Update Blade Coning View
+      // Coning angle maxes out around 6 degrees
+      const coningAngle = collectiveInput * 6;
+      coneLeft.setAttribute('transform', `rotate(${coningAngle}, -10, -40)`);
+      coneRight.setAttribute('transform', `rotate(${-coningAngle}, 10, -40)`);
+      
+      // 6. Update Torque View
+      // Draw a curved arrow proportional to torque
+      // Base radius = 30, grows slightly, sweeps further
+      const sweepAngle = 30 + (collectiveInput * collectiveInput * 90); 
+      torqueArrow.setAttribute('d', getArcPath(0, 10, 30, 180, 180 + sweepAngle));
+      
+      // Tail rotor arrow grows to counter torque
+      const trLength = 10 + (collectiveInput * collectiveInput * 40);
+      antiTorqueArrow.setAttribute('x2', -8 - trLength);
+
+      requestAnimationFrame(animate);
+    }
+
+    // Start Loop
+    requestAnimationFrame(animate);
+
+  ]]></script>
+</svg>

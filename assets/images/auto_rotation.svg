@@ -1,0 +1,651 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 850" style="background-color: #ffffff; font-family: system-ui, -apple-system, sans-serif; user-select: none;">
+  <defs>
+    <!-- Shadows & Filters -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000" flood-opacity="0.10" />
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Vector Markers -->
+    <marker id="arrowLift" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#0ea5e9" />
+    </marker>
+    <marker id="arrowDrag" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#ef4444" />
+    </marker>
+    <marker id="arrowTAF" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowWind" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#64748b" />
+    </marker>
+    <marker id="arrowFlowDown" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#93c5fd" opacity="0.6"/>
+    </marker>
+    <marker id="arrowFlowUp" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#86efac" opacity="0.6"/>
+    </marker>
+
+    <!-- Stick Knob Gradient -->
+    <radialGradient id="knobGrad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </radialGradient>
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(50, 60)">
+    <text x="0" y="0" fill="#0369a1" font-size="42" font-weight="800" style="text-shadow: 0 0 20px rgba(3, 105, 161, 0.2);">Rotary Aerodynamics: Autorotation</text>
+    <text x="0" y="35" fill="#475569" font-size="18">During an engine failure, a freewheeling unit uncouples the rotor from the engine.</text>
+    <text x="0" y="60" fill="#475569" font-size="18">By lowering the collective, upward airflow drives the rotor, maintaining RPM for a safe gliding descent.</text>
+    <line x1="0" y1="90" x2="1200" y2="90" stroke="#bae6fd" stroke-width="2" />
+  </g>
+
+  <!-- ==================== LEFT COLUMN: CONTROLS & GAUGES ==================== -->
+  <g transform="translate(50, 180)">
+    <!-- Base Panel -->
+    <rect x="0" y="0" width="380" height="620" rx="20" fill="#ffffff" stroke="#bae6fd" stroke-width="3" filter="url(#shadow)"/>
+    <text x="25" y="40" fill="#0f172a" font-size="22" font-weight="bold">Flight Controls</text>
+
+    <!-- Engine Toggle -->
+    <g transform="translate(25, 70)">
+      <rect x="0" y="0" width="330" height="70" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" />
+      <text x="20" y="40" fill="#475569" font-size="16" font-weight="bold">ENGINE STATUS</text>
+      
+      <g id="engineBtn" transform="translate(180, 15)" cursor="pointer">
+        <rect id="engineBtnBg" x="0" y="0" width="130" height="40" rx="20" fill="#10b981" />
+        <rect id="engineBtnSlider" x="95" y="5" width="30" height="30" rx="15" fill="#ffffff" filter="url(#shadow)" />
+        <text id="engineBtnText" x="45" y="26" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">NORMAL</text>
+      </g>
+    </g>
+
+    <!-- Rotor RPM Gauge -->
+    <g transform="translate(190, 250)">
+      <text x="0" y="-70" fill="#475569" font-size="16" font-weight="bold" text-anchor="middle">ROTOR RPM</text>
+      <!-- Gauge Background -->
+      <path d="M -80 60 A 100 100 0 1 1 80 60" fill="none" stroke="#f1f5f9" stroke-width="20" stroke-linecap="round"/>
+      
+      <!-- Color Zones -->
+      <!-- Red (0-75%) -->
+      <path d="M -80 60 A 100 100 0 0 1 -40 -91" fill="none" stroke="#ef4444" stroke-width="20" stroke-linecap="round"/>
+      <!-- Yellow (75-90%) -->
+      <path d="M -40 -91 A 100 100 0 0 1 -15 -98" fill="none" stroke="#f59e0b" stroke-width="20" />
+      <!-- Green (90-104%) -->
+      <path d="M -15 -98 A 100 100 0 0 1 30 -95" fill="none" stroke="#10b981" stroke-width="20" />
+      <!-- Red/Overspeed (>104%) -->
+      <path d="M 30 -95 A 100 100 0 0 1 80 60" fill="none" stroke="#ef4444" stroke-width="20" stroke-linecap="round"/>
+
+      <!-- Needle -->
+      <g id="rpmNeedle" transform="rotate(20)">
+        <polygon points="-5,0 5,0 0,-95" fill="#0f172a" filter="url(#shadow)"/>
+        <circle cx="0" cy="0" r="10" fill="#475569" />
+      </g>
+      
+      <text id="rpmText" x="0" y="40" fill="#0f172a" font-size="28" font-weight="bold" font-family="monospace" text-anchor="middle">100%</text>
+    </g>
+
+    <!-- Collective Lever -->
+    <g transform="translate(190, 360)">
+      <text x="0" y="0" fill="#475569" font-size="16" font-weight="bold" text-anchor="middle">COLLECTIVE PITCH</text>
+      
+      <!-- Track -->
+      <rect x="-10" y="20" width="20" height="180" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" filter="url(#shadow)"/>
+      <line x1="0" y1="30" x2="0" y2="190" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" />
+      
+      <text x="-25" y="35" fill="#64748b" font-size="12" font-weight="bold" text-anchor="end">MAX</text>
+      <text x="-25" y="195" fill="#64748b" font-size="12" font-weight="bold" text-anchor="end">MIN</text>
+
+      <!-- Warning Indicator (Hidden normally) -->
+      <g id="collectiveWarning" transform="translate(60, 35)" visibility="hidden">
+        <path d="M 0 0 L -15 10 L 0 20 Z" fill="#ef4444" />
+        <rect x="0" y="0" width="120" height="20" rx="4" fill="#ef4444" />
+        <text x="60" y="14" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">LOWER IMMEDIATELY!</text>
+      </g>
+
+      <!-- The Knob -->
+      <g id="collKnob" transform="translate(0, 110)" filter="url(#shadow)" cursor="ns-resize">
+        <rect x="-30" y="-12" width="60" height="24" rx="6" fill="url(#knobGrad)" stroke="#475569" stroke-width="2" />
+        <line x1="-15" y1="0" x2="15" y2="0" stroke="#94a3b8" stroke-width="2" />
+      </g>
+
+      <!-- Hitbox -->
+      <rect id="collHitbox" x="-40" y="20" width="80" height="180" fill="transparent" cursor="ns-resize" />
+    </g>
+
+    <!-- Descent Rate Text -->
+    <g transform="translate(25, 565)">
+      <rect x="0" y="0" width="330" height="40" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" />
+      <text x="15" y="25" fill="#64748b" font-size="12" font-weight="bold">VERTICAL SPEED:</text>
+      <text id="vsiText" x="135" y="26" fill="#0f172a" font-size="18" font-weight="bold" font-family="monospace">0 fpm (Hover)</text>
+    </g>
+  </g>
+
+  <!-- ==================== CENTER COLUMN: BLADE AERODYNAMICS ==================== -->
+  <g transform="translate(460, 180)">
+    <rect x="0" y="0" width="460" height="620" rx="20" fill="#ffffff" stroke="#bae6fd" stroke-width="3" filter="url(#shadow)"/>
+    <text x="230" y="40" fill="#0f172a" font-size="22" font-weight="bold" text-anchor="middle">Aerodynamic Driving Force</text>
+
+    <!-- Top Half: Rotor Regions -->
+    <g transform="translate(230, 120)">
+      <rect x="-210" y="-50" width="420" height="100" rx="12" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" />
+      
+      <!-- Center Mast -->
+      <circle cx="0" cy="0" r="10" fill="#475569" />
+      
+      <!-- Blade Outline -->
+      <rect x="15" y="-15" width="180" height="30" rx="4" fill="none" stroke="#94a3b8" stroke-width="2" />
+      
+      <!-- Regions (Dynamic width based on descent/RPM) -->
+      <g id="bladeRegions" clip-path="url(#bladeClip)">
+        <clipPath id="bladeClip">
+          <rect x="15" y="-15" width="180" height="30" rx="4" />
+        </clipPath>
+        
+        <!-- Stalled Region (Root) -->
+        <rect id="regStalled" x="15" y="-15" width="45" height="30" fill="#fca5a5" opacity="0.8" />
+        
+        <!-- Driving Region (Middle) -->
+        <rect id="regDriving" x="60" y="-15" width="80" height="30" fill="#86efac" opacity="0.8" />
+        
+        <!-- Driven Region (Tip) -->
+        <rect id="regDriven" x="140" y="-15" width="55" height="30" fill="#fde047" opacity="0.8" />
+      </g>
+      
+      <!-- Clean Legend for Regions -->
+      <g transform="translate(-165, 30)">
+        <rect x="0" y="0" width="12" height="12" fill="#fca5a5" rx="2" />
+        <text x="18" y="10" fill="#ef4444" font-size="10" font-weight="bold">STALLED</text>
+        
+        <rect x="90" y="0" width="12" height="12" fill="#86efac" rx="2" />
+        <text x="108" y="10" fill="#10b981" font-size="10" font-weight="bold">DRIVING (AUTOROTATIVE)</text>
+        
+        <rect x="260" y="0" width="12" height="12" fill="#fde047" rx="2" />
+        <text x="278" y="10" fill="#eab308" font-size="10" font-weight="bold">DRIVEN</text>
+      </g>
+    </g>
+
+    <!-- Bottom Half: Airfoil Vectors -->
+    <g transform="translate(10, 200)">
+      <rect x="0" y="0" width="440" height="410" rx="12" fill="url(#grid)" />
+      
+      <g transform="translate(220, 250)">
+        
+        <!-- The Airfoil -->
+        <g id="airfoilSection" transform="rotate(-5)">
+          <line x1="-50" y1="0" x2="100" y2="0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 4" />
+          <path d="M -50,0 C -50,-25 30,-25 100,0 C 30,5 -50,15 -50,0 Z" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" filter="url(#shadow)"/>
+          <circle cx="0" cy="0" r="4" fill="#0f172a" />
+        </g>
+
+        <!-- Vectors Grid Line -->
+        <line x1="-200" y1="0" x2="200" y2="0" stroke="#cbd5e1" stroke-width="1" />
+        <line x1="0" y1="-200" x2="0" y2="150" stroke="#cbd5e1" stroke-width="1" />
+        <text x="190" y="-10" fill="#94a3b8" font-size="12" text-anchor="end">Axis of Rotation</text>
+
+        <!-- Dynamic Vectors Group -->
+        <g id="vectorGroup">
+          <!-- Inflow Wind (Vertical) -->
+          <line id="vecInflow" x1="-120" y1="80" x2="-120" y2="0" stroke="#93c5fd" stroke-width="3" stroke-dasharray="4 4" />
+          <text id="lblInflow" x="-125" y="45" fill="#60a5fa" font-size="12" text-anchor="end">Upward Flow</text>
+
+          <!-- Rotational Wind (Horizontal) -->
+          <line id="vecRot" x1="-120" y1="80" x2="0" y2="80" stroke="#93c5fd" stroke-width="3" stroke-dasharray="4 4" />
+          <text id="lblRot" x="-60" y="95" fill="#60a5fa" font-size="12" text-anchor="middle">Rotational Velocity</text>
+
+          <!-- Relative Wind (Resultant) -->
+          <line id="vecRelWind" x1="-120" y1="80" x2="0" y2="0" stroke="#64748b" stroke-width="4" marker-end="url(#arrowWind)" />
+          <text id="lblRelWind" x="-70" y="30" fill="#475569" font-size="12" font-weight="bold" transform="rotate(33, -70, 30)">RELATIVE WIND</text>
+
+          <!-- Lift (Perpendicular to Rel Wind) -->
+          <line id="vecLift" x1="0" y1="0" x2="-60" y2="-90" stroke="#0ea5e9" stroke-width="4" marker-end="url(#arrowLift)" />
+          
+          <!-- Drag (Parallel to Rel Wind) -->
+          <line id="vecDrag" x1="0" y1="0" x2="30" y2="-20" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowDrag)" />
+
+          <!-- Total Aerodynamic Force (TAF) -->
+          <line id="vecTAF" x1="0" y1="0" x2="-30" y2="-110" stroke="#10b981" stroke-width="5" marker-end="url(#arrowTAF)" filter="url(#glow)"/>
+        </g>
+      </g>
+
+      <!-- Legend -->
+      <g transform="translate(20, 370)">
+        <rect x="0" y="0" width="12" height="12" fill="#0ea5e9" rx="2" />
+        <text x="20" y="11" fill="#475569" font-size="12" font-weight="bold">LIFT</text>
+        
+        <rect x="80" y="0" width="12" height="12" fill="#ef4444" rx="2" />
+        <text x="100" y="11" fill="#475569" font-size="12" font-weight="bold">DRAG</text>
+
+        <rect x="160" y="0" width="12" height="12" fill="#10b981" rx="2" />
+        <text x="180" y="11" fill="#475569" font-size="12" font-weight="bold">TOTAL AERODYNAMIC FORCE</text>
+      </g>
+      
+      <text id="tafExplanation" fill="#047857" font-size="13" font-weight="bold">
+        <tspan id="tafLine1" x="20" y="335"></tspan>
+        <tspan id="tafLine2" x="20" y="355"></tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT COLUMN: HELICOPTER STATE ==================== -->
+  <g transform="translate(950, 180)">
+    <rect x="0" y="0" width="300" height="620" rx="20" fill="#ffffff" stroke="#bae6fd" stroke-width="3" filter="url(#shadow)"/>
+    <text x="150" y="40" fill="#0f172a" font-size="22" font-weight="bold" text-anchor="middle">Flight Profile</text>
+    
+    <g transform="translate(15, 60)">
+      <rect x="0" y="0" width="270" height="540" rx="12" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" />
+      
+      <!-- Moving "Ground" Lines for speed illusion -->
+      <g id="speedLines" opacity="0.3">
+        <line x1="20" y1="100" x2="250" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="10 20" />
+        <line x1="20" y1="200" x2="250" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="15 25" />
+        <line x1="20" y1="300" x2="250" y2="300" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5 15" />
+        <line x1="20" y1="400" x2="250" y2="400" stroke="#94a3b8" stroke-width="1" stroke-dasharray="20 30" />
+        <line x1="20" y1="500" x2="250" y2="500" stroke="#94a3b8" stroke-width="1" stroke-dasharray="8 12" />
+      </g>
+
+      <!-- Airflow Indicator Lines (Dynamic direction based on state) -->
+      <g id="airflowArrows">
+        <line id="af1" x1="60" y1="200" x2="60" y2="300" stroke="#93c5fd" stroke-width="6" stroke-linecap="round"/>
+        <line id="af2" x1="135" y1="180" x2="135" y2="320" stroke="#93c5fd" stroke-width="6" stroke-linecap="round"/>
+        <line id="af3" x1="210" y1="200" x2="210" y2="300" stroke="#93c5fd" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Helicopter Silhouette -->
+      <g transform="translate(60, 240)">
+        <path d="M 40 40 L 120 40" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+        <path d="M 60 20 L 50 40" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+        <path d="M 100 20 L 110 40" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+        <path d="M 30 10 C 20 10 20 -10 40 -20 C 60 -30 100 -30 110 -10 L 160 -10 L 170 -20 L 175 -20 L 175 0 L 160 -5 L 110 15 C 100 25 40 25 30 10 Z" fill="#3b82f6" />
+        <path d="M 35 5 C 28 5 28 -8 42 -15 C 55 -22 75 -22 85 -8 L 35 5 Z" fill="#93c5fd" opacity="0.8" />
+        <rect x="92" y="-40" width="4" height="20" fill="#475569" />
+        
+        <!-- Rotating Main Rotor -->
+        <ellipse id="heliRotor" cx="94" cy="-40" rx="70" ry="3" fill="#cbd5e1" opacity="0.8" />
+      </g>
+
+      <!-- Status Overlay -->
+      <g transform="translate(135, 480)">
+        <rect x="-100" y="0" width="200" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+        <text id="statusText" x="0" y="25" fill="#10b981" font-size="14" font-weight="bold" text-anchor="middle">POWERED HOVER</text>
+      </g>
+
+    </g>
+  </g>
+
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script type="text/javascript"><![CDATA[
+    // Core Simulator State
+    let engineRunning = true;
+    let collectiveInput = 0.5; // Starts in mid hover
+    let isDragging = false;
+    
+    // Physics State
+    let rpm = 100; // Percentage 0-110%
+    let descentRate = 0; // fpm (positive is down)
+    
+    // Get Elements
+    const svgRoot = document.documentElement;
+    const collHitbox = document.getElementById('collHitbox');
+    const collKnob = document.getElementById('collKnob');
+    const engineBtn = document.getElementById('engineBtn');
+    const engineBtnBg = document.getElementById('engineBtnBg');
+    const engineBtnSlider = document.getElementById('engineBtnSlider');
+    const engineBtnText = document.getElementById('engineBtnText');
+    const collectiveWarning = document.getElementById('collectiveWarning');
+    
+    const rpmNeedle = document.getElementById('rpmNeedle');
+    const rpmText = document.getElementById('rpmText');
+    const vsiText = document.getElementById('vsiText');
+    const statusText = document.getElementById('statusText');
+    
+    // Airfoil Elements
+    const airfoilSection = document.getElementById('airfoilSection');
+    const vecInflow = document.getElementById('vecInflow');
+    const vecRot = document.getElementById('vecRot');
+    const vecRelWind = document.getElementById('vecRelWind');
+    const vecLift = document.getElementById('vecLift');
+    const vecDrag = document.getElementById('vecDrag');
+    const vecTAF = document.getElementById('vecTAF');
+    const lblInflow = document.getElementById('lblInflow');
+    const lblRot = document.getElementById('lblRot');
+    const lblRelWind = document.getElementById('lblRelWind');
+    const tafExplanation = document.getElementById('tafExplanation');
+    const tafLine1 = document.getElementById('tafLine1');
+    const tafLine2 = document.getElementById('tafLine2');
+    
+    // Blade Region Elements
+    const regStalled = document.getElementById('regStalled');
+    const regDriving = document.getElementById('regDriving');
+    const regDriven = document.getElementById('regDriven');
+    
+    // Flight Profile Elements
+    const speedLines = document.getElementById('speedLines').querySelectorAll('line');
+    let speedLineOffsets = [0, 0, 0, 0, 0];
+    const airflowArrows = [
+        document.getElementById('af1'),
+        document.getElementById('af2'),
+        document.getElementById('af3')
+    ];
+    const heliRotor = document.getElementById('heliRotor');
+
+    // Engine Toggle Logic
+    engineBtn.addEventListener('click', () => {
+      engineRunning = !engineRunning;
+      
+      if (engineRunning) {
+        engineBtnBg.setAttribute('fill', '#10b981'); // Green
+        engineBtnSlider.setAttribute('x', '95');
+        engineBtnText.setAttribute('x', '45');
+        engineBtnText.textContent = 'NORMAL';
+      } else {
+        engineBtnBg.setAttribute('fill', '#ef4444'); // Red
+        engineBtnSlider.setAttribute('x', '5');
+        engineBtnText.setAttribute('x', '85');
+        engineBtnText.textContent = 'FAILED';
+      }
+    });
+
+    // Collective Input Handling
+    function getMouseY(e) {
+      let clientY = e.clientY;
+      if (e.touches && e.touches.length > 0) {
+        clientY = e.touches[0].clientY;
+      }
+      const pt = svgRoot.createSVGPoint();
+      pt.x = 0; pt.y = clientY;
+      const ctm = collHitbox.getScreenCTM().inverse();
+      return pt.matrixTransform(ctm).y;
+    }
+
+    function startDrag(e) {
+      e.preventDefault();
+      isDragging = true;
+      updateLever(e);
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      updateLever(e);
+    }
+
+    function stopDrag() {
+      isDragging = false;
+    }
+
+    function updateLever(e) {
+      let y = getMouseY(e);
+      // Track is from y=30 to y=190 (height 160)
+      // Map y=190 -> collective=0, y=30 -> collective=1
+      let val = 1 - ((y - 30) / 160);
+      collectiveInput = Math.max(0, Math.min(1, val));
+    }
+
+    collHitbox.addEventListener('mousedown', startDrag);
+    collHitbox.addEventListener('touchstart', startDrag, {passive: false});
+    window.addEventListener('mousemove', drag);
+    window.addEventListener('touchmove', drag, {passive: false});
+    window.addEventListener('mouseup', stopDrag);
+    window.addEventListener('touchend', stopDrag);
+
+    // Physics Update Loop
+    let lastTime = 0;
+    
+    function animate(time) {
+      const dt = (time - lastTime) / 1000 || 0.016;
+      lastTime = time;
+
+      // 1. UPDATE PHYSICS
+      if (engineRunning) {
+        // Engine governs RPM
+        rpm += (100 - rpm) * 0.1;
+        
+        // Descent rate based purely on collective (simplified for hover state)
+        // collective 0.5 = 0 fpm. 0 = 1000 fpm down. 1 = 1000 fpm up.
+        let targetDescent = (0.5 - collectiveInput) * 2000;
+        descentRate += (targetDescent - descentRate) * 0.1;
+        
+      } else {
+        // AUTOROTATION PHYSICS
+        // Descent rate rapidly increases if no engine, governed by rotor drag and lift
+        let targetDescent = 1500 + (collectiveInput * 1500); // Higher collective = drops faster initially as rpm bleeds
+        descentRate += (targetDescent - descentRate) * 0.05;
+
+        // RPM is driven by upward flow (descent rate) VS aerodynamic drag (collective)
+        // Optimal autorotation collective is near 0.
+        
+        // Upward driving force proportional to descent rate
+        let drivingForce = (descentRate / 1500) * 1.5; 
+        
+        // Drag penalty heavily weighted by collective
+        let dragPenalty = 0.5 + (collectiveInput * 3.0); 
+        
+        // RPM acceleration
+        let rpmAccel = (drivingForce - dragPenalty) * 20; 
+        
+        rpm += rpmAccel * dt;
+        
+        // Crash condition constraint
+        if (rpm < 0) rpm = 0;
+      }
+
+      // 2. UPDATE UI
+      
+      // Controls UI
+      const knobY = 190 - (collectiveInput * 160);
+      collKnob.setAttribute('transform', `translate(0, ${knobY})`);
+      
+      if (!engineRunning && collectiveInput > 0.2 && rpm > 20) {
+        collectiveWarning.setAttribute('visibility', 'visible');
+      } else {
+        collectiveWarning.setAttribute('visibility', 'hidden');
+      }
+
+      // Gauges UI
+      // RPM needle maps: 0% -> -140 deg, 100% -> 20 deg, 110% -> 50 deg
+      // Slope: 160 deg range / 100 units = 1.6
+      let rpmAngle = -140 + (rpm * 1.6);
+      if (rpmAngle > 80) rpmAngle = 80;
+      rpmNeedle.setAttribute('transform', `rotate(${rpmAngle})`);
+      rpmText.textContent = Math.round(rpm) + '%';
+      
+      // Color RPM text
+      if (rpm < 75 || rpm > 104) rpmText.setAttribute('fill', '#ef4444');
+      else if (rpm < 90) rpmText.setAttribute('fill', '#f59e0b');
+      else rpmText.setAttribute('fill', '#10b981');
+
+      vsiText.textContent = Math.round(descentRate) + ' fpm ' + (descentRate > 0 ? '⬇' : descentRate < 0 ? '⬆' : '');
+
+      // Status Text UI
+      if (engineRunning) {
+        statusText.textContent = "POWERED FLIGHT";
+        statusText.setAttribute('fill', '#10b981');
+      } else {
+        if (rpm < 75) {
+          statusText.textContent = "ROTOR STALL / FATAL";
+          statusText.setAttribute('fill', '#ef4444');
+        } else {
+          statusText.textContent = "GLIDING (AUTOROTATION)";
+          statusText.setAttribute('fill', '#f59e0b');
+        }
+      }
+
+      // 3. UPDATE AIRFOIL & VECTORS
+      // Base blade pitch is tied to collective
+      let pitchDeg = 2 + (collectiveInput * 10);
+      airfoilSection.setAttribute('transform', `rotate(${-pitchDeg})`);
+
+      // Draw vectors relative to origin (0,0) at quarter-chord
+      let inflowMag = 0;
+      let rotMag = rpm * 1.2; // Visual scale
+      
+      if (engineRunning) {
+        // Powered hover: Airflow is pulled DOWN by the rotor
+        inflowMag = -40; // Downward
+        lblInflow.textContent = "Induced Flow (Down)";
+        lblInflow.setAttribute('y', '-50');
+        vecInflow.setAttribute('y1', '-80');
+      } else {
+        // Autorotation: Airflow pushed UP by descent
+        inflowMag = (descentRate / 1500) * 80; 
+        lblInflow.textContent = "Upward Flow";
+        lblInflow.setAttribute('y', '45');
+        vecInflow.setAttribute('y1', '80');
+      }
+
+      // Rotational Vector (always horizontal, leftward relative to blade)
+      vecRot.setAttribute('x1', -rotMag);
+      vecRot.setAttribute('y1', inflowMag);
+      vecRot.setAttribute('y2', inflowMag);
+      lblRot.setAttribute('x', -rotMag/2);
+      lblRot.setAttribute('y', inflowMag + 15);
+
+      // Relative Wind (Resultant)
+      vecRelWind.setAttribute('x1', -rotMag);
+      vecRelWind.setAttribute('y1', inflowMag);
+      
+      // Calculate Angle of Attack
+      let relWindAngleRad = Math.atan2(inflowMag, -rotMag);
+      let pitchRad = pitchDeg * (Math.PI / 180);
+      let aoaRad = relWindAngleRad + pitchRad;
+      
+      // Position Label (pushed perpendicularly away from the vector to prevent overlapping)
+      lblRelWind.setAttribute('x', -rotMag/2 - 10);
+      lblRelWind.setAttribute('y', inflowMag/2 + 25);
+      lblRelWind.setAttribute('transform', `rotate(${relWindAngleRad * 180/Math.PI}, ${-rotMag/2 - 10}, ${inflowMag/2 + 25})`);
+
+      // Calculate Lift and Drag magnitudes based on AoA and velocity
+      let velocitySq = Math.pow(rotMag, 2) + Math.pow(inflowMag, 2);
+      
+      // Simplified lift/drag curves
+      let liftCoef = Math.sin(aoaRad * 2); // Peaks around 45deg artificially, good enough visually
+      let dragCoef = 0.1 + Math.pow(Math.sin(aoaRad), 2);
+      
+      // Stall condition override
+      if (aoaRad > 0.3 || rpm < 40) { // ~17 degrees
+        liftCoef = 0.1;
+        dragCoef += 1.0;
+      }
+
+      let liftMag = liftCoef * (velocitySq / 150);
+      let dragMag = dragCoef * (velocitySq / 150);
+
+      // Calculate vector endpoints
+      // Lift is perpendicular to relative wind (rotate 90 deg clockwise in SVG coords)
+      let liftX = liftMag * Math.sin(relWindAngleRad);
+      let liftY = liftMag * -Math.cos(relWindAngleRad);
+      
+      vecLift.setAttribute('x2', liftX);
+      vecLift.setAttribute('y2', liftY);
+
+      // Drag is parallel to relative wind
+      let dragX = dragMag * Math.cos(relWindAngleRad);
+      let dragY = dragMag * Math.sin(relWindAngleRad);
+      
+      vecDrag.setAttribute('x2', dragX);
+      vecDrag.setAttribute('y2', dragY);
+
+      // Total Aerodynamic Force (TAF) is vector sum
+      let tafX = liftX + dragX;
+      let tafY = liftY + dragY;
+      
+      vecTAF.setAttribute('x2', tafX);
+      vecTAF.setAttribute('y2', tafY);
+
+      // Analyze TAF to update multi-line explanation
+      if (engineRunning) {
+        tafLine1.textContent = "POWERED: TAF points backwards, creating";
+        tafLine2.textContent = "aerodynamic drag the engine must overcome.";
+        tafExplanation.setAttribute('fill', '#0ea5e9');
+      } else {
+        if (tafX < -5 && rpm > 40) { // TAF points forward
+          tafLine1.textContent = "AUTOROTATING: TAF points FORWARD of the";
+          tafLine2.textContent = "axis of rotation, accelerating the blade!";
+          tafExplanation.setAttribute('fill', '#10b981');
+        } else {
+          tafLine1.textContent = "STALLED: TAF points BACKWARD.";
+          tafLine2.textContent = "Blade is slowing down rapidly.";
+          tafExplanation.setAttribute('fill', '#ef4444');
+        }
+      }
+
+      // 4. UPDATE BLADE REGIONS
+      if (engineRunning) {
+        regStalled.setAttribute('width', 20);
+        regDriving.setAttribute('x', 35);
+        regDriving.setAttribute('width', 0); // No driving region in powered flight
+        regDriven.setAttribute('x', 35);
+        regDriven.setAttribute('width', 160);
+      } else {
+        // Autorotation regions depend on RPM and collective
+        // High collective = big stalled region
+        let stallWidth = 20 + (collectiveInput * 80);
+        if (rpm < 50) stallWidth = 180; // All stalled
+        
+        regStalled.setAttribute('width', stallWidth);
+        
+        let drivingStart = 15 + stallWidth;
+        let drivingWidth = (rpm > 50) ? Math.max(0, 100 - (collectiveInput * 50)) : 0;
+        
+        regDriving.setAttribute('x', drivingStart);
+        regDriving.setAttribute('width', drivingWidth);
+        
+        let drivenStart = drivingStart + drivingWidth;
+        let drivenWidth = 195 - drivenStart;
+        
+        regDriven.setAttribute('x', drivenStart);
+        regDriven.setAttribute('width', Math.max(0, drivenWidth));
+      }
+
+      // 5. UPDATE FLIGHT PROFILE (Right Column)
+      // Speed lines movement
+      let visualDescentSpeed = descentRate * 0.01;
+      speedLines.forEach((line, i) => {
+        speedLineOffsets[i] = (speedLineOffsets[i] - visualDescentSpeed) % 540;
+        if (speedLineOffsets[i] < -100) speedLineOffsets[i] += 640;
+        if (speedLineOffsets[i] > 540) speedLineOffsets[i] -= 640;
+        line.setAttribute('transform', `translate(0, ${speedLineOffsets[i]})`);
+      });
+
+      // Rotor visual blur depends on RPM
+      let opacity = Math.max(0.2, (rpm / 100) * 0.8);
+      heliRotor.setAttribute('opacity', opacity);
+
+      // Airflow arrows direction
+      airflowArrows.forEach(arrow => {
+        if (engineRunning && descentRate <= 0) {
+          // Pointing Down
+          arrow.setAttribute('y1', arrow.getAttribute('x1') === '135' ? '180' : '200');
+          arrow.setAttribute('y2', arrow.getAttribute('x1') === '135' ? '320' : '300');
+          arrow.setAttribute('marker-end', 'url(#arrowFlowDown)');
+          arrow.setAttribute('marker-start', '');
+        } else {
+          // Pointing Up
+          arrow.setAttribute('y2', arrow.getAttribute('x1') === '135' ? '180' : '200');
+          arrow.setAttribute('y1', arrow.getAttribute('x1') === '135' ? '320' : '300');
+          arrow.setAttribute('marker-end', 'url(#arrowFlowUp)');
+          arrow.setAttribute('marker-start', '');
+        }
+      });
+
+
+      requestAnimationFrame(animate);
+    }
+
+    // Initialize line offsets randomly
+    speedLines.forEach((_, i) => speedLineOffsets[i] = Math.random() * 500);
+
+    // Start Loop
+    requestAnimationFrame(animate);
+
+  ]]></script>
+</svg>
