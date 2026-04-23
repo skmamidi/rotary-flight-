@@ -366,6 +366,32 @@
   margin-bottom: var(--space-2);
 }
 
+.vocab-term-link {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--sky-blue);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.vocab-term-link:hover {
+  color: var(--deep-navy);
+  border-bottom-color: var(--sky-blue);
+}
+
+.vocab-term-link::after {
+  content: ' →';
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.vocab-card:hover .vocab-term-link {
+  color: var(--deep-navy);
+}
+
 .vocab-def {
   font-size: 0.9rem;
   color: var(--steel-gray);
