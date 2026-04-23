@@ -61,6 +61,18 @@ const App = {
     return false;
   },
 
+  unmarkPageComplete(pageId) {
+    const data = this.getData();
+    const idx = data.completedPages.indexOf(pageId);
+    if (idx !== -1) {
+      data.completedPages.splice(idx, 1);
+      data.xp = Math.max(0, data.xp - 10);
+      this.setData(data);
+      return true;
+    }
+    return false;
+  },
+
   isPageComplete(pageId) {
     return this.getData().completedPages.includes(pageId);
   },
