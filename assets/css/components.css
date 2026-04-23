@@ -510,6 +510,111 @@
   font-size: 0.8rem;
 }
 
+/* Accordion Side Navigation */
+.side-nav-section {
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(23,59,109,0.06);
+}
+
+.side-nav-section:last-child {
+  margin-bottom: 0;
+}
+
+.side-nav-section.expanded {
+  background: rgba(23,59,109,0.02);
+}
+
+.side-nav-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--deep-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background var(--transition-fast);
+}
+
+.side-nav-header:hover {
+  background: var(--soft-background);
+}
+
+.side-nav-header-title {
+  text-align: left;
+}
+
+.side-nav-header-toggle {
+  font-size: 0.7rem;
+  color: var(--steel-gray);
+  transition: transform var(--transition-fast);
+}
+
+.side-nav-section.expanded .side-nav-header-toggle {
+  transform: rotate(0deg);
+}
+
+.side-nav-section:not(.expanded) .side-nav-list {
+  display: none;
+}
+
+.side-nav-section.expanded .side-nav-list {
+  display: block;
+}
+
+.side-nav-section .side-nav-list {
+  margin-top: 0;
+  padding: 0 var(--space-2) var(--space-2) var(--space-2);
+  list-style: none;
+}
+
+.side-nav-section .side-nav-list li {
+  margin-bottom: var(--space-1);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--soft-background);
+}
+
+.side-nav-section .side-nav-list li:last-child {
+  margin-bottom: 0;
+}
+
+.side-nav-section .side-nav-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--steel-gray);
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.side-nav-section .side-nav-list a:hover,
+.side-nav-section .side-nav-list a.active {
+  background: var(--cloud-white);
+  color: var(--sky-blue);
+  font-weight: 700;
+}
+
+.side-nav-section .side-nav-list a.completed {
+  color: var(--success-green);
+}
+
+.side-nav-section .side-nav-list .check {
+  font-size: 0.75rem;
+}
+
 /* Quiz Strip */
 .quiz-strip {
   background: linear-gradient(135deg, var(--deep-navy) 0%, #1e4a8a 100%);
