@@ -1,4 +1,4 @@
-<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" style="user-select: none; -webkit-user-select: none;">
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" ontouchmove="onTouchMove(event)" ontouchend="onTouchEnd(event)" ontouchcancel="onTouchEnd(event)" style="user-select: none; -webkit-user-select: none; touch-action: none;">
     <style>
         .bg { fill: #f0f9ff; }
         
@@ -198,7 +198,7 @@
         <g transform="translate(0, 70)">
             <text x="0" y="0" font-size="16" font-weight="800" fill="#10b981">LIFT</text>
             <text id="slider-val-lift" x="350" y="0" font-size="16" font-weight="800" fill="#059669" text-anchor="end">5000 lbs</text>
-            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'lift')">
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'lift')" ontouchstart="startDragTouch(event, 'lift')">
                 <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
                 <line id="track-lift" x1="0" y1="0" x2="175" y2="0" class="slider-fill" stroke="#10b981" />
                 <circle id="thumb-lift" cx="175" cy="0" r="12" class="slider-thumb" stroke="#10b981" />
@@ -210,7 +210,7 @@
         <g transform="translate(0, 150)">
             <text x="0" y="0" font-size="16" font-weight="800" fill="#ef4444">WEIGHT</text>
             <text id="slider-val-weight" x="350" y="0" font-size="16" font-weight="800" fill="#b91c1c" text-anchor="end">5000 lbs</text>
-            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'weight')">
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'weight')" ontouchstart="startDragTouch(event, 'weight')">
                 <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
                 <line id="track-weight" x1="0" y1="0" x2="175" y2="0" class="slider-fill" stroke="#ef4444" />
                 <circle id="thumb-weight" cx="175" cy="0" r="12" class="slider-thumb" stroke="#ef4444" />
@@ -222,7 +222,7 @@
         <g transform="translate(0, 230)">
             <text x="0" y="0" font-size="16" font-weight="800" fill="#3b82f6">THRUST</text>
             <text id="slider-val-thrust" x="350" y="0" font-size="16" font-weight="800" fill="#1d4ed8" text-anchor="end">2000 lbs</text>
-            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'thrust')">
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'thrust')" ontouchstart="startDragTouch(event, 'thrust')">
                 <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
                 <line id="track-thrust" x1="0" y1="0" x2="140" y2="0" class="slider-fill" stroke="#3b82f6" />
                 <circle id="thumb-thrust" cx="140" cy="0" r="12" class="slider-thumb" stroke="#3b82f6" />
@@ -234,7 +234,7 @@
         <g transform="translate(0, 310)">
             <text x="0" y="0" font-size="16" font-weight="800" fill="#f97316">DRAG (Or Reverse)</text>
             <text id="slider-val-drag" x="350" y="0" font-size="16" font-weight="800" fill="#c2410c" text-anchor="end">2000 lbs</text>
-            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'drag')">
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'drag')" ontouchstart="startDragTouch(event, 'drag')">
                 <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
                 <line id="track-drag" x1="0" y1="0" x2="140" y2="0" class="slider-fill" stroke="#f97316" />
                 <circle id="thumb-drag" cx="140" cy="0" r="12" class="slider-thumb" stroke="#f97316" />
@@ -346,27 +346,47 @@
         }
 
         // Drag Handling
+        function getClientX(evt) {
+            if (evt.touches && evt.touches.length > 0) return evt.touches[0].clientX;
+            if (evt.changedTouches && evt.changedTouches.length > 0) return evt.changedTouches[0].clientX;
+            return evt.clientX;
+        }
+        function getClientY(evt) {
+            if (evt.touches && evt.touches.length > 0) return evt.touches[0].clientY;
+            if (evt.changedTouches && evt.changedTouches.length > 0) return evt.changedTouches[0].clientY;
+            return evt.clientY;
+        }
+
         function startDrag(evt, id) {
             activeSlider = id;
-            setForce(id); // Highlight the force being dragged
+            setForce(id);
+            updateDrag(evt);
+        }
+        function startDragTouch(evt, id) {
+            evt.preventDefault();
+            activeSlider = id;
+            setForce(id);
             updateDrag(evt);
         }
 
         function onMouseMove(evt) {
-            if (activeSlider) {
-                updateDrag(evt);
-            }
+            if (activeSlider) updateDrag(evt);
         }
-
         function onMouseUp(evt) {
+            activeSlider = null;
+        }
+        function onTouchMove(evt) {
+            if (activeSlider) { evt.preventDefault(); updateDrag(evt); }
+        }
+        function onTouchEnd(evt) {
             activeSlider = null;
         }
 
         function updateDrag(evt) {
             const svg = document.getElementById('main-svg');
             const pt = svg.createSVGPoint();
-            pt.x = evt.clientX;
-            pt.y = evt.clientY;
+            pt.x = getClientX(evt);
+            pt.y = getClientY(evt);
             const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
             
             // Sliders track starts at x=770

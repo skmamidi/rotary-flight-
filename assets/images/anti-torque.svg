@@ -1,4 +1,4 @@
-<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" style="user-select: none; -webkit-user-select: none;">
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" ontouchmove="onTouchMove(event)" ontouchend="onTouchEnd(event)" ontouchcancel="onTouchEnd(event)" style="user-select: none; -webkit-user-select: none; touch-action: none;">
     <style>
         .bg { fill: #f8fafc; }
         
@@ -152,7 +152,7 @@
         <g transform="translate(0, 80)">
             <text x="0" y="0" font-size="15" font-weight="800" fill="#3b82f6">MAIN ROTOR POWER</text>
             <text id="val-power" x="350" y="0" font-size="16" font-weight="800" fill="#1d4ed8" text-anchor="end">40%</text>
-            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'power')">
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'power')" ontouchstart="startDragTouch(event, 'power')">
                 <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
                 <line id="track-power" x1="0" y1="0" x2="140" y2="0" class="slider-fill" stroke="#3b82f6" />
                 <circle id="thumb-power" cx="140" cy="0" r="12" class="slider-thumb" stroke="#3b82f6" />
@@ -164,7 +164,7 @@
         <g id="sec-slider-group" transform="translate(0, 180)">
             <text id="sec-slider-title" x="0" y="0" font-size="15" font-weight="800" fill="#10b981">TAIL ROTOR THRUST</text>
             <text id="val-sec" x="350" y="0" font-size="16" font-weight="800" fill="#059669" text-anchor="end">0 lbs</text>
-            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'secondary')">
+            <g transform="translate(0, 15)" onmousedown="startDrag(event, 'secondary')" ontouchstart="startDragTouch(event, 'secondary')">
                 <line x1="0" y1="0" x2="350" y2="0" class="slider-track" />
                 <line id="track-sec" x1="0" y1="0" x2="0" y2="0" class="slider-fill" stroke="#10b981" />
                 <circle id="thumb-sec" cx="0" cy="0" r="12" class="slider-thumb" stroke="#10b981" />
@@ -229,13 +229,27 @@
             updateVisuals();
         }
 
+        function getClientX(e) {
+            if (e.touches && e.touches.length > 0) return e.touches[0].clientX;
+            if (e.changedTouches && e.changedTouches.length > 0) return e.changedTouches[0].clientX;
+            return e.clientX;
+        }
+        function getClientY(e) {
+            if (e.touches && e.touches.length > 0) return e.touches[0].clientY;
+            if (e.changedTouches && e.changedTouches.length > 0) return e.changedTouches[0].clientY;
+            return e.clientY;
+        }
+
         function startDrag(e, id) { activeSlider = id; updateDrag(e); }
+        function startDragTouch(e, id) { e.preventDefault(); activeSlider = id; updateDrag(e); }
         function onMouseMove(e) { if(activeSlider) updateDrag(e); }
         function onMouseUp() { activeSlider = null; }
+        function onTouchMove(e) { if(activeSlider) { e.preventDefault(); updateDrag(e); } }
+        function onTouchEnd(e) { activeSlider = null; }
 
         function updateDrag(e) {
             const svg = document.getElementById('main-svg');
-            const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+            const pt = svg.createSVGPoint(); pt.x = getClientX(e); pt.y = getClientY(e);
             const p = pt.matrixTransform(svg.getScreenCTM().inverse());
             let x = Math.max(0, Math.min(350, p.x - 770));
             state[activeSlider==='power'?'power':'secondary'] = x/350 * (activeSlider==='power'?100:800);
