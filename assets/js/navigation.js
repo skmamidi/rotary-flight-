@@ -79,6 +79,19 @@ const Navigation = {
     'glossary': 'Glossary'
   },
 
+  // Section order matching the Learn page numbering
+  sectionOrder: [
+    'introduction',
+    'early-concepts',
+    'pioneers',
+    'aircraft-types',
+    'flight-science',
+    'applications',
+    'future',
+    'olympiad',
+    'glossary'
+  ],
+
   init() {
     this.renderTopNav();
     this.renderBreadcrumbs();
@@ -177,23 +190,47 @@ const Navigation = {
     const sideNav = document.getElementById('side-nav');
     if (!sideNav) return;
     const currentId = this.getCurrentPageId();
-    const page = this.pages[currentId];
-    if (!page || !page.section) return;
+    const currentPage = this.pages[currentId];
+    if (!currentPage || !currentPage.section) return;
 
-    const sectionPages = Object.entries(this.pages).filter(([_, info]) => info.section === page.section);
     const data = App.getData();
 
-    let html = `<div class="side-nav sticky-sidebar">
-      <div class="side-nav-title">${this.sections[page.section]}</div>
-      <ul class="side-nav-list">`;
-    sectionPages.forEach(([id, info]) => {
-      const completed = data.completedPages.includes(id) ? '<span class="check">✓</span>' : '';
-      const active = id === currentId ? 'active' : '';
-      const path = this.getRelativePath(info.path);
-      html += `<li><a href="${path}" class="${active} ${completed ? 'completed' : ''}">${info.title} ${completed}</a></li>`;
+    let html = `<div class="side-nav sticky-sidebar">`;
+
+    this.sectionOrder.forEach((sectionKey, index) => {
+      const sectionLabel = this.sections[sectionKey];
+      const sectionPages = Object.entries(this.pages).filter(([_, info]) => info.section === sectionKey);
+      if (sectionPages.length === 0) return;
+
+      const isActiveSection = currentPage.section === sectionKey;
+      const expandedClass = isActiveSection ? 'expanded' : '';
+      const toggleIcon = isActiveSection ? '▼' : '▶';
+      // Number Learn sections (1-8); glossary stays unnumbered
+      const sectionNumber = sectionKey === 'glossary' ? '' : `${index + 1}. `;
+
+      html += `<div class="side-nav-section ${expandedClass}" data-section="${sectionKey}">`;
+      html += `<button class="side-nav-header" type="button" onclick="Navigation.toggleSideNavSection(this)">
+          <span class="side-nav-header-title">${sectionNumber}${sectionLabel}</span>
+          <span class="side-nav-header-toggle">${toggleIcon}</span>
+        </button>`;
+      html += `<ul class="side-nav-list">`;
+      sectionPages.forEach(([id, info]) => {
+        const completed = data.completedPages.includes(id) ? '<span class="check">✓</span>' : '';
+        const active = id === currentId ? 'active' : '';
+        const path = this.getRelativePath(info.path);
+        html += `<li><a href="${path}" class="${active} ${completed ? 'completed' : ''}">${info.title} ${completed}</a></li>`;
+      });
+      html += `</ul></div>`;
     });
-    html += `</ul></div>`;
+
+    html += `</div>`;
     sideNav.innerHTML = html;
+  },
+
+  toggleSideNavSection(btn) {
+    const section = btn.closest('.side-nav-section');
+    const isExpanded = section.classList.toggle('expanded');
+    btn.querySelector('.side-nav-header-toggle').textContent = isExpanded ? '▼' : '▶';
   },
 
   setupMobileMenu() {
