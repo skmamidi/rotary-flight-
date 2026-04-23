@@ -37,8 +37,36 @@
               <div class="callout-icon">🎯</div>
               <div><strong>Why this matters</strong><p class="mt-2">History questions often ask for chronological order. Know the sequence: ancient inspiration → da Vinci → early models → autogyro → VS-300.</p></div>
             </div>
+
+            <!-- Interactive Timeline Scramble -->
+            <div class="card card-yellow mt-5">
+              <h2>🎮 Timeline Scramble</h2>
+              <p class="mt-2">The events got mixed up! Use the arrows to put them in the correct chronological order, then click <strong>Check Order</strong>.</p>
+              <div id="timeline-scramble" class="mt-4"></div>
+              <div id="scramble-feedback" class="feedback-box mt-3"></div>
+              <div class="flex gap-3 mt-4">
+                <button class="btn btn-primary" id="check-order-btn">Check Order</button>
+                <button class="btn btn-secondary hidden" id="retry-order-btn">Try Again</button>
+              </div>
+            </div>
+
+            <!-- Date Matcher -->
+            <div class="card card-teal mt-5">
+              <h2>🔗 Match the Dates</h2>
+              <p class="mt-2">Pick the correct date for each breakthrough.</p>
+              <div id="date-matcher" class="mt-4"></div>
+              <div id="matcher-feedback" class="feedback-box mt-3"></div>
+              <div class="flex gap-3 mt-4">
+                <button class="btn btn-primary" id="check-matcher-btn">Check Matches</button>
+                <button class="btn btn-secondary hidden" id="retry-matcher-btn">Try Again</button>
+              </div>
+            </div>
+
+            <!-- Quick Check Quiz -->
+            <div id="quick-check"></div>
+
             <div class="card card-blue mt-5">
-              <h2>Key Dates</h2>
+              <h2>Key Dates Reference</h2>
               <div class="timeline mt-3">
                 <div class="timeline-item">Ancient — Bird observation</div>
                 <div class="timeline-item">400 BC — Flying top</div>
@@ -47,6 +75,8 @@
                 <div class="timeline-item">1939 — VS-300 first flight</div>
               </div>
             </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
           </div>
         </div>
       </div>
@@ -58,10 +88,232 @@
       </div>
     </footer>
   </div>
+
   <script src="../../assets/js/app-shell.js"></script>
   <script src="../../assets/js/navigation.js"></script>
   <script src="../../assets/js/progress.js"></script>
   <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
   <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('timeline-review');
+
+      // --- Timeline Scramble Game ---
+      const correctOrder = [
+        { text: 'Ancient — Bird observation', id: 'bird' },
+        { text: '400 BC — Flying top', id: 'top' },
+        { text: '1480s — Da Vinci aerial screw', id: 'davinci' },
+        { text: '1923 — Autogyro first flight', id: 'autogyro' },
+        { text: '1939 — VS-300 first flight', id: 'vs300' }
+      ];
+
+      let currentOrder = [...correctOrder].sort(() => Math.random() - 0.5);
+      // Make sure it's not accidentally in correct order at start
+      while (JSON.stringify(currentOrder) === JSON.stringify(correctOrder)) {
+        currentOrder = [...correctOrder].sort(() => Math.random() - 0.5);
+      }
+
+      function renderScramble() {
+        const container = document.getElementById('timeline-scramble');
+        container.innerHTML = '';
+        currentOrder.forEach((item, index) => {
+          const row = document.createElement('div');
+          row.className = 'scramble-row';
+          row.innerHTML = `
+            <div class="scramble-number">${index + 1}</div>
+            <div class="scramble-text">${item.text}</div>
+            <div class="scramble-controls">
+              <button class="btn btn-sm btn-secondary" data-dir="up" data-index="${index}" ${index === 0 ? 'disabled' : ''}>▲</button>
+              <button class="btn btn-sm btn-secondary" data-dir="down" data-index="${index}" ${index === currentOrder.length - 1 ? 'disabled' : ''}>▼</button>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+
+        container.querySelectorAll('button[data-dir]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const idx = parseInt(e.target.dataset.index);
+            const dir = e.target.dataset.dir;
+            const swapIdx = dir === 'up' ? idx - 1 : idx + 1;
+            [currentOrder[idx], currentOrder[swapIdx]] = [currentOrder[swapIdx], currentOrder[idx]];
+            renderScramble();
+          });
+        });
+      }
+
+      renderScramble();
+
+      document.getElementById('check-order-btn').addEventListener('click', () => {
+        const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correctOrder);
+        const fb = document.getElementById('scramble-feedback');
+        fb.className = `feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+        fb.innerHTML = `
+          <div style="font-size:1.5rem">${isCorrect ? '🎉' : '😬'}</div>
+          <div>
+            <strong>${isCorrect ? 'Perfect order!' : 'Not quite right.'}</strong>
+            <p class="mt-2">${isCorrect ? 'You nailed the timeline. Great job!' : 'Use the arrows to swap events until they are in chronological order.'}</p>
+          </div>
+        `;
+        document.getElementById('check-order-btn').classList.add('hidden');
+        document.getElementById('retry-order-btn').classList.remove('hidden');
+        if (isCorrect) App.addXP(15);
+      });
+
+      document.getElementById('retry-order-btn').addEventListener('click', () => {
+        currentOrder = [...correctOrder].sort(() => Math.random() - 0.5);
+        while (JSON.stringify(currentOrder) === JSON.stringify(correctOrder)) {
+          currentOrder = [...correctOrder].sort(() => Math.random() - 0.5);
+        }
+        renderScramble();
+        document.getElementById('scramble-feedback').className = 'feedback-box';
+        document.getElementById('scramble-feedback').innerHTML = '';
+        document.getElementById('check-order-btn').classList.remove('hidden');
+        document.getElementById('retry-order-btn').classList.add('hidden');
+      });
+
+      // --- Date Matcher ---
+      const matcherData = [
+        { event: 'Ancient bird observation', date: 'Ancient times' },
+        { event: 'Flying top invented', date: '400 BC' },
+        { event: 'Da Vinci designs aerial screw', date: '1480s' },
+        { event: 'First autogyro flight', date: '1923' },
+        { event: 'VS-300 first flight', date: '1939' }
+      ];
+      const dateOptions = ['Ancient times', '400 BC', '1480s', '1923', '1939'];
+
+      function renderMatcher() {
+        const container = document.getElementById('date-matcher');
+        container.innerHTML = '';
+        matcherData.forEach((item, i) => {
+          const row = document.createElement('div');
+          row.className = 'matcher-row';
+          row.innerHTML = `
+            <div class="matcher-event">${item.event}</div>
+            <select class="matcher-select" data-index="${i}">
+              <option value="">-- Pick a date --</option>
+              ${dateOptions.map(d => `<option value="${d}">${d}</option>`).join('')}
+            </select>
+          `;
+          container.appendChild(row);
+        });
+      }
+
+      renderMatcher();
+
+      document.getElementById('check-matcher-btn').addEventListener('click', () => {
+        const selects = document.querySelectorAll('.matcher-select');
+        let correctCount = 0;
+        selects.forEach((sel, i) => {
+          const val = sel.value;
+          const isCorrect = val === matcherData[i].date;
+          if (isCorrect) correctCount++;
+          sel.classList.remove('correct', 'incorrect');
+          sel.classList.add(isCorrect ? 'correct' : 'incorrect');
+        });
+
+        const allCorrect = correctCount === matcherData.length;
+        const fb = document.getElementById('matcher-feedback');
+        fb.className = `feedback-box show ${allCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+        fb.innerHTML = `
+          <div style="font-size:1.5rem">${allCorrect ? '🎯' : '💡'}</div>
+          <div>
+            <strong>${allCorrect ? 'All matched!' : `${correctCount} out of ${matcherData.length} correct`}</strong>
+            <p class="mt-2">${allCorrect ? 'You know your dates!' : 'Review the timeline and try again.'}</p>
+          </div>
+        `;
+        document.getElementById('check-matcher-btn').classList.add('hidden');
+        document.getElementById('retry-matcher-btn').classList.remove('hidden');
+        if (allCorrect) App.addXP(15);
+      });
+
+      document.getElementById('retry-matcher-btn').addEventListener('click', () => {
+        renderMatcher();
+        document.getElementById('matcher-feedback').className = 'feedback-box';
+        document.getElementById('matcher-feedback').innerHTML = '';
+        document.getElementById('check-matcher-btn').classList.remove('hidden');
+        document.getElementById('retry-matcher-btn').classList.add('hidden');
+      });
+
+      // --- Quick Check Quiz ---
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Which came first: the flying top or Da Vinci\'s aerial screw?', options: ['Da Vinci\'s aerial screw', 'The flying top', 'They were the same year', 'Neither existed'], correct: 1 },
+        { question: 'In what decade did the VS-300 first fly?', options: ['1910s', '1920s', '1930s', '1940s'], correct: 2 },
+        { question: 'What was invented first: the autogyro or the helicopter?', options: ['Helicopter', 'Autogyro', 'Same year', 'Neither'], correct: 1 },
+        { question: 'The aerial screw was designed in which century?', options: ['14th century', '15th century', '16th century', '17th century'], correct: 1 }
+      ]);
+    });
+  </script>
+
+  <style>
+    .scramble-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--cloud-white);
+      border: 2px solid var(--soft-background);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+    }
+    .scramble-number {
+      width: 32px;
+      height: 32px;
+      background: var(--sky-blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .scramble-text {
+      flex: 1;
+      font-weight: 600;
+      color: var(--deep-navy);
+    }
+    .scramble-controls {
+      display: flex;
+      gap: var(--space-2);
+    }
+    .scramble-controls button {
+      min-width: 36px;
+      padding: var(--space-2);
+    }
+
+    .matcher-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: var(--cloud-white);
+      border: 2px solid var(--soft-background);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+    }
+    .matcher-event {
+      flex: 1;
+      font-weight: 600;
+      color: var(--deep-navy);
+    }
+    .matcher-select {
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--soft-background);
+      font-size: 1rem;
+      background: white;
+      cursor: pointer;
+    }
+    .matcher-select.correct {
+      border-color: var(--success-green);
+      background: #d4edda;
+    }
+    .matcher-select.incorrect {
+      border-color: var(--alert-coral);
+      background: #f8d7da;
+    }
+  </style>
 </body>
 </html>
