@@ -91,9 +91,10 @@ const Navigation = {
     const filename = path.split('/').pop().replace('.html', '');
     // Handle root pages
     if (!filename || filename === 'index') return 'index';
-    // Find matching page id
+    // Find matching page id by exact filename (avoid substring collisions)
     for (const [id, info] of Object.entries(this.pages)) {
-      if (info.path.includes(filename)) return id;
+      const pageFilename = info.path.split('/').pop().replace('.html', '');
+      if (pageFilename === filename) return id;
     }
     return filename;
   },
