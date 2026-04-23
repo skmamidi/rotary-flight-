@@ -1,0 +1,464 @@
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initSimulation()" onmousemove="onMouseMove(event)" onmouseup="onMouseUp(event)" onmouseleave="onMouseUp(event)" style="user-select: none; -webkit-user-select: none;">
+    <style>
+        .bg { fill: #f8fafc; }
+        
+        /* Typography */
+        text { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; }
+        .title { font-size: 32px; font-weight: 900; fill: #0f172a; letter-spacing: 1px; }
+        .subtitle { font-size: 16px; font-weight: 600; fill: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+        .label-text { font-size: 14px; font-weight: 700; fill: #475569; }
+        
+        /* Tabs */
+        .tab { cursor: pointer; transition: all 0.2s ease; }
+        .tab-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; transition: all 0.3s ease; }
+        .tab-text { font-size: 18px; font-weight: 800; fill: #64748b; text-anchor: middle; transition: all 0.2s ease; pointer-events: none; }
+        
+        .tab:hover .tab-bg { stroke: #94a3b8; }
+        .tab-pitch.active .tab-bg { fill: #3b82f6; stroke: #3b82f6; }
+        .tab-roll.active .tab-bg { fill: #a855f7; stroke: #a855f7; }
+        .tab-yaw.active .tab-bg { fill: #f97316; stroke: #f97316; }
+        .tab.active .tab-text { fill: #ffffff; }
+
+        /* Helicopter Graphics */
+        .heli-body { fill: #e2e8f0; stroke: #475569; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+        .heli-glass { fill: #bae6fd; stroke: #475569; stroke-width: 3; }
+        .heli-dark { fill: #94a3b8; stroke: #475569; stroke-width: 3; }
+        .heli-blade { stroke: #334155; stroke-width: 6; stroke-linecap: round; }
+        .heli-rotor-disc { fill: rgba(148, 163, 184, 0.2); stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 6 6; }
+        
+        /* Axis Lines and Indicators */
+        .axis-dot { fill: #ffffff; stroke-width: 4; }
+        .axis-path { fill: none; stroke-width: 3; stroke-dasharray: 4 4; marker-end: url(#arrow-head); }
+        .force-arrow { fill: none; stroke-width: 5; stroke-linecap: round; marker-end: url(#arrow-head); }
+
+        /* Panels */
+        .panel { fill: #ffffff; stroke: #e2e8f0; stroke-width: 2; rx: 12; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05)); }
+        
+        /* Sliders */
+        .slider-hitbox { fill: transparent; cursor: pointer; }
+        .slider-track { stroke: #e2e8f0; stroke-width: 8; stroke-linecap: round; }
+        .slider-fill { stroke-width: 8; stroke-linecap: round; pointer-events: none; }
+        .slider-thumb { fill: #ffffff; stroke-width: 3; pointer-events: none; }
+        .slider-center-tick { stroke: #94a3b8; stroke-width: 2; }
+    </style>
+
+    <defs>
+        <!-- Arrow markers will be dynamically colored via JS or specific defs -->
+        <marker id="arrow-pitch" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" /></marker>
+        <marker id="arrow-roll" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7" /></marker>
+        <marker id="arrow-yaw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f97316" /></marker>
+    </defs>
+
+    <!-- Background -->
+    <rect width="100%" height="100%" class="bg" />
+
+    <!-- Header Section -->
+    <g transform="translate(50, 50)">
+        <text x="0" y="0" class="title">Helicopter Axes of Motion</text>
+        <text x="0" y="25" class="subtitle">Understanding Yaw, Pitch, and Roll Physics</text>
+    </g>
+
+    <!-- Mode Tabs -->
+    <g transform="translate(620, 40)">
+        <g id="tab-pitch" class="tab tab-pitch active" onclick="setAxis('pitch')">
+            <rect x="0" y="0" width="160" height="40" class="tab-bg" />
+            <text x="80" y="26" class="tab-text">PITCH</text>
+        </g>
+        <g id="tab-roll" class="tab tab-roll" onclick="setAxis('roll')" transform="translate(175, 0)">
+            <rect x="0" y="0" width="160" height="40" class="tab-bg" />
+            <text x="80" y="26" class="tab-text">ROLL</text>
+        </g>
+        <g id="tab-yaw" class="tab tab-yaw" onclick="setAxis('yaw')" transform="translate(350, 0)">
+            <rect x="0" y="0" width="160" height="40" class="tab-bg" />
+            <text x="80" y="26" class="tab-text">YAW</text>
+        </g>
+    </g>
+
+    <!-- SIMULATION AREA (LEFT) -->
+    <rect x="50" y="110" width="700" height="520" class="panel" />
+
+    <!-- HELICOPTER VIEWS -->
+    
+    <!-- 1. PITCH VIEW (Side View) -->
+    <g id="view-pitch" display="block">
+        <text x="400" y="160" font-size="20" font-weight="800" fill="#3b82f6" text-anchor="middle" letter-spacing="2">LATERAL AXIS (SIDE VIEW)</text>
+        
+        <g transform="translate(400, 360)">
+            <g id="model-pitch">
+                <!-- Tail -->
+                <path d="M 60,-10 L 220,-20 L 240,-40 L 250,-40 L 250,-10 L 230,0 Z" class="heli-body" />
+                <circle cx="240" cy="-25" r="15" class="heli-rotor-disc" />
+                <!-- Skids -->
+                <line x1="-50" y1="60" x2="-60" y2="100" class="heli-body" />
+                <line x1="40" y1="60" x2="50" y2="100" class="heli-body" />
+                <line x1="-120" y1="100" x2="100" y2="100" class="heli-body" />
+                <!-- Cabin -->
+                <path d="M -60,30 C -80,30 -120,-10 -120,-40 C -120,-70 -70,-90 -10,-90 C 50,-90 80,-60 80,-20 C 80,10 -20,30 -60,30 Z" class="heli-body" />
+                <path d="M -50,10 C -70,10 -100,-10 -100,-40 L -40,-40 L -10,-70 L 30,-70 L 30,-10 Z" class="heli-glass" />
+                <!-- Mast & Rotor -->
+                <rect x="-15" y="-120" width="10" height="30" class="heli-dark" />
+                <line id="spin-pitch" x1="-150" y1="-120" x2="130" y2="-120" class="heli-blade" />
+                
+                <!-- Thrust Vector (Moves with the model) -->
+                <line x1="-10" y1="-120" x2="-10" y2="-190" class="force-arrow" stroke="#3b82f6" marker-end="url(#arrow-pitch)" />
+            </g>
+            
+            <!-- Axis Rotation Indicator (Stationary Center) -->
+            <circle cx="-10" cy="-10" r="8" class="axis-dot" stroke="#3b82f6" />
+            <path d="M -140,-10 A 130 130 0 0 1 -10,120" class="axis-path" stroke="#3b82f6" marker-end="url(#arrow-pitch)" />
+            <path d="M 120,-10 A 130 130 0 0 1 -10,-140" class="axis-path" stroke="#3b82f6" marker-end="url(#arrow-pitch)" />
+        </g>
+    </g>
+
+    <!-- 2. ROLL VIEW (Front View) -->
+    <g id="view-roll" display="none">
+        <text x="400" y="160" font-size="20" font-weight="800" fill="#a855f7" text-anchor="middle" letter-spacing="2">LONGITUDINAL AXIS (FRONT VIEW)</text>
+        
+        <g transform="translate(400, 380)">
+            <g id="model-roll">
+                <!-- Skids -->
+                <line x1="-40" y1="50" x2="-60" y2="100" class="heli-body" />
+                <line x1="40" y1="50" x2="60" y2="100" class="heli-body" />
+                <line x1="-80" y1="100" x2="80" y2="100" class="heli-body" />
+                <!-- Cabin -->
+                <ellipse cx="0" cy="-10" rx="60" ry="70" class="heli-body" />
+                <path d="M -45,-10 C -45,-50 45,-50 45,-10 C 45,20 -45,20 -45,-10 Z" class="heli-glass" />
+                <!-- Mast & Rotor -->
+                <rect x="-5" y="-120" width="10" height="40" class="heli-dark" />
+                <line id="spin-roll" x1="-180" y1="-120" x2="180" y2="-120" class="heli-blade" />
+                
+                <!-- Thrust Vector -->
+                <line x1="0" y1="-120" x2="0" y2="-200" class="force-arrow" stroke="#a855f7" marker-end="url(#arrow-roll)" />
+            </g>
+            
+            <!-- Axis Rotation Indicator (Stationary Center) -->
+            <circle cx="0" cy="-10" r="8" class="axis-dot" stroke="#a855f7" />
+            <path d="M -130,-10 A 130 130 0 0 1 0,120" class="axis-path" stroke="#a855f7" marker-end="url(#arrow-roll)" />
+            <path d="M 130,-10 A 130 130 0 0 1 0,-140" class="axis-path" stroke="#a855f7" marker-end="url(#arrow-roll)" />
+        </g>
+    </g>
+
+    <!-- 3. YAW VIEW (Top View) -->
+    <g id="view-yaw" display="none">
+        <text x="400" y="160" font-size="20" font-weight="800" fill="#f97316" text-anchor="middle" letter-spacing="2">VERTICAL AXIS (TOP VIEW)</text>
+        
+        <g transform="translate(400, 360)">
+            <g id="model-yaw">
+                <!-- Tail Boom & Stabilizer -->
+                <path d="M -20,10 L -20,-10 L 220,-5 L 220,5 Z" class="heli-body" />
+                <rect x="180" y="-30" width="15" height="60" class="heli-dark" />
+                <!-- Tail Rotor (Shows thrust left/right) -->
+                <line id="spin-yaw-tail" x1="220" y1="-25" x2="220" y2="25" class="heli-blade" stroke-width="4" />
+                <line id="yaw-thrust" x1="220" y1="0" x2="220" y2="0" class="force-arrow" stroke="#f97316" marker-end="url(#arrow-yaw)" />
+
+                <!-- Cabin -->
+                <ellipse cx="-40" cy="0" rx="80" ry="40" class="heli-body" />
+                <ellipse cx="-60" cy="0" rx="50" ry="25" class="heli-glass" />
+                
+                <!-- Main Rotor Disc (Transparent from top) -->
+                <circle cx="-30" cy="0" r="160" class="heli-rotor-disc" />
+                <line id="spin-yaw-main" x1="-190" y1="0" x2="130" y2="0" class="heli-blade" />
+            </g>
+            
+            <!-- Axis Rotation Indicator (Stationary Center) -->
+            <circle cx="-30" cy="0" r="8" class="axis-dot" stroke="#f97316" />
+            <path d="M 90,0 A 120 120 0 0 1 -30,120" class="axis-path" stroke="#f97316" marker-end="url(#arrow-yaw)" />
+            <path d="M -150,0 A 120 120 0 0 1 -30,-120" class="axis-path" stroke="#f97316" marker-end="url(#arrow-yaw)" />
+        </g>
+    </g>
+
+
+    <!-- CONTROLS AREA (RIGHT) -->
+    <rect x="780" y="110" width="370" height="520" class="panel" />
+    
+    <g transform="translate(810, 150)">
+        <text id="ctrl-title" x="0" y="0" font-size="24" font-weight="900" fill="#3b82f6" letter-spacing="1">PITCH CONTROL</text>
+        <text id="ctrl-subtitle" x="0" y="25" font-size="14" fill="#64748b">Adjust the Cyclic Stick (Forward/Back)</text>
+        
+        <!-- Common Slider Container -->
+        <g transform="translate(0, 80)">
+            <text id="slider-label-left" x="0" y="-15" font-size="12" font-weight="700" fill="#94a3b8">Nose Down</text>
+            <text id="slider-label-right" x="310" y="-15" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="end">Nose Up</text>
+            <text id="slider-val" x="155" y="-15" font-size="16" font-weight="800" fill="#3b82f6" text-anchor="middle">0°</text>
+
+            <g onmousedown="startDrag(event)">
+                <line x1="0" y1="0" x2="310" y2="0" class="slider-track" />
+                <line x1="155" y1="-8" x2="155" y2="8" class="slider-center-tick" />
+                <line id="slider-fill" x1="155" y1="0" x2="155" y2="0" class="slider-fill" stroke="#3b82f6" />
+                <circle id="slider-thumb" cx="155" cy="0" r="12" class="slider-thumb" stroke="#3b82f6" />
+                <rect x="-10" y="-20" width="330" height="40" class="slider-hitbox" />
+            </g>
+        </g>
+
+        <!-- Dynamic Pilot Controls Graphic -->
+        <g transform="translate(0, 150)">
+            <rect width="310" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="12" />
+            <text id="pilot-action-text" x="155" y="30" font-size="14" font-weight="800" fill="#475569" text-anchor="middle">PILOT ACTION: CYCLIC STICK</text>
+
+            <!-- CYCLIC STICK (For Pitch and Roll) -->
+            <g id="graphic-cyclic" transform="translate(155, 180)" display="block">
+                <!-- Base -->
+                <path d="M -30,0 L 30,0 L 20,-20 L -20,-20 Z" fill="#94a3b8" />
+                <!-- Stick (Rotates) -->
+                <g id="cyclic-stick">
+                    <line x1="0" y1="-20" x2="0" y2="-100" stroke="#475569" stroke-width="12" stroke-linecap="round" />
+                    <!-- Grip -->
+                    <rect x="-10" y="-120" width="20" height="40" rx="4" fill="#1e293b" />
+                    <circle cx="0" cy="-115" r="4" fill="#ef4444" />
+                </g>
+            </g>
+
+            <!-- ANTI-TORQUE PEDALS (For Yaw) -->
+            <g id="graphic-pedals" transform="translate(155, 120)" display="none">
+                <!-- Center column -->
+                <rect x="-10" y="-20" width="20" height="60" fill="#94a3b8" />
+                <!-- Left Pedal -->
+                <g id="pedal-left" transform="translate(-40, 0)">
+                    <line x1="0" y1="0" x2="30" y2="0" stroke="#475569" stroke-width="6" />
+                    <rect x="-15" y="-25" width="30" height="50" rx="4" fill="#334155" />
+                    <path d="M -10,-10 L 10,-10 M -10,0 L 10,0 M -10,10 L 10,10" stroke="#94a3b8" stroke-width="2" />
+                </g>
+                <!-- Right Pedal -->
+                <g id="pedal-right" transform="translate(40, 0)">
+                    <line x1="-30" y1="0" x2="0" y2="0" stroke="#475569" stroke-width="6" />
+                    <rect x="-15" y="-25" width="30" height="50" rx="4" fill="#334155" />
+                    <path d="M -10,-10 L 10,-10 M -10,0 L 10,0 M -10,10 L 10,10" stroke="#94a3b8" stroke-width="2" />
+                </g>
+            </g>
+        </g>
+    </g>
+
+    <!-- INFO PANEL BOTTOM -->
+    <rect x="50" y="650" width="1100" height="150" class="panel" />
+    <foreignObject x="80" y="670" width="1040" height="110">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, sans-serif;">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span id="info-badge" style="background-color: #3b82f6; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 14px; margin-right: 15px; letter-spacing: 0.5px;">AERODYNAMICS &amp; CONTROLS</span>
+                <h3 id="info-title" style="margin: 0; font-size: 22px; font-weight: 800; color: #0f172a;">Pitch (Lateral Axis)</h3>
+            </div>
+            <p id="info-desc" style="margin: 0; font-size: 16px; color: #475569; line-height: 1.5;">
+                Pitch is the up-and-down movement of the helicopter's nose. The pilot controls this by moving the <strong>Cyclic Stick</strong> forward or backward. This mechanically tilts the entire main rotor disc, directing the thrust vector forward (to accelerate) or backward (to slow down or reverse).
+            </p>
+        </div>
+    </foreignObject>
+
+    <!-- JAVASCRIPT ANIMATION AND PHYSICS ENGINE -->
+    <script type="text/javascript">
+        <![CDATA[
+        // State Configuration
+        let currentAxis = 'pitch'; // 'pitch', 'roll', 'yaw'
+        let targetAngle = 0;
+        let currentAngle = 0;
+        
+        // Animation variables
+        let lastTime = 0;
+        let mainRotorAngle = 0;
+        let tailRotorAngle = 0;
+
+        // Custom SVG Slider State
+        const SLIDER_WIDTH = 310;
+        const SLIDER_CENTER = 155;
+        let isDragging = false;
+        
+        // Axis Configurations
+        const axisData = {
+            'pitch': {
+                color: '#3b82f6',
+                title: 'PITCH CONTROL',
+                subtitle: 'Adjust the Cyclic Stick (Forward/Back)',
+                lblLeft: 'Nose Down (Fwd)',
+                lblRight: 'Nose Up (Back)',
+                min: -30,
+                max: 30,
+                infoTitle: 'Pitch (Lateral Axis)',
+                infoDesc: 'Pitch is the up-and-down movement of the helicopter\'s nose. The pilot controls this by moving the <strong>Cyclic Stick</strong> forward or backward. This mechanically tilts the entire main rotor disc, directing the thrust vector forward (to accelerate) or backward (to slow down or reverse).'
+            },
+            'roll': {
+                color: '#a855f7',
+                title: 'ROLL CONTROL',
+                subtitle: 'Adjust the Cyclic Stick (Left/Right)',
+                lblLeft: 'Bank Left',
+                lblRight: 'Bank Right',
+                min: -30,
+                max: 30,
+                infoTitle: 'Roll (Longitudinal Axis)',
+                infoDesc: 'Roll is the side-to-side tilting of the helicopter. The pilot controls this by moving the <strong>Cyclic Stick</strong> left or right. This tilts the main rotor disc laterally, directing thrust to the side to initiate a banking turn or a horizontal slide through the air.'
+            },
+            'yaw': {
+                color: '#f97316',
+                title: 'YAW CONTROL',
+                subtitle: 'Adjust the Anti-Torque Pedals',
+                lblLeft: 'Nose Left',
+                lblRight: 'Nose Right',
+                min: -45,
+                max: 45,
+                infoTitle: 'Yaw (Vertical Axis)',
+                infoDesc: 'Yaw is the left or right rotation of the helicopter\'s nose around its vertical center. The pilot controls this using the <strong>Anti-torque Pedals</strong>, which adjust the blade pitch of the tail rotor. This increases or decreases sideways thrust, allowing the helicopter to pivot in place.'
+            }
+        };
+
+        function initSimulation() {
+            setAxis('pitch');
+            requestAnimationFrame(animationLoop);
+        }
+
+        function setAxis(axis) {
+            currentAxis = axis;
+            const data = axisData[axis];
+            
+            // Reset Slider & Angles
+            targetAngle = 0;
+            currentAngle = 0;
+            updateSliderVisuals(SLIDER_CENTER, 0);
+
+            // Update Tabs
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + axis).classList.add('active');
+
+            // Update Views
+            document.getElementById('view-pitch').setAttribute('display', axis === 'pitch' ? 'block' : 'none');
+            document.getElementById('view-roll').setAttribute('display', axis === 'roll' ? 'block' : 'none');
+            document.getElementById('view-yaw').setAttribute('display', axis === 'yaw' ? 'block' : 'none');
+
+            // Update Control Panel Text & Colors
+            document.getElementById('ctrl-title').textContent = data.title;
+            document.getElementById('ctrl-title').setAttribute('fill', data.color);
+            document.getElementById('ctrl-subtitle').textContent = data.subtitle;
+            document.getElementById('slider-label-left').textContent = data.lblLeft;
+            document.getElementById('slider-label-right').textContent = data.lblRight;
+            
+            document.getElementById('slider-fill').setAttribute('stroke', data.color);
+            document.getElementById('slider-thumb').setAttribute('stroke', data.color);
+            document.getElementById('slider-val').setAttribute('fill', data.color);
+
+            // Toggle Pilot Controls Graphic
+            if (axis === 'yaw') {
+                document.getElementById('graphic-cyclic').setAttribute('display', 'none');
+                document.getElementById('graphic-pedals').setAttribute('display', 'block');
+                document.getElementById('pilot-action-text').textContent = 'PILOT ACTION: ANTI-TORQUE PEDALS';
+            } else {
+                document.getElementById('graphic-cyclic').setAttribute('display', 'block');
+                document.getElementById('graphic-pedals').setAttribute('display', 'none');
+                document.getElementById('pilot-action-text').textContent = 'PILOT ACTION: CYCLIC STICK';
+                
+                // Reset cyclic stick visual
+                document.getElementById('cyclic-stick').setAttribute('transform', 'rotate(0)');
+            }
+
+            // Update Bottom Info Panel
+            document.getElementById('info-badge').style.backgroundColor = data.color;
+            document.getElementById('info-title').textContent = data.infoTitle;
+            document.getElementById('info-desc').innerHTML = data.infoDesc;
+        }
+
+        // Slider Drag Handling
+        function startDrag(evt) {
+            isDragging = true;
+            updateDrag(evt);
+        }
+
+        function onMouseMove(evt) {
+            if (isDragging) {
+                updateDrag(evt);
+            }
+        }
+
+        function onMouseUp(evt) {
+            isDragging = false;
+        }
+
+        function updateDrag(evt) {
+            // Map screen mouse position exactly to SVG coordinate space
+            const svg = document.getElementById('main-svg');
+            const pt = svg.createSVGPoint();
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+            const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+            
+            // Sliders track starts at x=810 in the main SVG
+            let localX = svgP.x - 810;
+            if (localX < 0) localX = 0;
+            if (localX > SLIDER_WIDTH) localX = SLIDER_WIDTH;
+            
+            const data = axisData[currentAxis];
+            // Map [0, SLIDER_WIDTH] to [min, max]
+            targetAngle = data.min + (localX / SLIDER_WIDTH) * (data.max - data.min);
+            
+            updateSliderVisuals(localX, targetAngle);
+        }
+
+        function updateSliderVisuals(x, angle) {
+            document.getElementById('slider-fill').setAttribute('x1', SLIDER_CENTER);
+            document.getElementById('slider-fill').setAttribute('x2', x);
+            document.getElementById('slider-thumb').setAttribute('cx', x);
+            document.getElementById('slider-val').textContent = Math.round(angle) + '°';
+        }
+
+        // 60fps Animation Loop for Physics Lerping and Rotor Spinning
+        function animationLoop(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const dt = timestamp - lastTime || 16;
+            lastTime = timestamp;
+            
+            // Lerp current angle towards target angle for smooth physical motion
+            currentAngle += (targetAngle - currentAngle) * 0.15;
+
+            // Apply rotations to the active helicopter model and pilot controls
+            if (currentAxis === 'pitch') {
+                document.getElementById('model-pitch').setAttribute('transform', `rotate(${currentAngle}, -10, -10)`);
+                // Move Cyclic stick (push forward = nose down = negative angle)
+                document.getElementById('cyclic-stick').setAttribute('transform', `rotate(${currentAngle})`);
+            } 
+            else if (currentAxis === 'roll') {
+                document.getElementById('model-roll').setAttribute('transform', `rotate(${currentAngle}, 0, -10)`);
+                // Move Cyclic stick laterally
+                document.getElementById('cyclic-stick').setAttribute('transform', `rotate(${currentAngle})`);
+            } 
+            else if (currentAxis === 'yaw') {
+                document.getElementById('model-yaw').setAttribute('transform', `rotate(${currentAngle}, -30, 0)`);
+                
+                // Animate Pedals (Push right pedal forward = nose right = positive angle)
+                // Left pedal moves opposite
+                const pedalMove = currentAngle * 0.6; // Scale down for visual
+                document.getElementById('pedal-left').setAttribute('transform', `translate(-40, ${pedalMove})`);
+                document.getElementById('pedal-right').setAttribute('transform', `translate(40, ${-pedalMove})`);
+
+                // Adjust Yaw thrust vector dynamically based on yaw intensity
+                const baseThrust = 40;
+                // If nose goes right (+ angle), tail needs to be pushed LEFT (negative thrust line)
+                const extraThrust = currentAngle * 1.5; 
+                let thrustEnd = 220 + baseThrust - extraThrust;
+                document.getElementById('yaw-thrust').setAttribute('x2', thrustEnd);
+                
+                // Flip marker direction if thrust reverses entirely
+                if (thrustEnd < 220) {
+                     // Simple visual hack: If line crosses origin, it looks reversed.
+                }
+            }
+
+            // Animate spinning rotors (continuous)
+            mainRotorAngle = (mainRotorAngle + 20) % 360;
+            tailRotorAngle = (tailRotorAngle + 35) % 360;
+            
+            // Because we are using 2D orthogonal views, spinning is faked via scaling/dasharrays
+            // Side View Pitch
+            const bladeScalePitch = Math.cos(mainRotorAngle * Math.PI / 180);
+            document.getElementById('spin-pitch').setAttribute('transform', `scale(${bladeScalePitch}, 1)`);
+            
+            // Front View Roll
+            const bladeScaleRoll = Math.cos(mainRotorAngle * Math.PI / 180);
+            document.getElementById('spin-roll').setAttribute('transform', `scale(${bladeScaleRoll}, 1)`);
+
+            // Top View Yaw (Spinning tail rotor line, main rotor is a circle so it's fine)
+            const tailScaleYaw = Math.cos(tailRotorAngle * Math.PI / 180);
+            // Translate to center of tail rotor, scale, translate back
+            document.getElementById('spin-yaw-tail').setAttribute('transform', `translate(220,0) scale(1, ${tailScaleYaw}) translate(-220,0)`);
+            
+            // Main rotor in top view: spin a line
+            document.getElementById('spin-yaw-main').setAttribute('transform', `rotate(${mainRotorAngle}, -30, 0)`);
+
+            requestAnimationFrame(animationLoop);
+        }
+        ]]>
+    </script>
+</svg>
