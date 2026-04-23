@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Rotary Flight? - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-introduction">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">
+            <svg width="40" height="40" viewBox="0 0 36 36" fill="none" class="rotor-svg-slow">
+              <circle cx="18" cy="18" r="3" fill="#FFD166"/>
+              <path d="M18 2L20 14H16L18 2Z" fill="#4DA8FF" transform="rotate(0 18 18)"/>
+              <path d="M18 2L20 14H16L18 2Z" fill="#4DA8FF" transform="rotate(120 18 18)"/>
+              <path d="M18 2L20 14H16L18 2Z" fill="#4DA8FF" transform="rotate(240 18 18)"/>
+            </svg>
+          </div>
+          <div>
+            <h1>What is Rotary Flight?</h1>
+            <p class="lead">Discover how spinning wings lift aircraft into the sky.</p>
+            <div class="hero-meta">
+              <span class="tag tag-starter">Starter</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 3 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <!-- Why It Matters -->
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Rotary flight is the key to hovering, vertical rescue, and landing in places runways don't exist. Understanding it is the first step to mastering helicopters, autogyros, and tiltrotors.</p>
+              </div>
+            </div>
+
+            <!-- Definition -->
+            <div class="card card-blue mt-5">
+              <h2>Definition of Rotary Flight</h2>
+              <p><strong>Rotary flight</strong> is flight that uses <span class="glossary-chip" data-term="rotary flight">rotating blades</span> or wings to create lift. Instead of a fixed wing moving forward through the air like an airplane, a rotary-wing aircraft spins its blades overhead.</p>
+              <p>When the blades spin, they move through the air and generate lift—just like a wing, but in a circle. This lets rotary aircraft do things fixed-wing planes cannot, like hovering in place or taking off straight up.</p>
+            </div>
+
+            <!-- Difference from Fixed-Wing -->
+            <div class="card card-teal mt-5">
+              <h2>What Makes It Different from Fixed-Wing?</h2>
+              <div class="two-col mt-3">
+                <div>
+                  <h4>Airplane (Fixed-Wing)</h4>
+                  <ul style="margin-left:var(--space-4)">
+                    <li>Wings are fixed in place</li>
+                    <li>Needs forward speed for lift</li>
+                    <li>Must use a runway</li>
+                    <li>Cannot hover</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Helicopter (Rotary-Wing)</h4>
+                  <ul style="margin-left:var(--space-4)">
+                    <li>Blades spin overhead</li>
+                    <li>Lift comes from rotation</li>
+                    <li>No runway needed</li>
+                    <li>Can hover and fly backwards</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Examples -->
+            <div class="card card-yellow mt-5">
+              <h2>Real-World Examples</h2>
+              <div class="row gap-4 mt-3">
+                <div class="col-4 col-sm-12">
+                  <div class="text-center">
+                    <div style="font-size:2.5rem">🚁</div>
+                    <h4>Helicopter</h4>
+                    <p class="caption">Powered main rotor. Can hover, land vertically, and fly in any direction.</p>
+                  </div>
+                </div>
+                <div class="col-4 col-sm-12">
+                  <div class="text-center">
+                    <div style="font-size:2.5rem">🔄</div>
+                    <h4>Autogyro</h4>
+                    <p class="caption">Rotor spins from airflow, not engine power. Needs forward motion.</p>
+                  </div>
+                </div>
+                <div class="col-4 col-sm-12">
+                  <div class="text-center">
+                    <div style="font-size:2.5rem">🔃</div>
+                    <h4>Tiltrotor</h4>
+                    <p class="caption">Rotors tilt to act like helicopter blades or airplane propellers.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive -->
+            <div class="interactive-slider mt-6" id="rotor-speed-demo">
+              <h3>Interactive: Spin the Rotor</h3>
+              <p>Drag the slider to change rotor speed and see how lift changes.</p>
+              <div class="text-center mt-3" style="font-size:4rem">
+                <svg width="120" height="120" viewBox="0 0 120 120" style="margin:0 auto">
+                  <circle cx="60" cy="60" r="8" fill="#FFD166"/>
+                  <g class="rotor-svg" style="transform-origin:60px 60px">
+                    <rect x="55" y="10" width="10" height="40" fill="#4DA8FF" rx="5"/>
+                    <rect x="55" y="10" width="10" height="40" fill="#4DA8FF" rx="5" transform="rotate(120 60 60)"/>
+                    <rect x="55" y="10" width="10" height="40" fill="#4DA8FF" rx="5" transform="rotate(240 60 60)"/>
+                  </g>
+                </svg>
+              </div>
+              <input type="range" min="0" max="100" value="30" class="slider-control" id="rotor-speed-slider">
+              <div class="slider-labels"><span>Stopped</span><span>Slow</span><span>Fast</span></div>
+              <div class="text-center mt-3" id="rotor-speed-output"><strong>Low lift</strong> (30% speed)</div>
+            </div>
+
+            <!-- Quick Check -->
+            <div id="quick-check"></div>
+
+            <!-- Olympiad Edge -->
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">Test writers love to check if you understand that <strong>rotary flight is about rotating lifting surfaces</strong>. Do not reduce it to "anything with propellers." A propeller creates thrust; a rotor creates lift. That distinction matters!</p>
+              </div>
+            </div>
+
+            <!-- Vocabulary -->
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Rotary flight</div><div class="vocab-def">Flight using rotating blades to create lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Fixed-wing</div><div class="vocab-def">Aircraft with rigid wings that need forward motion for lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Rotor</div><div class="vocab-def">The assembly of spinning blades that generates lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Hover</div><div class="vocab-def">Staying in one place in the air.</div></div>
+              </div>
+            </div>
+
+            <!-- Topic Footer -->
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/diagrams.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('what-is-rotary-flight');
+      if (App.isPageComplete('what-is-rotary-flight')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      Diagrams.initRotorSpeedSlider('rotor-speed-slider', 'rotor-speed-output');
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Which aircraft uses rotating blades to create lift?', options: ['Airplane', 'Helicopter', 'Glider', 'Car'], correct: 1 },
+        { question: 'A helicopter must use a runway.', options: ['True', 'False'], correct: 1 },
+        { question: 'Rotary flight means:', options: ['Flying in circles', 'Using rotating blades for lift', 'Flying very fast', 'Using jet engines'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helicopters Overview - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-aircraft-types">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🚁</div>
+          <div>
+            <h1>Helicopters Overview</h1>
+            <p class="lead">Powered rotors, vertical flight, and unmatched flexibility.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Helicopters are the most familiar rotary-wing aircraft. Understanding their basic layout and capabilities is essential before comparing them to autogyros and tiltrotors.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>What Is a Helicopter?</h2>
+              <p>A <strong>helicopter</strong> is a rotary-wing aircraft with a <strong>powered main rotor</strong>. The engine spins the rotor blades, creating lift. Because the rotor is powered, the helicopter can hover, take off vertically, and fly in any direction.</p>
+            </div>
+
+            <div class="card card-teal mt-5">
+              <h2>Key Capabilities</h2>
+              <div class="row gap-4 mt-3">
+                <div class="col-4 col-sm-12 text-center">
+                  <div style="font-size:2.5rem">⬆️</div>
+                  <h4>Vertical Takeoff</h4>
+                  <p class="caption">Lift off without a runway.</p>
+                </div>
+                <div class="col-4 col-sm-12 text-center">
+                  <div style="font-size:2.5rem">🎯</div>
+                  <h4>Hover</h4>
+                  <p class="caption">Stay still in mid-air.</p>
+                </div>
+                <div class="col-4 col-sm-12 text-center">
+                  <div style="font-size:2.5rem">↔️</div>
+                  <h4>Any Direction</h4>
+                  <p class="caption">Fly forward, backward, or sideways.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-purple mt-5">
+              <h2>Interactive: Highlight Capabilities</h2>
+              <p>Click each icon to see what the helicopter can do.</p>
+              <div class="flex gap-3 justify-center flex-wrap mt-3">
+                <button class="btn btn-secondary heli-cap" data-cap="hover">Hover</button>
+                <button class="btn btn-secondary heli-cap" data-cap="vtol">Vertical Takeoff</button>
+                <button class="btn btn-secondary heli-cap" data-cap="dir">Directional Flight</button>
+              </div>
+              <div class="mt-3 p-4" style="background:var(--soft-background);border-radius:var(--radius-md)" id="heli-cap-display">
+                Click a capability above to learn more.
+              </div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">Helicopters are defined by their <strong>powered rotor</strong> and <strong>hover capability</strong>. When comparing aircraft on tests, always check: Is the lift rotor powered? Can it hover? These two questions separate helicopters from autogyros instantly.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Helicopter</div><div class="vocab-def">Aircraft with powered rotor that can hover and take off vertically.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Powered rotor</div><div class="vocab-def">A rotor driven directly by the engine to create lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">VTOL</div><div class="vocab-def">Vertical Takeoff and Landing.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('helicopters-overview');
+      if (App.isPageComplete('helicopters-overview')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      const caps = {
+        hover: 'Hovering lets a helicopter stay over one spot. This is vital for rescue, photography, and precise loading.',
+        vtol: 'Vertical takeoff means no runway is needed. Helicopters can launch from rooftops, clearings, and ship decks.',
+        dir: 'By tilting the rotor disk with the cyclic control, a helicopter can fly forward, backward, or sideways.'
+      };
+      document.querySelectorAll('.heli-cap').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById('heli-cap-display').textContent = caps[btn.dataset.cap];
+        });
+      });
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'A helicopter\'s rotor is:', options: ['Unpowered', 'Powered by the engine', 'Pushed by wind', 'Not needed for lift'], correct: 1 },
+        { question: 'Which is a key helicopter capability?', options: ['Needs a long runway', 'Can hover', 'Cannot turn in place', 'Has fixed wings'], correct: 1 },
+        { question: 'Helicopters can fly:', options: ['Only forward', 'Forward and backward', 'Only up and down', 'Only in circles'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotary vs Fixed-Wing - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-introduction">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">⚖️</div>
+          <div>
+            <h1>Rotary vs Fixed-Wing</h1>
+            <p class="lead">Two ways to fly. One big difference in how lift is made.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Science Olympiad tests often ask you to compare how lift is generated. Knowing the difference between rotary and fixed-wing flight helps you answer comparison questions with confidence.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>What Both Have in Common</h2>
+              <p>Both <span class="glossary-chip" data-term="fixed-wing">fixed-wing</span> airplanes and <span class="glossary-chip" data-term="rotary flight">rotary-wing</span> aircraft need <strong>air moving over a shaped surface</strong> to create lift. The shape is called an <span class="glossary-chip" data-term="airfoil">airfoil</span>. The difference is <em>how</em> they get the air to move.</p>
+            </div>
+
+            <div class="two-col mt-5">
+              <div class="card card-teal">
+                <h3>How Fixed Wings Make Lift</h3>
+                <p>In an airplane, the <strong>whole aircraft moves forward</strong>. Air flows over the fixed wing, creating lower pressure on top and lift.</p>
+                <ul style="margin-left:var(--space-4);margin-top:var(--space-3)">
+                  <li>Wing stays in place</li>
+                  <li>Aircraft must move forward</li>
+                  <li>Needs a runway</li>
+                  <li>Cannot hover</li>
+                </ul>
+              </div>
+              <div class="card card-orange">
+                <h3>How Rotors Make Lift</h3>
+                <p>In a helicopter, the <strong>blades spin</strong> while the aircraft stays mostly still. The spinning blades move through the air and create lift.</p>
+                <ul style="margin-left:var(--space-4);margin-top:var(--space-3)">
+                  <li>Blades spin in a circle</li>
+                  <li>Lift comes from rotation</li>
+                  <li>No runway needed</li>
+                  <li>Can hover and fly backwards</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card card-purple mt-5">
+              <h2>Comparison Table</h2>
+              <table class="compare-table">
+                <thead>
+                  <tr><th>Feature</th><th>Fixed-Wing (Airplane)</th><th>Rotary-Wing (Helicopter)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Lift source</td><td>Fixed wing + forward speed</td><td>Spinning rotor blades</td></tr>
+                  <tr><td>Runway needed?</td><td>Yes</td><td>No</td></tr>
+                  <tr><td>Can hover?</td><td>No</td><td>Yes</td></tr>
+                  <tr><td>Can fly backward?</td><td>No</td><td>Yes</td></tr>
+                  <tr><td>Speed</td><td>Usually faster</td><td>Usually slower</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="interactive-slider mt-6">
+              <h3>Interactive: Sort the Features</h3>
+              <p>Click each feature to see if it belongs to fixed-wing or rotary-wing aircraft.</p>
+              <div class="row gap-3 mt-3" id="sort-game">
+                <div class="col-6 col-sm-12">
+                  <div style="background:var(--soft-background);padding:var(--space-4);border-radius:var(--radius-md)">
+                    <strong>Fixed-Wing Traits</strong>
+                    <div class="drop-zone" id="fixed-zone" style="min-height:100px;margin-top:var(--space-2)"></div>
+                  </div>
+                </div>
+                <div class="col-6 col-sm-12">
+                  <div style="background:var(--soft-background);padding:var(--space-4);border-radius:var(--radius-md)">
+                    <strong>Rotary-Wing Traits</strong>
+                    <div class="drop-zone" id="rotary-zone" style="min-height:100px;margin-top:var(--space-2)"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-2 flex-wrap mt-3" id="sort-items">
+                <button class="draggable-item sort-btn" data-answer="rotary">Can hover</button>
+                <button class="draggable-item sort-btn" data-answer="fixed">Needs runway</button>
+                <button class="draggable-item sort-btn" data-answer="rotary">Spins blades</button>
+                <button class="draggable-item sort-btn" data-answer="fixed">Fixed wing</button>
+                <button class="draggable-item sort-btn" data-answer="rotary">No runway needed</button>
+                <button class="draggable-item sort-btn" data-answer="fixed">Usually faster</button>
+              </div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">Both create lift using moving air over an airfoil. The <strong>motion source</strong> differs. For airplanes, the whole vehicle moves. For helicopters, the blades move while the body can stay still. Tests often trap students who think helicopters "defy physics" rather than simply using a different mechanism.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Fixed-wing</div><div class="vocab-def">Aircraft with rigid wings requiring forward motion for lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Rotor</div><div class="vocab-def">Spinning blades that generate lift for rotary-wing aircraft.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Airfoil</div><div class="vocab-def">A shaped surface designed to produce lift from airflow.</div></div>
+                <div class="vocab-card"><div class="vocab-term">VTOL</div><div class="vocab-def">Vertical Takeoff and Landing.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('rotary-vs-fixed-wing');
+      if (App.isPageComplete('rotary-vs-fixed-wing')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      // Sort game
+      document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const ans = btn.dataset.answer;
+          const target = ans === 'fixed' ? document.getElementById('fixed-zone') : document.getElementById('rotary-zone');
+          btn.disabled = true;
+          btn.style.opacity = '0.6';
+          target.appendChild(btn);
+        });
+      });
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Which aircraft needs forward motion over a fixed wing to create lift?', options: ['Helicopter', 'Airplane', 'Autogyro', 'Tiltrotor'], correct: 1 },
+        { question: 'Which can hover without moving forward?', options: ['Airplane', 'Glider', 'Helicopter', 'None'], correct: 2 },
+        { question: 'Both fixed-wing and rotary-wing aircraft use:', options: ['Jet engines only', 'Air moving over a shaped surface', 'Rocket fuel', 'Balloons'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

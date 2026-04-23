@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotor Blade Lift - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-flight-science">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🪶</div>
+          <div>
+            <h1>Rotor Blade Lift</h1>
+            <p class="lead">How a spinning wing pulls the aircraft up.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">One of the highest-priority pages. Understanding blade lift is the key to understanding hovering, climbing, and autorotation.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>Rotor Blade as Airfoil</h2>
+              <p>A rotor blade is shaped like a wing. As it spins, air moves faster over the curved top than the flat bottom. This pressure difference creates lift.</p>
+            </div>
+            <div class="card card-teal mt-5">
+              <h2>Why Spinning Matters</h2>
+              <p>Speed increases lift. The faster the blade spins, the more air flows over it and the more lift is generated. That is why rotor RPM is critical.</p>
+            </div>
+            <div id="quick-check"></div>
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">Lift comes from air movement and blade shape/pitch, not engine power alone. Engine power spins the rotor; aerodynamics create lift.</p></div>
+            </div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('rotor-blade-lift');
+      if (App.isPageComplete('rotor-blade-lift')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      QuizEngine.renderQuickCheck('quick-check', [{question:'Lift on a rotor blade comes from:',options:['Engine power pushing up','Air moving faster over the top','Magic force','Weight pushing down'],correct:1}]);
+    });
+  </script>
+</body>
+</html>

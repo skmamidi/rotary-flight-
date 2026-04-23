@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hovering - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-introduction">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🎯</div>
+          <div>
+            <h1>Hovering</h1>
+            <p class="lead">Staying perfectly still in the air is harder than it looks.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Hovering is one of the most impressive and useful things a helicopter can do. It is also one of the most difficult skills for a pilot to master.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>What Hovering Means</h2>
+              <p><span class="glossary-chip" data-term="hover">Hovering</span> means remaining nearly stationary in the air. The helicopter stays over one spot on the ground without moving forward, backward, or sideways.</p>
+              <p>To hover, the pilot must balance <strong>lift</strong> against <strong>weight</strong> and make tiny control corrections to fight wind and drift.</p>
+            </div>
+
+            <div class="card card-teal mt-5">
+              <h2>Balance of Lift and Weight</h2>
+              <p>In a hover, lift must equal weight exactly. If lift is too low, the helicopter sinks. If lift is too high, it climbs. The pilot uses the <span class="glossary-chip" data-term="collective">collective</span> control to adjust overall lift.</p>
+              <div class="two-col mt-3">
+                <div class="text-center">
+                  <div style="font-size:3rem">⬆️</div>
+                  <h4>Lift</h4>
+                  <p class="caption">Upward force from the rotor</p>
+                </div>
+                <div class="text-center">
+                  <div style="font-size:3rem">⬇️</div>
+                  <h4>Weight</h4>
+                  <p class="caption">Downward pull of gravity</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="interactive-slider mt-6">
+              <h3>Interactive: Hover Balance</h3>
+              <p>Keep the helicopter steady! Adjust lift to match weight.</p>
+              <div class="game-canvas" style="height:200px">
+                <div id="hover-heli" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:3rem;transition:top 0.5s">🚁</div>
+                <div style="position:absolute;bottom:10px;left:10px;color:white;background:rgba(0,0,0,0.5);padding:4px 8px;border-radius:4px">Target: 50%</div>
+              </div>
+              <label>Collective (Lift)</label>
+              <input type="range" min="0" max="100" value="30" class="slider-control" id="hover-slider">
+              <div class="slider-labels"><span>Sink</span><span>Hover</span><span>Climb</span></div>
+              <div class="text-center mt-2" id="hover-output">Too low - sinking!</div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">Hovering is <strong>controlled balance</strong>, not simply "stopping the aircraft." The pilot must make constant, tiny corrections. Tests may ask why hovering is difficult—answer with balance and active control, not just engine power.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Hover</div><div class="vocab-def">Remaining in one place in the air.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Collective</div><div class="vocab-def">Control that changes all blade angles together.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Lift</div><div class="vocab-def">Upward force opposing weight.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/mini-games.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('hovering');
+      if (App.isPageComplete('hovering')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      const slider = document.getElementById('hover-slider');
+      const heli = document.getElementById('hover-heli');
+      const output = document.getElementById('hover-output');
+      slider.addEventListener('input', () => {
+        const val = parseInt(slider.value);
+        const y = 80 - (val * 0.6);
+        heli.style.top = y + '%';
+        if (val < 40) output.innerHTML = '<span style="color:var(--alert-coral)">Too low - sinking!</span>';
+        else if (val > 60) output.innerHTML = '<span style="color:var(--alert-coral)">Too high - climbing!</span>';
+        else output.innerHTML = '<span style="color:var(--success-green)">Balanced hover!</span>';
+      });
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Hovering means:', options: ['Flying very fast', 'Staying in one place in the air', 'Landing quickly', 'Spinning the rotor'], correct: 1 },
+        { question: 'To hover, lift must be:', options: ['Less than weight', 'Equal to weight', 'Much greater than weight', 'Zero'], correct: 1 },
+        { question: 'Which control adjusts overall lift?', options: ['Cyclic', 'Collective', 'Rudder', 'Throttle'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

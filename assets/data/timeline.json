@@ -1,0 +1,12 @@
+[
+  {"year": "Ancient", "title": "Bird and Insect Observation", "desc": "Humans study nature to understand flight."},
+  {"year": "400 BC", "title": "Chinese Flying Top", "desc": "Bamboo dragonfly toy demonstrates rotor lift concept."},
+  {"year": "1480s", "title": "Leonardo's Aerial Screw", "desc": "Da Vinci sketches a human-powered aerial screw."},
+  {"year": "1923", "title": "Juan de la Cierva Autogyro", "desc": "First successful autogyro flight. Rotor is unpowered."},
+  {"year": "1939", "title": "Sikorsky VS-300", "desc": "First practical single-main-rotor helicopter flight in the US."},
+  {"year": "1942", "title": "R-4 Helicopter", "desc": "First mass-produced helicopter."},
+  {"year": "1946", "title": "Bell Model 47", "desc": "First certified civilian helicopter."},
+  {"year": "1950s", "title": "Tandem Rotor Heavy Lift", "desc": "CH-47 Chinook enters development."},
+  {"year": "1989", "title": "V-22 Osprey First Flight", "desc": "Tiltrotor technology proven."},
+  {"year": "2020s", "title": "Electric Air Taxis", "desc": "Urban air mobility prototypes tested worldwide."}
+]

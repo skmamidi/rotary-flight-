@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arthur M. Young - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-pioneers">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🔔</div>
+          <div>
+            <h1>Arthur M. Young</h1>
+            <p class="lead">Bell Helicopter and the quest for stability.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">Young's work on stability and control at Bell Helicopter made helicopters safer and more practical.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>Who He Was</h2>
+              <p>Arthur M. Young (1905–1995) was an American inventor who worked with Bell Helicopter. He focused on stability and control systems.</p>
+            </div>
+            <div class="card card-teal mt-5">
+              <h2>Contributions</h2>
+              <ul style="margin-left:var(--space-5)">
+                <li>Developed stabilizer bar for helicopters</li>
+                <li>Improved pilot control response</li>
+                <li>Helped design early Bell helicopters</li>
+              </ul>
+            </div>
+            <div id="quick-check"></div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('arthur-m-young');
+      if (App.isPageComplete('arthur-m-young')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      QuizEngine.renderQuickCheck('quick-check', [{question:'Arthur M. Young worked with:',options:['Bell Helicopter','Boeing','Airbus','Sikorsky'],correct:0}]);
+    });
+  </script>
+</body>
+</html>

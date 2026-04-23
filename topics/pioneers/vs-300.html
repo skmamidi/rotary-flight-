@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VS-300 - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-pioneers">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🚁</div>
+          <div>
+            <h1>The VS-300</h1>
+            <p class="lead">The breakthrough that proved helicopters could work.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">The VS-300 is a milestone in aviation history. Tests often reference it as the first successful practical helicopter.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>What the VS-300 Was</h2>
+              <p>The <strong>Vought-Sikorsky VS-300</strong> was the first successful single-main-rotor helicopter in the United States. It first flew on <strong>September 14, 1939</strong>.</p>
+              <p>It used a single main rotor for lift and a small tail rotor to counter torque. This layout became the standard for most helicopters worldwide.</p>
+            </div>
+            <div class="card card-teal mt-5">
+              <h2>Key Design Features</h2>
+              <ul style="margin-left:var(--space-5)">
+                <li>Single three-bladed main rotor</li>
+                <li>Tail rotor for anti-torque and yaw control</li>
+                <li>Open-framework fuselage</li>
+                <li>Powered by a 75-horsepower engine</li>
+              </ul>
+            </div>
+            <div class="card card-yellow mt-5">
+              <h2>Legacy</h2>
+              <p>The VS-300 proved that helicopters could be <strong>practical</strong>, not just experimental. It led directly to the R-4, the first mass-produced helicopter, used in World War II.</p>
+            </div>
+            <div id="quick-check"></div>
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">Connect the VS-300 to <strong>practical helicopter development</strong>. It was not the first machine to ever leave the ground, but it was the first successful, controllable, practical helicopter configuration.</p></div>
+            </div>
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">VS-300</div><div class="vocab-def">Sikorsky's 1939 helicopter; first successful single-rotor design.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Tail rotor</div><div class="vocab-def">Small rotor for anti-torque and yaw control.</div></div>
+              </div>
+            </div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('vs-300');
+      if (App.isPageComplete('vs-300')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'The VS-300 first flew in:', options: ['1925', '1939', '1945', '1950'], correct: 1 },
+        { question: 'The VS-300 used:', options: ['Coaxial rotors', 'Single main rotor + tail rotor', 'Tandem rotors', 'No rotors'], correct: 1 },
+        { question: 'Why was the VS-300 important?', options: ['It was the first practical helicopter', 'It was the fastest plane', 'It carried 100 people', 'It flew to space'], correct: 0 }
+      ]);
+    });
+  </script>
+</body>
+</html>

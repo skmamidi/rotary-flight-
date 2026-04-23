@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lift in Rotary Flight - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-introduction">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">⬆️</div>
+          <div>
+            <h1>Lift in Rotary Flight</h1>
+            <p class="lead">How spinning blades pull an aircraft upward.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Lift is the most important force in flight. If you understand how a rotor blade makes lift, you unlock the secret to hovering, climbing, and autorotation.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>What Lift Means</h2>
+              <p><strong>Lift</strong> is the upward force that opposes <span class="glossary-chip" data-term="weight">weight</span>. In rotary flight, lift comes from air moving over each <span class="glossary-chip" data-term="rotor blade">rotor blade</span>. Each blade is shaped like a thin wing—curved on top and flatter on the bottom.</p>
+              <p>As the blade spins, air flows faster over the curved top surface than the bottom. This creates lower pressure on top, pulling the blade upward. Multiply that by all the blades spinning together, and you get enough lift to raise the entire aircraft.</p>
+            </div>
+
+            <div class="card card-teal mt-5">
+              <h2>Rotor Blade as a Wing</h2>
+              <p>A rotor blade acts like a wing, but with one key difference: <strong>it spins in a circle</strong>. This means the blade is constantly moving through air, even when the helicopter itself is not moving forward. That is why helicopters can hover.</p>
+              <div class="callout callout-funfact mt-4">
+                <div class="callout-icon">💡</div>
+                <div>
+                  <strong>Fun Fact</strong>
+                  <p class="mt-2">A helicopter rotor tip can move faster than the speed of sound if the rotor spins too fast! Pilots avoid this by controlling rotor speed carefully.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="interactive-slider mt-6">
+              <h3>Interactive: Lift Lab</h3>
+              <p>Adjust blade speed and pitch to see how lift changes.</p>
+              <div class="text-center" style="font-size:3rem;margin:var(--space-4) 0">
+                <svg width="200" height="120" viewBox="0 0 200 120" style="margin:0 auto">
+                  <!-- Blade -->
+                  <rect x="20" y="55" width="160" height="10" rx="5" fill="#4DA8FF" transform="rotate(-5 100 60)"/>
+                  <!-- Airflow arrows -->
+                  <path d="M40 80 L40 40" stroke="#29C7B8" stroke-width="3" marker-end="url(#arrowhead)" class="airflow-arrow"/>
+                  <path d="M100 85 L100 35" stroke="#29C7B8" stroke-width="3" marker-end="url(#arrowhead)" class="airflow-arrow"/>
+                  <path d="M160 80 L160 40" stroke="#29C7B8" stroke-width="3" marker-end="url(#arrowhead)" class="airflow-arrow"/>
+                  <!-- Lift arrow -->
+                  <path id="lift-arrow" d="M100 50 L100 10" stroke="#FF8A3D" stroke-width="5" marker-end="url(#arrowhead2)"/>
+                  <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#29C7B8"/></marker>
+                    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#FF8A3D"/></marker>
+                  </defs>
+                </svg>
+              </div>
+              <label>Rotor Speed</label>
+              <input type="range" min="0" max="100" value="40" class="slider-control" id="lift-speed-slider">
+              <label class="mt-3">Blade Pitch (Angle)</label>
+              <input type="range" min="0" max="20" value="5" class="slider-control" id="lift-pitch-slider">
+              <div class="text-center mt-3" id="lift-output"><strong>Moderate lift</strong></div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">Lift is <strong>not</strong> "magic upward force." It comes from air movement and blade shape/pitch. Tests may ask: "What causes lift on a rotor blade?" The correct answer involves airspeed over a curved surface and angle of attack—not engine power alone.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Lift</div><div class="vocab-def">Upward force from air moving over a blade.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Rotor blade</div><div class="vocab-def">A spinning wing that creates lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Airfoil</div><div class="vocab-def">A shaped surface that produces lift from airflow.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Angle of attack</div><div class="vocab-def">The angle between the blade and the oncoming air.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/diagrams.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('lift-in-rotary-flight');
+      if (App.isPageComplete('lift-in-rotary-flight')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      const speedSlider = document.getElementById('lift-speed-slider');
+      const pitchSlider = document.getElementById('lift-pitch-slider');
+      const output = document.getElementById('lift-output');
+      const arrow = document.getElementById('lift-arrow');
+      function updateLift() {
+        const speed = parseInt(speedSlider.value);
+        const pitch = parseInt(pitchSlider.value);
+        const lift = (speed * 0.6) + (pitch * 2);
+        let text = 'Low lift';
+        if (lift > 40) text = 'Good lift';
+        if (lift > 70) text = 'Strong lift';
+        if (lift > 90) text = 'Warning: high drag!';
+        output.innerHTML = `<strong>${text}</strong> (speed ${speed}%, pitch ${pitch}°)`;
+        arrow.setAttribute('y2', Math.max(10, 50 - lift * 0.4));
+      }
+      speedSlider.addEventListener('input', updateLift);
+      pitchSlider.addEventListener('input', updateLift);
+      updateLift();
+
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Lift on a rotor blade comes from:', options: ['Engine power pushing up', 'Air moving faster over the curved top', 'Magic force', 'Weight pushing down'], correct: 1 },
+        { question: 'A rotor blade is shaped like:', options: ['A flat board', 'A thin wing', 'A ball', 'A cylinder'], correct: 1 },
+        { question: 'More blade pitch usually means:', options: ['Less lift', 'More lift (but also more drag)', 'No change', 'Engine stops'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "helicopter": {
+    "hover": true,
+    "runway_need": "None",
+    "powered_lift_rotor": true,
+    "forward_speed": "Moderate",
+    "typical_missions": "Rescue, transport, military, medical",
+    "anti_torque": "Tail rotor, NOTAR, or coaxial",
+    "complexity": "High"
+  },
+  "autogyro": {
+    "hover": false,
+    "runway_need": "Short runway",
+    "powered_lift_rotor": false,
+    "forward_speed": "Moderate",
+    "typical_missions": "Recreation, surveillance, sport flying",
+    "anti_torque": "Not needed (rotor unpowered)",
+    "complexity": "Low"
+  },
+  "tiltrotor": {
+    "hover": true,
+    "runway_need": "None",
+    "powered_lift_rotor": true,
+    "forward_speed": "High (airplane-like)",
+    "typical_missions": "Military transport, long-range VTOL",
+    "anti_torque": "Counter-rotating prop-rotors",
+    "complexity": "Very High"
+  },
+  "tandem_rotor": {
+    "hover": true,
+    "runway_need": "None",
+    "powered_lift_rotor": true,
+    "forward_speed": "Moderate",
+    "typical_missions": "Heavy cargo, military transport",
+    "anti_torque": "Counter-rotating main rotors",
+    "complexity": "High"
+  },
+  "coaxial_rotor": {
+    "hover": true,
+    "runway_need": "None",
+    "powered_lift_rotor": true,
+    "forward_speed": "Moderate",
+    "typical_missions": "Naval, compact military",
+    "anti_torque": "Counter-rotating stacked rotors",
+    "complexity": "High"
+  }
+}

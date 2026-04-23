@@ -1,0 +1,10 @@
+[
+  {"id": "rookie", "name": "Rotor Rookie", "icon": "🚁", "desc": "Complete your first topic."},
+  {"id": "hover", "name": "Hover Helper", "icon": "🎯", "desc": "Complete the Hovering topic."},
+  {"id": "history", "name": "History Detective", "icon": "🕵️", "desc": "Complete the Pioneer Timeline."},
+  {"id": "lift", "name": "Lift Master", "icon": "🪶", "desc": "Complete Rotor Blade Lift."},
+  {"id": "torque", "name": "Torque Tamer", "icon": "⚙️", "desc": "Complete the Torque topic."},
+  {"id": "analyst", "name": "Aircraft Analyst", "icon": "🔍", "desc": "Complete Compare All Types."},
+  {"id": "challenger", "name": "Olympiad Challenger", "icon": "🏆", "desc": "Complete 3 practice quizzes."},
+  {"id": "ace", "name": "Mock Test Ace", "icon": "🎖️", "desc": "Score 80%+ on the State Mock Test."}
+]

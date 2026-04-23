@@ -1,0 +1,159 @@
+/* Rotary Flight App - base.css */
+/* CSS Variables, Reset, Typography */
+
+:root {
+  /* Primary Palette */
+  --sky-blue: #4DA8FF;
+  --deep-navy: #173B6D;
+  --rotor-teal: #29C7B8;
+  --sun-yellow: #FFD166;
+  --lift-orange: #FF8A3D;
+  --cloud-white: #F7FBFF;
+
+  /* Support Palette */
+  --success-green: #45C26B;
+  --alert-coral: #FF6B6B;
+  --purple-accent: #7A6FF0;
+  --steel-gray: #6C7A89;
+  --soft-background: #EEF5FB;
+
+  /* Typography */
+  --font-heading: 'Nunito', 'Fredoka', sans-serif;
+  --font-body: 'Inter', 'Atkinson Hyperlegible', sans-serif;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(23, 59, 109, 0.08);
+  --shadow-md: 0 4px 12px rgba(23, 59, 109, 0.12);
+  --shadow-lg: 0 12px 32px rgba(23, 59, 109, 0.16);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--deep-navy);
+  background-color: var(--cloud-white);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--sky-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover, a:focus {
+  color: var(--deep-navy);
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Typography Scale */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--deep-navy);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin-bottom: var(--space-4);
+  max-width: 70ch;
+}
+
+.lead {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--steel-gray);
+}
+
+small, .caption {
+  font-size: 0.875rem;
+  color: var(--steel-gray);
+}
+
+/* Utility Classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.font-heading { font-family: var(--font-heading); }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+
+/* Focus styles */
+:focus-visible {
+  outline: 3px solid var(--sky-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torque - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-flight-science">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🔄</div>
+          <div>
+            <h1>Torque</h1>
+            <p class="lead">Newton's Third Law in action: spin the rotor, and the body wants to spin back.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">Torque is one of the most tested concepts in rotary flight competitions. If you understand action-reaction, you understand why helicopters need tail rotors or coaxial designs.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>What Torque Is</h2>
+              <p><span class="glossary-chip" data-term="torque">Torque</span> is a twisting force. When a helicopter's engine spins the main rotor in one direction, the helicopter body tends to spin in the <strong>opposite direction</strong>. This is <strong>Newton's Third Law</strong>: for every action, there is an equal and opposite reaction.</p>
+            </div>
+            <div class="card card-teal mt-5">
+              <h2>The Action-Reaction Pair</h2>
+              <div class="two-col mt-3">
+                <div class="text-center">
+                  <div style="font-size:2.5rem">↻</div>
+                  <h4>Action</h4>
+                  <p class="caption">Engine spins rotor clockwise (as seen from above).</p>
+                </div>
+                <div class="text-center">
+                  <div style="font-size:2.5rem">↺</div>
+                  <h4>Reaction</h4>
+                  <p class="caption">Fuselage tries to spin counter-clockwise.</p>
+                </div>
+              </div>
+            </div>
+            <div class="interactive-slider mt-6" id="torque-demo-container">
+              <h3>Interactive: Torque Demo</h3>
+              <p>Spin the main rotor and watch what happens to the body. Then apply the tail rotor fix.</p>
+            </div>
+            <div id="quick-check"></div>
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">One of the highest-value competition concepts. Remember: torque is <strong>not</strong> drag. Torque is a twisting reaction from the rotor. Drag is air resistance. Tests often pair them as answer choices to trap students.</p></div>
+            </div>
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Torque</div><div class="vocab-def">Twisting reaction force when the rotor spins.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Newton's Third Law</div><div class="vocab-def">For every action there is an equal and opposite reaction.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Anti-torque</div><div class="vocab-def">System that counters main rotor torque.</div></div>
+              </div>
+            </div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/diagrams.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('torque');
+      if (App.isPageComplete('torque')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      Diagrams.initTorqueDemo('torque-demo-container');
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Torque in a helicopter is caused by:', options: ['Air resistance', 'The rotor spinning one way', 'Too much weight', 'Engine heat'], correct: 1 },
+        { question: 'Newton\'s Third Law says:', options: ['For every action there is an equal and opposite reaction', 'What goes up must come down', 'Speed equals distance over time', 'Force equals mass times acceleration'], correct: 0 },
+        { question: 'Torque is the same as drag.', options: ['True', 'False'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

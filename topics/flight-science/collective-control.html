@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collective Control - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-flight-science">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🎚️</div>
+          <div>
+            <h1>Collective Control</h1>
+            <p class="lead">Change all blade angles at once to climb or descend.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">Collective is how pilots control altitude. It is one of the most important controls and is frequently tested against cyclic.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>What Collective Is</h2>
+              <p>The <span class="glossary-chip" data-term="collective">collective</span> control raises or lowers the pitch of <strong>all rotor blades at the same time</strong> by the same amount. More pitch = more lift = climb. Less pitch = less lift = descent.</p>
+            </div>
+            <div class="card card-teal mt-5">
+              <h2>How It Works</h2>
+              <ul style="margin-left:var(--space-5)">
+                <li><strong>Pull up collective</strong> → blade pitch increases → more lift → helicopter climbs</li>
+                <li><strong>Lower collective</strong> → blade pitch decreases → less lift → helicopter descends</li>
+                <li><strong>Hold steady</strong> → pitch stays constant → lift equals weight → level flight or hover</li>
+              </ul>
+            </div>
+            <div class="interactive-slider mt-6">
+              <h3>Interactive: Collective Lever</h3>
+              <p>Pull the collective to make the helicopter climb.</p>
+              <div class="text-center" style="font-size:3rem;margin:var(--space-4) 0" id="collective-heli">🚁</div>
+              <label>Collective Position</label>
+              <input type="range" min="0" max="100" value="40" class="slider-control" id="collective-slider">
+              <div class="slider-labels"><span>Descend</span><span>Hover</span><span>Climb</span></div>
+              <div class="text-center mt-2" id="collective-output">Level flight</div>
+            </div>
+            <div id="quick-check"></div>
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">Very important comparison: <strong>Collective changes all blades equally</strong> (total lift). <strong>Cyclic changes blades selectively</strong> (direction). If a test asks which control is used to climb, the answer is collective.</p></div>
+            </div>
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Collective</div><div class="vocab-def">Control that changes all blade angles together.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Blade pitch</div><div class="vocab-def">The angle of a rotor blade.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Climb</div><div class="vocab-def">Gaining altitude by increasing lift.</div></div>
+              </div>
+            </div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('collective-control');
+      if (App.isPageComplete('collective-control')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      const slider = document.getElementById('collective-slider');
+      const heli = document.getElementById('collective-heli');
+      const output = document.getElementById('collective-output');
+      slider.addEventListener('input', () => {
+        const val = parseInt(slider.value);
+        heli.style.transform = `translateY(${40 - val}%)`;
+        if (val < 30) output.innerHTML = '<span style="color:var(--alert-coral)">Descending</span>';
+        else if (val > 70) output.innerHTML = '<span style="color:var(--success-green)">Climbing!</span>';
+        else output.innerHTML = '<span style="color:var(--sky-blue)">Level flight / hover</span>';
+      });
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'The collective control changes:', options: ['Only one blade', 'All blades together', 'The tail rotor', 'The engine'], correct: 1 },
+        { question: 'Pulling up the collective makes the helicopter:', options: ['Turn left', 'Climb', 'Speed up', 'Land'], correct: 1 },
+        { question: 'Which control is used to change total lift?', options: ['Cyclic', 'Collective', 'Rudder', 'Throttle'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

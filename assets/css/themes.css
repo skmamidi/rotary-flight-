@@ -1,0 +1,84 @@
+/* Rotary Flight App - themes.css */
+/* Section-specific color themes */
+
+/* Introduction - blue-teal */
+.theme-introduction .hero-page {
+  border-bottom-color: var(--rotor-teal);
+}
+.theme-introduction .card-blue {
+  border-top-color: var(--rotor-teal);
+}
+.theme-introduction .side-nav-list a.active,
+.theme-introduction .side-nav-list a:hover {
+  color: var(--rotor-teal);
+}
+
+/* History - parchment gold + muted teal */
+.theme-early-concepts .hero-page,
+.theme-pioneers .hero-page {
+  background: linear-gradient(135deg, #fff9f0 0%, #f7fbff 100%);
+  border-bottom-color: var(--sun-yellow);
+}
+.theme-early-concepts .card-yellow,
+.theme-pioneers .card-yellow {
+  border-top-color: var(--sun-yellow);
+}
+
+/* Flight Science - blue + orange */
+.theme-flight-science .hero-page {
+  background: linear-gradient(135deg, #f0f7ff 0%, #fff4ec 100%);
+  border-bottom-color: var(--lift-orange);
+}
+.theme-flight-science .card-orange {
+  border-top-color: var(--lift-orange);
+}
+.theme-flight-science .side-nav-list a.active,
+.theme-flight-science .side-nav-list a:hover {
+  color: var(--lift-orange);
+}
+
+/* Aircraft Types - blue + purple */
+.theme-aircraft-types .hero-page {
+  background: linear-gradient(135deg, #f0f7ff 0%, #f5f3ff 100%);
+  border-bottom-color: var(--purple-accent);
+}
+.theme-aircraft-types .card-purple {
+  border-top-color: var(--purple-accent);
+}
+.theme-aircraft-types .side-nav-list a.active,
+.theme-aircraft-types .side-nav-list a:hover {
+  color: var(--purple-accent);
+}
+
+/* Applications - green + blue */
+.theme-applications .hero-page {
+  background: linear-gradient(135deg, #f0fff4 0%, #f0f7ff 100%);
+  border-bottom-color: var(--success-green);
+}
+.theme-applications .card-teal {
+  border-top-color: var(--success-green);
+}
+
+/* Future - teal + violet */
+.theme-future .hero-page {
+  background: linear-gradient(135deg, #e6fdfb 0%, #f3f0ff 100%);
+  border-bottom-color: var(--rotor-teal);
+}
+
+/* Olympiad - navy + gold */
+.theme-olympiad .hero-page {
+  background: linear-gradient(135deg, #e8f0ff 0%, #fff9e6 100%);
+  border-bottom-color: var(--deep-navy);
+}
+.theme-olympiad .quiz-strip {
+  background: linear-gradient(135deg, var(--deep-navy) 0%, #2a1a6e 100%);
+}
+.theme-olympiad .card {
+  border-top: 4px solid var(--sun-yellow);
+}
+
+/* Glossary - soft blue */
+.theme-glossary .hero-page {
+  background: var(--soft-background);
+  border-bottom-color: var(--sky-blue);
+}

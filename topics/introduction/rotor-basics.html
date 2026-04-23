@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotor Basics - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-introduction">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">⚙️</div>
+          <div>
+            <h1>Rotor Basics</h1>
+            <p class="lead">Meet the parts that spin: hub, mast, blades, and more.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Knowing rotor parts by name helps you read diagrams quickly on tests and understand how control inputs reach the blades.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>What Is a Rotor?</h2>
+              <p>A <span class="glossary-chip" data-term="rotor">rotor</span> is the complete spinning assembly on top of a helicopter. It includes the <strong>mast</strong> (vertical shaft), the <strong>hub</strong> (center connection), and the <strong>blades</strong> (long airfoils).</p>
+              <p>The engine turns the mast, the mast turns the hub, and the hub spins the blades. As the blades spin, they generate lift.</p>
+            </div>
+
+            <div class="card card-teal mt-5">
+              <h2>Main Rotor vs Tail Rotor</h2>
+              <div class="two-col mt-3">
+                <div>
+                  <h4>Main Rotor</h4>
+                  <ul style="margin-left:var(--space-4)">
+                    <li>Creates most of the lift</li>
+                    <li>Sits on top of the aircraft</li>
+                    <li>Large diameter</li>
+                    <li>Connected to engine via transmission</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tail Rotor</h4>
+                  <ul style="margin-left:var(--space-4)">
+                    <li>Counters main rotor torque</li>
+                    <li>Mounted on the tail</li>
+                    <li>Smaller diameter</li>
+                    <li>Also controls yaw direction</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-purple mt-5">
+              <h2>Labeled Diagram</h2>
+              <p>Click the hotspots to learn each part.</p>
+              <div class="diagram-container" style="margin:var(--space-4) auto;max-width:400px">
+                <svg viewBox="0 0 400 300" style="width:100%;height:auto">
+                  <!-- Simple helicopter outline -->
+                  <ellipse cx="200" cy="220" rx="120" ry="30" fill="#EEF5FB" stroke="#173B6D" stroke-width="3"/>
+                  <rect x="160" y="160" width="80" height="70" rx="10" fill="#fff" stroke="#173B6D" stroke-width="2"/>
+                  <rect x="170" y="170" width="20" height="15" fill="#4DA8FF"/>
+                  <rect x="210" y="170" width="20" height="15" fill="#4DA8FF"/>
+                  <!-- Mast -->
+                  <line x1="200" y1="160" x2="200" y2="100" stroke="#6C7A89" stroke-width="6"/>
+                  <!-- Hub -->
+                  <circle cx="200" cy="100" r="12" fill="#29C7B8" stroke="#173B6D" stroke-width="2"/>
+                  <!-- Blades -->
+                  <rect x="80" y="95" width="240" height="10" rx="5" fill="#4DA8FF" stroke="#173B6D" stroke-width="2"/>
+                  <rect x="195" y="20" width="10" height="160" rx="5" fill="#4DA8FF" stroke="#173B6D" stroke-width="2"/>
+                  <!-- Tail -->
+                  <line x1="320" y1="210" x2="380" y2="180" stroke="#173B6D" stroke-width="4"/>
+                  <rect x="375" y="150" width="8" height="60" fill="#4DA8FF" stroke="#173B6D" stroke-width="2"/>
+                  <!-- Hotspots -->
+                  <circle cx="200" cy="130" r="14" fill="#FF8A3D" opacity="0.8" class="hotspot" data-term="mast" style="cursor:pointer"/>
+                  <text x="200" y="135" text-anchor="middle" fill="white" font-size="10" font-weight="bold" pointer-events="none">1</text>
+                  <circle cx="200" cy="100" r="14" fill="#FF8A3D" opacity="0.8" class="hotspot" data-term="hub" style="cursor:pointer"/>
+                  <text x="200" y="105" text-anchor="middle" fill="white" font-size="10" font-weight="bold" pointer-events="none">2</text>
+                  <circle cx="260" cy="100" r="14" fill="#FF8A3D" opacity="0.8" class="hotspot" data-term="rotor blade" style="cursor:pointer"/>
+                  <text x="260" y="105" text-anchor="middle" fill="white" font-size="10" font-weight="bold" pointer-events="none">3</text>
+                  <circle cx="379" cy="180" r="14" fill="#FF8A3D" opacity="0.8" class="hotspot" data-term="tail rotor" style="cursor:pointer"/>
+                  <text x="379" y="185" text-anchor="middle" fill="white" font-size="10" font-weight="bold" pointer-events="none">4</text>
+                </svg>
+                <div class="flex justify-center gap-4 mt-2 caption">
+                  <span>1: <strong>Mast</strong></span>
+                  <span>2: <strong>Hub</strong></span>
+                  <span>3: <strong>Blade</strong></span>
+                  <span>4: <strong>Tail Rotor</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">Distinguish rotor system parts from aircraft body parts. The mast, hub, and blades are part of the <strong>rotor system</strong>. The fuselage, tail boom, and landing gear are <strong>airframe</strong> parts. Tests may mix them to check your precision.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Mast</div><div class="vocab-def">The vertical shaft supporting the rotor.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Hub</div><div class="vocab-def">The central part connecting blades to the mast.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Main rotor</div><div class="vocab-def">The primary spinning assembly that creates lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Tail rotor</div><div class="vocab-def">Small rotor that counters torque and controls yaw.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/diagrams.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('rotor-basics');
+      if (App.isPageComplete('rotor-basics')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      Diagrams.initHotspots('rotor-diagram');
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'What part connects the blades to the mast?', options: ['Fuselage', 'Hub', 'Tail boom', 'Engine'], correct: 1 },
+        { question: 'The tail rotor primarily:', options: ['Creates main lift', 'Counters torque', 'Powers the engine', 'Holds fuel'], correct: 1 },
+        { question: 'Which is part of the rotor system?', options: ['Landing gear', 'Hub', 'Cockpit window', 'Passenger seat'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

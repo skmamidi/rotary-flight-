@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare All Types - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-aircraft-types">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🔍</div>
+          <div>
+            <h1>Compare All Types</h1>
+            <p class="lead">Master the distinctions that win competitions.</p>
+            <div class="hero-meta">
+              <span class="tag tag-olympiad">Olympiad</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 8 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">This is one of the highest-value pages in the app. State-level tests love compare-and-contrast questions. If you know this table cold, you will earn points others miss.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>Quick Definitions</h2>
+              <div class="row gap-4 mt-3">
+                <div class="col-6 col-sm-12">
+                  <h4>Helicopter</h4>
+                  <p class="caption">Powered main rotor. Can hover. Most common rotary-wing aircraft.</p>
+                </div>
+                <div class="col-6 col-sm-12">
+                  <h4>Autogyro</h4>
+                  <p class="caption">Unpowered rotor (autorotates). Needs propeller for thrust. Cannot hover.</p>
+                </div>
+                <div class="col-6 col-sm-12">
+                  <h4>Tiltrotor</h4>
+                  <p class="caption">Rotors tilt between vertical and horizontal. VTOL + fast cruise.</p>
+                </div>
+                <div class="col-6 col-sm-12">
+                  <h4>Tandem Rotor</h4>
+                  <p class="caption">Two large rotors, front and rear. Heavy lift. No tail rotor.</p>
+                </div>
+                <div class="col-6 col-sm-12">
+                  <h4>Coaxial Rotor</h4>
+                  <p class="caption">Two rotors stacked, spinning opposite directions. Compact, no tail rotor.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-purple mt-5">
+              <h2>Master Comparison Table</h2>
+              <div style="overflow-x:auto">
+                <table class="compare-table">
+                  <thead>
+                    <tr><th>Feature</th><th>Helicopter</th><th>Autogyro</th><th>Tiltrotor</th><th>Tandem</th><th>Coaxial</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Can hover?</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+                    <tr><td>Runway need</td><td>None</td><td>Short</td><td>None</td><td>None</td><td>None</td></tr>
+                    <tr><td>Powered lift rotor</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+                    <tr><td>Forward thrust source</td><td>Rotor tilt</td><td>Propeller</td><td>Rotors as props</td><td>Rotor tilt</td><td>Rotor tilt</td></tr>
+                    <tr><td>Anti-torque method</td><td>Tail rotor / NOTAR</td><td>Not needed</td><td>Counter-rotating</td><td>Counter-rotating</td><td>Counter-rotating</td></tr>
+                    <tr><td>Cruise speed</td><td>Moderate</td><td>Moderate</td><td>High</td><td>Moderate</td><td>Moderate</td></tr>
+                    <tr><td>Typical missions</td><td>Rescue, transport</td><td>Recreation</td><td>Military, long-range</td><td>Heavy cargo</td><td>Naval, compact</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="interactive-slider mt-6">
+              <h3>Interactive: Mission Matcher</h3>
+              <p>Choose the best aircraft for each mission.</p>
+              <div id="mission-matcher"></div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">State tests often use elimination questions. Practice asking yourself:</p>
+                <ol style="margin-left:var(--space-4);margin-top:var(--space-2)">
+                  <li>Does it hover? If yes, eliminate autogyro.</li>
+                  <li>Is the lift rotor powered? If no, it's an autogyro.</li>
+                  <li>Does it have a tail rotor? If no, it might be tandem or coaxial.</li>
+                  <li>Do the rotors tilt? If yes, it's a tiltrotor.</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Powered rotor</div><div class="vocab-def">Rotor driven by engine to create lift.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Unpowered rotor</div><div class="vocab-def">Rotor that spins from airflow, not engine.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Counter-rotating</div><div class="vocab-def">Rotors spinning in opposite directions to cancel torque.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/mini-games.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('compare-all-types');
+      if (App.isPageComplete('compare-all-types')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      MiniGames.init('aircraft-matcher', 'mission-matcher');
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Which aircraft CANNOT hover?', options: ['Helicopter', 'Tiltrotor', 'Autogyro', 'Tandem rotor'], correct: 2 },
+        { question: 'Which uses a separate propeller for forward thrust?', options: ['Helicopter', 'Autogyro', 'Tiltrotor', 'Coaxial rotor'], correct: 1 },
+        { question: 'A tiltrotor is best described as:', options: ['A fast helicopter', 'A mix of helicopter and airplane', 'An autogyro with extra blades', 'A fixed-wing plane'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

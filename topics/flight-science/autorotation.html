@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autorotation - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-flight-science">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🪂</div>
+          <div>
+            <h1>Autorotation</h1>
+            <p class="lead">A safety descent when the engine goes quiet.</p>
+            <div class="hero-meta">
+              <span class="tag tag-advanced">Advanced</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 8 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">Autorotation is an advanced concept that distinguishes top competitors. It shows deep understanding of how rotors interact with air.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>What Autorotation Is</h2>
+              <p><span class="glossary-chip" data-term="autorotation">Autorotation</span> is an unpowered descent. If the engine fails, the pilot enters autorotation. Air flowing <strong>upward</strong> through the rotor keeps the blades spinning. This spinning creates enough lift to control the descent and land safely.</p>
+            </div>
+            <div class="card card-teal mt-5">
+              <h2>Why It Works</h2>
+              <p>Normally, engine power spins the rotor and air moves downward. In autorotation, the helicopter descends, so air moves <strong>upward</strong> through the rotor disk. This upward airflow pushes the blades and keeps them turning.</p>
+              <p>Near the ground, the pilot pulls the <span class="glossary-chip" data-term="collective">collective</strong> to increase blade pitch. The stored rotor energy creates a final burst of lift for a soft landing.</p>
+            </div>
+            <div class="interactive-slider mt-6" id="autorotation-demo-container">
+              <h3>Interactive: Autorotation Demo</h3>
+              <p>Watch what happens when engine power is lost.</p>
+            </div>
+            <div id="quick-check"></div>
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">This concept can distinguish advanced learners. Key points: in autorotation, airflow reverses direction (upward through rotor). The rotor is <strong>not</strong> powered by the engine. The pilot uses collective at the bottom to flare and soften landing.</p></div>
+            </div>
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Autorotation</div><div class="vocab-def">Unpowered descent with rotor kept spinning by upward airflow.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Flare</div><div class="vocab-def">Pulling collective at the end of autorotation to soften landing.</div></div>
+              </div>
+            </div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/diagrams.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('autorotation');
+      if (App.isPageComplete('autorotation')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      Diagrams.initAutorotationDemo('autorotation-demo-container');
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Autorotation is used when:', options: ['Taking off', 'The engine fails', 'Flying fast', 'Refueling'], correct: 1 },
+        { question: 'In autorotation, air flows:', options: ['Down through the rotor', 'Up through the rotor', 'Around the fuselage', 'Into the engine'], correct: 1 },
+        { question: 'The pilot pulls collective at the bottom to:', options: ['Speed up', 'Soften the landing', 'Start the engine', 'Spin the tail rotor'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

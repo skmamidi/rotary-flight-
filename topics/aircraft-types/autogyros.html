@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autogyros - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-aircraft-types">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🔄</div>
+          <div>
+            <h1>Autogyros</h1>
+            <p class="lead">Rotorcraft that look like helicopters but fly differently.</p>
+            <div class="hero-meta">
+              <span class="tag tag-advanced">Advanced</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 8 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-warning">
+              <div class="callout-icon">⚠️</div>
+              <div>
+                <strong>Critical Distinction</strong>
+                <p class="mt-2">Autogyros are <strong>not</strong> helicopters. This is one of the most commonly missed questions on rotary flight tests. Read carefully.</p>
+              </div>
+            </div>
+
+            <div class="callout callout-mission mt-4">
+              <div class="callout-icon">🎯</div>
+              <div>
+                <strong>Why this matters</strong>
+                <p class="mt-2">Science Olympiad tests frequently ask students to distinguish autogyros from helicopters. Knowing the difference in rotor power and hover ability earns easy points.</p>
+              </div>
+            </div>
+
+            <div class="card card-blue mt-5">
+              <h2>What Is an Autogyro?</h2>
+              <p>An <span class="glossary-chip" data-term="autogyro">autogyro</span> (also called a gyrocopter) has a rotor like a helicopter, but the rotor is <strong>not powered by the engine</strong> for lift. Instead, the rotor spins because air passes through it as the aircraft moves forward.</p>
+              <p>Forward thrust comes from a separate <strong>propeller</strong>, similar to an airplane. The unpowered rotor simply autorotates, creating lift from the airflow.</p>
+            </div>
+
+            <div class="card card-coral mt-5">
+              <h2>Why It Is Not a Helicopter</h2>
+              <table class="compare-table">
+                <thead>
+                  <tr><th>Feature</th><th>Helicopter</th><th>Autogyro</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Lift rotor powered?</td><td>Yes</td><td>No</td></tr>
+                  <tr><td>Can hover?</td><td>Yes</td><td>No</td></tr>
+                  <tr><td>Forward thrust</td><td>Main rotor tilts</td><td>Separate propeller</td></tr>
+                  <tr><td>Takeoff</td><td>Vertical</td><td>Needs roll or short run</td></tr>
+                  <tr><td>Cost/complexity</td><td>Higher</td><td>Lower</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="interactive-slider mt-6">
+              <h3>Interactive: Helicopter vs Autogyro Mode</h3>
+              <p>Toggle to see how rotor power differs.</p>
+              <div class="flex gap-3 justify-center mt-3">
+                <button class="btn btn-primary" id="mode-heli">Helicopter Mode</button>
+                <button class="btn btn-secondary" id="mode-auto">Autogyro Mode</button>
+              </div>
+              <div class="mt-3 p-4 text-center" style="background:var(--soft-background);border-radius:var(--radius-md)">
+                <div style="font-size:3rem" id="mode-icon">🚁</div>
+                <div id="mode-text" class="mt-2"><strong>Helicopter:</strong> Engine powers the rotor. Can hover.</div>
+                <div class="mt-2 caption" id="mode-detail">The main rotor is connected to the engine via the transmission.</div>
+              </div>
+            </div>
+
+            <div id="quick-check"></div>
+
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div>
+                <strong>Olympiad Edge</strong>
+                <p class="mt-2">This is a <strong>high-frequency trap</strong>. Remember:</p>
+                <ul style="margin-left:var(--space-4);margin-top:var(--space-2)">
+                  <li>Autogyro rotor = unpowered (autorotates from airflow)</li>
+                  <li>Helicopter rotor = powered by engine</li>
+                  <li>Autogyro cannot hover</li>
+                  <li>Autogyro uses a propeller for thrust</li>
+                </ul>
+                <p class="mt-2">If a test says "an autogyro is a type of helicopter," that statement is <strong>false</strong>.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Autogyro</div><div class="vocab-def">Aircraft with unpowered rotor and propeller for thrust.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Autorotation</div><div class="vocab-def">Rotor spinning from airflow, not engine power.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Propeller</div><div class="vocab-def">Spinning blade that creates forward thrust.</div></div>
+              </div>
+            </div>
+
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4">
+          <a href="../../index.html">Home</a>
+          <a href="../../study-path.html">Study Path</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('autogyros');
+      if (App.isPageComplete('autogyros')) {
+        document.getElementById('completion-marker').innerHTML = '✓ Completed';
+        document.getElementById('completion-marker').classList.remove('incomplete');
+      }
+      document.getElementById('mode-heli').addEventListener('click', () => {
+        document.getElementById('mode-icon').textContent = '🚁';
+        document.getElementById('mode-text').innerHTML = '<strong>Helicopter:</strong> Engine powers the rotor. Can hover.';
+        document.getElementById('mode-detail').textContent = 'The main rotor is connected to the engine via the transmission.';
+      });
+      document.getElementById('mode-auto').addEventListener('click', () => {
+        document.getElementById('mode-icon').textContent = '🔄';
+        document.getElementById('mode-text').innerHTML = '<strong>Autogyro:</strong> Rotor spins from airflow. Cannot hover.';
+        document.getElementById('mode-detail').textContent = 'A propeller pushes the aircraft forward, and air spins the rotor.';
+      });
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'An autogyro\'s rotor is:', options: ['Powered by the engine', 'Spun by airflow', 'Not needed', 'Powered by rocket'], correct: 1 },
+        { question: 'Can an autogyro hover?', options: ['Yes', 'No', 'Only with wind', 'Only at night'], correct: 1 },
+        { question: 'An autogyro uses a propeller for:', options: ['Lift', 'Forward thrust', 'Braking', 'Steering'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

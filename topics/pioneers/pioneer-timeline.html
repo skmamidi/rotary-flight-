@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pioneer Timeline - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-pioneers">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">📜</div>
+          <div>
+            <h1>Pioneer Timeline</h1>
+            <p class="lead">From ancient dreams to modern rotorcraft.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">Knowing the sequence of breakthroughs helps you answer history questions and understand how each invention built on the last.</p></div>
+            </div>
+            <div class="card card-blue mt-5">
+              <h2>Timeline of Rotary Flight</h2>
+              <div class="timeline mt-4">
+                <div class="timeline-item active"><strong>Ancient</strong> — Humans observe birds and insects, dreaming of flight.</div>
+                <div class="timeline-item"><strong>400 BC</strong> — Chinese flying top (bamboo dragonfly) shows rotor lift concept.</div>
+                <div class="timeline-item"><strong>1480s</strong> — Leonardo da Vinci sketches the aerial screw.</div>
+                <div class="timeline-item"><strong>1923</strong> — Juan de la Cierva's autogyro makes its first successful flight.</div>
+                <div class="timeline-item"><strong>1939</strong> — Sikorsky's VS-300 achieves first practical helicopter flight.</div>
+                <div class="timeline-item"><strong>1942</strong> — R-4 becomes the first mass-produced helicopter.</div>
+                <div class="timeline-item"><strong>1946</strong> — Bell Model 47 becomes first certified civilian helicopter.</div>
+                <div class="timeline-item"><strong>1989</strong> — V-22 Osprey tiltrotor proves hybrid vertical and forward flight.</div>
+                <div class="timeline-item"><strong>2020s</strong> — Electric air taxis and urban air mobility prototypes tested.</div>
+              </div>
+            </div>
+            <div id="quick-check"></div>
+            <div class="callout callout-olympiad mt-6">
+              <div class="callout-icon">🏆</div>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">Knowing sequence strengthens concept understanding. Tests may ask: "What came first, the autogyro or the practical helicopter?" Answer: autogyro (1923) before VS-300 (1939).</p></div>
+            </div>
+            <div class="mt-6">
+              <h3>Key Vocabulary</h3>
+              <div class="vocab-grid">
+                <div class="vocab-card"><div class="vocab-term">Aerial screw</div><div class="vocab-def">Da Vinci's concept for a human-powered rotor.</div></div>
+                <div class="vocab-card"><div class="vocab-term">Autogyro</div><div class="vocab-def">Cierva's unpowered-rotor aircraft (1923).</div></div>
+                <div class="vocab-card"><div class="vocab-term">VS-300</div><div class="vocab-def">First successful practical helicopter (1939).</div></div>
+              </div>
+            </div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('pioneer-timeline');
+      if (App.isPageComplete('pioneer-timeline')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'Which came first?', options: ['VS-300', 'Autogyro', 'Bell 47', 'V-22 Osprey'], correct: 1 },
+        { question: 'Leonardo da Vinci designed:', options: ['The first engine', 'The aerial screw', 'A jet airplane', 'A rocket'], correct: 1 },
+        { question: 'The first mass-produced helicopter was:', options: ['VS-300', 'R-4', 'Bell 47', 'Osprey'], correct: 1 }
+      ]);
+    });
+  </script>
+</body>
+</html>

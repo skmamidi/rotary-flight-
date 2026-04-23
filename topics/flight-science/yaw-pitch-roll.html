@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yaw, Pitch, Roll - Rotary Flight Mission</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/themes.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+</head>
+<body class="theme-flight-science">
+  <div class="page-wrapper">
+    <nav class="top-nav sticky-nav" id="top-nav"></nav>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <main class="main-content" id="main-content">
+      <section class="hero hero-page">
+        <div class="container hero-inner">
+          <div class="hero-icon">🎲</div>
+          <div>
+            <h1>Yaw, Pitch, Roll</h1>
+            <p class="lead">The three ways an aircraft can rotate.</p>
+            <div class="hero-meta">
+              <span class="tag tag-core">Core</span>
+              <span class="tag" style="background:var(--soft-background);color:var(--steel-gray)">⏱ 5 min</span>
+              <span id="completion-marker" class="completion-check incomplete">○ Not completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container section">
+        <div class="topic-layout">
+          <aside id="side-nav"></aside>
+          <div>
+            <div class="callout callout-mission">
+              <div class="callout-icon">🎯</div>
+              <div><strong>Why this matters</strong><p class="mt-2">These three terms describe every aircraft movement. Tests often ask which control produces which motion.</p></div>
+            </div>
+            <div class="row gap-4 mt-5">
+              <div class="col-4 col-sm-12">
+                <div class="card card-blue text-center">
+                  <div style="font-size:2.5rem">↔️</div>
+                  <h3>Yaw</h3>
+                  <p class="caption">Nose left or right. Controlled by tail rotor pedals.</p>
+                </div>
+              </div>
+              <div class="col-4 col-sm-12">
+                <div class="card card-teal text-center">
+                  <div style="font-size:2.5rem">↕️</div>
+                  <h3>Pitch</h3>
+                  <p class="caption">Nose up or down. Controlled by cyclic.</p>
+                </div>
+              </div>
+              <div class="col-4 col-sm-12">
+                <div class="card card-purple text-center">
+                  <div style="font-size:2.5rem">↩️</div>
+                  <h3>Roll</h3>
+                  <p class="caption">Tilting side to side. Controlled by cyclic.</p>
+                </div>
+              </div>
+            </div>
+            <div id="quick-check"></div>
+            <div class="topic-footer" id="topic-footer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container flex justify-between items-center flex-wrap gap-3">
+        <div>Rotary Flight Mission</div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
+      </div>
+    </footer>
+  </div>
+  <script src="../../assets/js/app-shell.js"></script>
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('yaw-pitch-roll');
+      if (App.isPageComplete('yaw-pitch-roll')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
+      QuizEngine.renderQuickCheck('quick-check', [{question:'Yaw means:',options:['Nose up/down','Nose left/right','Tilting side','Speed up'],correct:1}]);
+    });
+  </script>
+</body>
+</html>
