@@ -1,0 +1,189 @@
+<svg width="1600" height="950" viewBox="0 0 1600 950" xmlns="http://www.w3.org/2000/svg" role="img">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#4a4a4a"/>
+    </marker>
+    <style>
+      .part { stroke:#222; stroke-width:4; stroke-linejoin:round; stroke-linecap:round; vector-effect:non-scaling-stroke; }
+      .label-text { font-family: Arial, Helvetica, sans-serif; font-size: 28px; fill:#111; }
+      .label-subtext { font-family: Arial, Helvetica, sans-serif; font-size: 20px; fill:#555; }
+      .line-label { stroke:#4a4a4a; stroke-width:2.5; fill:none; marker-end:url(#arrowhead); vector-effect:non-scaling-stroke; }
+      .clickable { cursor:pointer; transition:opacity .18s ease; }
+      .clickable:hover { opacity:.88; }
+      .target { transition: filter .2s ease, stroke .2s ease, fill .2s ease, opacity .2s ease; }
+      .dimmed { opacity:.18; }
+      .active-stroke { stroke:#ff8a00 !important; stroke-width:8 !important; }
+      .active-fill { fill:#ffe2b8 !important; }
+      .active-dashed { stroke:#ff8a00 !important; stroke-width:6 !important; opacity:1 !important; }
+      .label-active text { fill:#c75b00 !important; font-weight:700; }
+      .label-active path, .label-active line { stroke:#c75b00 !important; }
+      .button-bg { fill: rgba(255,255,255,0.001); stroke: transparent; }
+      .helper-hit { fill:transparent; stroke:transparent; stroke-width:18; }
+      .info-panel { fill:#f4f7fb; stroke:#b8c6d8; stroke-width:3; }
+      .info-panel-accent { fill:#dfe9f5; }
+      .info-title { font-family: Arial, Helvetica, sans-serif; font-size:30px; font-weight:700; fill:#102033; }
+      .info-body { font-family: Arial, Helvetica, sans-serif; font-size:19px; fill:#213040; }
+      .info-hint { font-family: Arial, Helvetica, sans-serif; font-size:17px; fill:#607080; }
+      .wood { fill:#dbc29c; }
+      .fabric { fill:#d7e1ea; }
+      .metal { fill:#cfd8e3; }
+      .darkmetal { fill:#aeb8c3; }
+      .ground { fill:#eef2e8; }
+      .accent { fill:#dde7f1; }
+      .shadow { fill:#e9edf2; }
+      .small { font-size:22px; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="950" fill="#f8fbfd"/>
+  <ellipse cx="600" cy="815" rx="410" ry="38" class="ground"/>
+  <path id="fuselage" class="part target clickable metal" data-part="fuselage"
+        d="M330 500 C375 435 460 402 570 402 L785 402 C865 402 935 438 980 490 C1000 512 1000 548 970 565 L785 610 L470 610 C390 610 330 580 288 530 C265 503 288 500 330 500 Z"/>
+  <path id="wing" class="part target clickable accent" data-part="wing" d="M455 360 L1085 360 Q1125 360 1138 390 Q1147 420 1112 432 L540 470 L420 450 Q395 445 392 425 Q390 400 418 390 Z"/>
+  <line id="nacelle-left-axis" class="part target clickable" data-part="nacelle" x1="455" y1="370" x2="380" y2="290"/>
+  <line id="nacelle-right-axis" class="part target clickable" data-part="nacelle" x1="1085" y1="370" x2="1160" y2="290"/>
+  <g id="nacelle-left" class="target clickable" data-part="nacelle">
+    <rect id="nacelle-left-body" x="318" y="240" width="84" height="120" rx="22" class="part darkmetal"/>
+    <circle id="rotor-left-hub" cx="360" cy="220" r="20" class="part darkmetal"/>
+    <line id="rotor-left-v1" x1="360" y1="90" x2="360" y2="220" class="part"/>
+    <line id="rotor-left-v2" x1="295" y1="155" x2="425" y2="155" class="part"/>
+  </g>
+  <g id="nacelle-right" class="target clickable" data-part="nacelle">
+    <rect id="nacelle-right-body" x="1138" y="240" width="84" height="120" rx="22" class="part darkmetal"/>
+    <circle id="rotor-right-hub" cx="1180" cy="220" r="20" class="part darkmetal"/>
+    <line id="rotor-right-v1" x1="1180" y1="90" x2="1180" y2="220" class="part"/>
+    <line id="rotor-right-v2" x1="1115" y1="155" x2="1245" y2="155" class="part"/>
+  </g>
+  <path id="tilt-arrow-left" class="part target clickable" data-part="tilt" d="M430 250 Q470 200 442 145" fill="none"/>
+  <polygon id="tilt-arrow-left-head" class="part target clickable" data-part="tilt" points="432,146 452,142 444,160"/>
+  <path id="tilt-arrow-right" class="part target clickable" data-part="tilt" d="M1110 250 Q1070 200 1098 145" fill="none"/>
+  <polygon id="tilt-arrow-right-head" class="part target clickable" data-part="tilt" points="1112,146 1092,142 1100,160"/>
+  <path id="tail" class="part target clickable accent" data-part="tail" d="M980 494 L1240 494 L1315 448 L1315 570 L1240 530 L980 530 Z"/>
+  <path id="vertical-fin" class="part target clickable accent" data-part="tail" d="M1245 458 L1332 350 L1332 468 Z"/>
+  <line id="gear-left" class="part target clickable" data-part="landing-gear" x1="515" y1="610" x2="475" y2="700"/>
+  <line id="gear-right" class="part target clickable" data-part="landing-gear" x1="780" y1="610" x2="825" y2="700"/>
+  <circle id="wheel-left" class="part target clickable" data-part="landing-gear" cx="460" cy="730" r="34" fill="none"/>
+  <circle id="wheel-right" class="part target clickable" data-part="landing-gear" cx="840" cy="730" r="34" fill="none"/>
+
+  <g id="label-wing" class="clickable" data-part="wing">
+    <rect class="button-bg" x="1125" y="385" width="125" height="70" rx="14"/>
+    <text x="1155" y="430" class="label-text">Wing</text>
+    <path class="line-label" d="M1135 420 L1000 402"/>
+  </g>
+  <g id="label-nacelle" class="clickable" data-part="nacelle">
+    <rect class="button-bg" x="1240" y="135" width="145" height="70" rx="14"/>
+    <text x="1260" y="180" class="label-text">Nacelle</text>
+    <path class="line-label" d="M1250 190 L1215 245"/>
+  </g>
+  <g id="label-tilt" class="clickable" data-part="tilt">
+    <rect class="button-bg" x="1010" y="70" width="175" height="70" rx="14"/>
+    <text x="1030" y="115" class="label-text">Tilt Direction</text>
+    <path class="line-label" d="M1080 130 L1115 180"/>
+  </g>
+  <g id="label-fuselage" class="clickable" data-part="fuselage">
+    <rect class="button-bg" x="105" y="595" width="165" height="70" rx="14"/>
+    <text x="130" y="640" class="label-text">Fuselage</text>
+    <path class="line-label" d="M275 620 L402 592"/>
+  </g>
+  <g id="label-tail" class="clickable" data-part="tail">
+    <rect class="button-bg" x="1365" y="345" width="120" height="70" rx="14"/>
+    <text x="1400" y="390" class="label-text">Tail</text>
+    <path class="line-label" d="M1370 395 L1290 450"/>
+  </g>
+  <g id="label-landing-gear" class="clickable" data-part="landing-gear">
+    <rect class="button-bg" x="1000" y="705" width="190" height="70" rx="14"/>
+    <text x="1023" y="750" class="label-text">Landing Gear</text>
+    <path class="line-label" d="M1010 715 L856 722"/>
+  </g>
+  <text x="70" y="85" class="label-text" style="font-size:38px;font-weight:700;">Tiltrotor</text>
+  <text x="72" y="120" class="label-subtext">Aircraft whose rotor nacelles tilt between helicopter-like vertical lift and airplane-like forward flight</text>
+
+  <g id="info-box">
+    <rect class="info-panel" x="900" y="705" width="640" height="220" rx="24"/>
+    <rect class="info-panel-accent" x="900" y="705" width="640" height="46" rx="24"/>
+    <text id="info-title" x="935" y="737" class="info-title">Select a part</text>
+    <text id="info-line-1" x="935" y="795" class="info-body">Click a label or a machine part to highlight it.</text>
+    <text id="info-line-2" x="935" y="830" class="info-body">The explanation for that part will appear here.</text>
+    <text id="info-line-3" x="935" y="865" class="info-body">This helps compare early rotary-flight ideas and aircraft.</text>
+    <text id="info-line-4" x="935" y="900" class="info-hint">Tip: labels and shapes are both interactive.</text>
+  </g>
+
+  <script><![CDATA[
+    (function () {
+      var svg = document.currentScript.ownerDocument.documentElement;
+      var partConfig = {
+      "wing": {title:"Wing", lines:["The wing supports the aircraft in forward flight like an airplane wing.","Once the rotors tilt forward, the wing carries much of the lift.","This helps the aircraft fly efficiently at higher speed.","The wing is a key difference between tiltrotors and most helicopters."], targets:["wing"], fills:["wing"], labels:["label-wing"]},
+      "nacelle": {title:"Nacelle and Rotor", lines:["Each nacelle holds an engine and a rotor system.","The rotor acts like a helicopter rotor in vertical mode.","In forward flight, the nacelle tilts and the rotor acts more like a propeller.","This makes the aircraft capable of both hovering and airplane-like travel."], targets:["nacelle-left-body","rotor-left-hub","rotor-left-v1","rotor-left-v2","nacelle-right-body","rotor-right-hub","rotor-right-v1","rotor-right-v2"], fills:["nacelle-left-body","rotor-left-hub","nacelle-right-body","rotor-right-hub"], labels:["label-nacelle"]},
+      "tilt": {title:"Tilt Direction", lines:["These arrows show how the nacelles rotate.","Pointed upward, the rotors provide vertical lift for takeoff and hover.","Tilted forward, the rotors provide forward thrust for airplane-style flight.","That tilting action is the defining feature of a tiltrotor."], targets:["tilt-arrow-left","tilt-arrow-left-head","tilt-arrow-right","tilt-arrow-right-head","nacelle-left-axis","nacelle-right-axis"], fills:[], labels:["label-tilt"]},
+      "fuselage": {title:"Fuselage", lines:["The fuselage is the main body of the aircraft.","It carries the crew, passengers, cargo, and central systems.","The wing, tail, and landing gear all connect to it.","It is the structural center of the tiltrotor."], targets:["fuselage"], fills:["fuselage"], labels:["label-fuselage"]},
+      "tail": {title:"Tail", lines:["The tail helps keep the aircraft stable and controllable.","It supports directional control in forward flight.","This includes the rear body and vertical stabilizing surfaces.","The tail works together with the wing during airplane-like flight."], targets:["tail","vertical-fin"], fills:["tail","vertical-fin"], labels:["label-tail"]},
+      "landing-gear": {title:"Landing Gear", lines:["The landing gear supports the aircraft on the ground.","Wheels allow taxiing, takeoff, and landing operations.","This system must carry the aircraft in both rotorcraft and airplane phases.","It is the ground-support structure of the tiltrotor."], targets:["gear-left","gear-right","wheel-left","wheel-right"], fills:[], labels:["label-landing-gear"]}
+    };
+      var allTargetIds = ["wing","nacelle-left-body","rotor-left-hub","rotor-left-v1","rotor-left-v2","nacelle-right-body","rotor-right-hub","rotor-right-v1","rotor-right-v2","tilt-arrow-left","tilt-arrow-left-head","tilt-arrow-right","tilt-arrow-right-head","nacelle-left-axis","nacelle-right-axis","fuselage","tail","vertical-fin","gear-left","gear-right","wheel-left","wheel-right"];
+      var allLabelIds = ["label-wing","label-nacelle","label-tilt","label-fuselage","label-tail","label-landing-gear"];
+
+      function byId(id) { return svg.getElementById(id); }
+
+      function setInfo(title, lines) {
+        byId("info-title").textContent = title;
+        byId("info-line-1").textContent = lines[0] || "";
+        byId("info-line-2").textContent = lines[1] || "";
+        byId("info-line-3").textContent = lines[2] || "";
+        byId("info-line-4").textContent = lines[3] || "";
+      }
+
+      function clearState() {
+        allTargetIds.forEach(function(id) {
+          var el = byId(id);
+          if (el) el.classList.remove("active-stroke","active-fill","active-dashed","dimmed");
+        });
+        allLabelIds.forEach(function(id) {
+          var el = byId(id);
+          if (el) el.classList.remove("label-active","dimmed");
+        });
+      }
+
+      function dimEverything() {
+        allTargetIds.forEach(function(id) {
+          var el = byId(id);
+          if (el) el.classList.add("dimmed");
+        });
+        allLabelIds.forEach(function(id) {
+          var el = byId(id);
+          if (el) el.classList.add("dimmed");
+        });
+      }
+
+      function activatePart(name) {
+        var cfg = partConfig[name];
+        if (!cfg) return;
+        clearState();
+        dimEverything();
+        cfg.targets.forEach(function(id) {
+          var el = byId(id);
+          if (!el) return;
+          el.classList.remove("dimmed");
+          if (id.indexOf("outline") !== -1) el.classList.add("active-dashed");
+          else el.classList.add("active-stroke");
+        });
+        cfg.fills.forEach(function(id) {
+          var el = byId(id);
+          if (el) el.classList.add("active-fill");
+        });
+        cfg.labels.forEach(function(id) {
+          var el = byId(id);
+          if (el) { el.classList.remove("dimmed"); el.classList.add("label-active"); }
+        });
+        setInfo(cfg.title, cfg.lines);
+      }
+
+      Array.prototype.forEach.call(svg.querySelectorAll("[data-part]"), function(node) {
+        node.addEventListener("click", function() {
+          activatePart(node.getAttribute("data-part"));
+        });
+      });
+
+      activatePart("tilt");
+    })();
+  ]]></script>
+</svg>

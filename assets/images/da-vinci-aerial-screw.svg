@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 880" width="100%" height="100%">
+    <style>
+        .bg { fill: #f8fafc; }
+        .label { 
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; 
+            font-size: 16px; 
+            font-weight: 800; 
+            fill: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .pointer { 
+            stroke: #e2e8f0;
+            stroke-width: 2.5; 
+            fill: none; 
+            marker-end: url(#arrow-light); 
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .pointer-dot { 
+            fill: #e2e8f0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .heli-stroke { 
+            stroke: #1e293b; 
+            stroke-width: 4; 
+            stroke-linejoin: round; 
+            stroke-linecap: round; 
+            transition: stroke 0.3s, stroke-width 0.3s;
+        }
+        .heli-fill-main { fill: #e2e8f0; }
+        .heli-fill-dark { fill: #cbd5e1; }
+        .heli-fill-darker { fill: #94a3b8; }
+        .heli-wood { fill: #d4a373; stroke: #8b5a2b; stroke-width: 4; transition: all 0.3s ease;}
+        .heli-linen { fill: #fefae0; stroke: #ccd5ae; stroke-width: 4; transition: all 0.3s ease;}
+
+        .interactive-label { cursor: pointer; }
+        .interactive-label:hover .label, .interactive-label.active .label { fill: #e11d48; }
+        .interactive-label:hover .pointer, .interactive-label.active .pointer { stroke: #e11d48; stroke-width: 4; marker-end: url(#arrow-active); }
+        .interactive-label:hover .pointer-dot, .interactive-label.active .pointer-dot { fill: #e11d48; r: 6; }
+        .highlight { stroke: #e11d48 !important; stroke-width: 6 !important; }
+        .info-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+    </style>
+
+    <defs>
+        <marker id="arrow-light" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#e2e8f0" />
+        </marker>
+        <marker id="arrow-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" />
+        </marker>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.1"/>
+        </filter>
+        <filter id="panel-shadow" x="-5%" y="-10%" width="110%" height="130%">
+            <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.08"/>
+        </filter>
+    </defs>
+
+    <rect width="100%" height="100%" class="bg" />
+
+    <!-- GRAPHIC -->
+    <g filter="url(#shadow)">
+        <!-- Circular Base Platform -->
+        <ellipse id="circular-base" cx="550" cy="600" rx="200" ry="40" class="heli-wood" />
+        <path id="base-rim" d="M 350,600 C 350,630 750,630 750,600 L 750,620 C 750,650 350,650 350,620 Z" class="heli-wood" />
+
+        <!-- Central Mast -->
+        <rect id="central-mast" x="535" y="150" width="30" height="460" rx="5" class="heli-wood" />
+
+        <!-- Pushing Bars -->
+        <line id="push-bar-1" x1="400" y1="550" x2="700" y2="550" class="heli-wood" stroke-width="12" />
+        <line id="push-bar-2" x1="550" y1="520" x2="550" y2="580" class="heli-wood" stroke-width="12" />
+
+        <!-- Wire Supports (Rigging) -->
+        <line id="rigging-1" x1="550" y1="150" x2="380" y2="280" class="heli-stroke" stroke-width="2" />
+        <line id="rigging-2" x1="550" y1="150" x2="720" y2="280" class="heli-stroke" stroke-width="2" />
+
+        <!-- Helical Linen Rotor (simplified representation) -->
+        <path id="linen-spiral-1" d="M 550,450 C 300,420 300,320 550,280 C 650,260 700,280 720,280 C 720,320 550,380 550,450 Z" class="heli-linen" />
+        <path id="linen-spiral-2" d="M 550,350 C 780,320 780,220 550,180 C 450,160 400,180 380,180 C 380,220 550,280 550,350 Z" class="heli-linen" />
+    </g>
+
+    <!-- LABELS -->
+    <g>
+        <g id="group-central-mast" class="interactive-label" onclick="selectPart('central-mast')">
+            <rect x="350" y="80" width="120" height="30" fill="transparent"/>
+            <text x="410" y="100" class="label" text-anchor="middle">Central Mast</text>
+            <circle cx="410" cy="110" r="4" class="pointer-dot"/>
+            <line x1="410" y1="110" x2="540" y2="200" class="pointer" />
+        </g>
+        <g id="group-linen-rotor" class="interactive-label" onclick="selectPart('linen-rotor')">
+            <rect x="750" y="200" width="150" height="30" fill="transparent"/>
+            <text x="825" y="220" class="label" text-anchor="middle">Helical Linen Rotor</text>
+            <circle cx="825" cy="230" r="4" class="pointer-dot"/>
+            <line x1="825" y1="230" x2="680" y2="290" class="pointer" />
+        </g>
+        <g id="group-pushing-bars" class="interactive-label" onclick="selectPart('pushing-bars')">
+            <rect x="780" y="480" width="150" height="30" fill="transparent"/>
+            <text x="855" y="500" class="label" text-anchor="middle">Pushing Bars</text>
+            <circle cx="855" cy="510" r="4" class="pointer-dot"/>
+            <line x1="855" y1="510" x2="680" y2="550" class="pointer" />
+        </g>
+        <g id="group-base-platform" class="interactive-label" onclick="selectPart('base-platform')">
+            <rect x="200" y="580" width="150" height="30" fill="transparent"/>
+            <text x="275" y="600" class="label" text-anchor="middle">Circular Base</text>
+            <circle cx="275" cy="610" r="4" class="pointer-dot"/>
+            <line x1="275" y1="610" x2="420" y2="620" class="pointer" />
+        </g>
+    </g>
+
+    <!-- INFO PANEL -->
+    <g id="info-panel" transform="translate(150, 740)" filter="url(#panel-shadow)">
+        <rect width="800" height="110" rx="12" class="info-box" />
+        <foreignObject x="20" y="15" width="760" height="80">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; padding: 0 10px;">
+                <h3 id="info-title" style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: #e11d48; text-transform: uppercase; letter-spacing: 0.5px;">Da Vinci's Aerial Screw</h3>
+                <p id="info-desc" style="margin: 0; font-size: 15px; color: #475569; line-height: 1.4;">Click on the labels above to explore Leonardo da Vinci's 1489 concept for a flying machine. Though it never flew, it was the first recorded design resembling a helicopter.</p>
+            </div>
+        </foreignObject>
+    </g>
+
+    <script type="text/javascript">
+        <![CDATA[
+        const aerialData = {
+            'central-mast': { title: 'Central Mast', desc: 'The solid wooden axis of the machine. The entire spiral structure revolves around this central point to generate compression.', elements: ['central-mast'] },
+            'linen-rotor': { title: 'Helical Linen Rotor', desc: 'Made of starched linen, reed, and wire. Da Vinci theorized that spinning this spiral rapidly would "screw" into the air, pulling the machine upwards.', elements: ['linen-spiral-1', 'linen-spiral-2', 'rigging-1', 'rigging-2'] },
+            'pushing-bars': { title: 'Pushing Bars', desc: 'Four long wooden spokes. Da Vinci planned for four men to stand on the base and push these bars to spin the central mast.', elements: ['push-bar-1', 'push-bar-2'] },
+            'base-platform': { title: 'Circular Base', desc: 'The standing platform for the human crew. Since humans cannot generate enough power to lift themselves and the heavy wood, it remained a theoretical concept.', elements: ['circular-base', 'base-rim'] }
+        };
+
+        function selectPart(partKey) {
+            document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+            document.querySelectorAll('.interactive-label').forEach(el => el.classList.remove('active'));
+            const partData = aerialData[partKey];
+            if (!partData) return;
+            document.getElementById('info-title').textContent = partData.title;
+            document.getElementById('info-desc').textContent = partData.desc;
+            partData.elements.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('highlight'); });
+            const labelGroup = document.getElementById('group-' + partKey);
+            if (labelGroup) labelGroup.classList.add('active');
+        }
+        ]]>
+    </script>
+</svg>

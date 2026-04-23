@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 880" width="100%" height="100%">
+    <style>
+        .bg { fill: #f8fafc; }
+        .label { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 16px; font-weight: 800; fill: #cbd5e1; text-transform: uppercase; letter-spacing: 1px; pointer-events: none; transition: all 0.3s ease; }
+        .pointer { stroke: #e2e8f0; stroke-width: 2.5; fill: none; marker-end: url(#arrow-light); pointer-events: none; transition: all 0.3s ease; }
+        .pointer-dot { fill: #e2e8f0; pointer-events: none; transition: all 0.3s ease; }
+        .heli-stroke { stroke: #1e293b; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; transition: stroke 0.3s, stroke-width 0.3s; }
+        .heli-fill-main { fill: #e2e8f0; transition: all 0.3s ease;}
+        .heli-fill-dark { fill: #cbd5e1; transition: all 0.3s ease;}
+        .heli-fill-darker { fill: #94a3b8; transition: all 0.3s ease;}
+        .truss-frame { stroke: #475569; stroke-width: 5; stroke-linejoin: round; fill: none; transition: all 0.3s ease;}
+
+        .interactive-label { cursor: pointer; }
+        .interactive-label:hover .label, .interactive-label.active .label { fill: #e11d48; }
+        .interactive-label:hover .pointer, .interactive-label.active .pointer { stroke: #e11d48; stroke-width: 4; marker-end: url(#arrow-active); }
+        .interactive-label:hover .pointer-dot, .interactive-label.active .pointer-dot { fill: #e11d48; r: 6; }
+        .highlight { stroke: #e11d48 !important; stroke-width: 8 !important; }
+        .info-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+    </style>
+
+    <defs>
+        <marker id="arrow-light" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e2e8f0" /></marker>
+        <marker id="arrow-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" /></marker>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.1"/></filter>
+        <filter id="panel-shadow" x="-5%" y="-10%" width="110%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.08"/></filter>
+    </defs>
+
+    <rect width="100%" height="100%" class="bg" />
+
+    <!-- GRAPHIC -->
+    <g filter="url(#shadow)">
+        <!-- Landing Gear (Wheels/Struts) -->
+        <line id="gear-strut-1" x1="450" y1="460" x2="400" y2="550" class="heli-stroke" />
+        <line id="gear-strut-2" x1="550" y1="460" x2="520" y2="550" class="heli-stroke" />
+        <line id="gear-strut-3" x1="850" y1="390" x2="850" y2="440" class="heli-stroke" />
+        <circle id="wheel-1" cx="400" cy="560" r="20" class="heli-fill-darker heli-stroke" />
+        <circle id="wheel-2" cx="520" cy="560" r="20" class="heli-fill-darker heli-stroke" />
+        <circle id="wheel-tail" cx="850" cy="450" r="10" class="heli-fill-darker heli-stroke" />
+
+        <!-- Open Tubular Fuselage / Tail Boom (Truss structure) -->
+        <path id="tubular-frame" d="M 350,420 L 580,420 L 580,460 L 350,460 Z M 580,420 L 880,380 L 880,400 L 580,460 Z M 580,420 L 680,440 M 680,405 L 580,460 M 680,405 L 780,420 M 780,390 L 680,440 M 780,390 L 880,400" class="truss-frame" />
+
+        <!-- Exposed Engine Block -->
+        <rect id="vs-engine" x="500" y="340" width="80" height="80" rx="8" class="heli-fill-dark heli-stroke" />
+        <!-- Belts/Transmission abstract -->
+        <line id="vs-belts" x1="540" y1="340" x2="540" y2="280" class="heli-stroke" stroke-width="8" stroke-dasharray="10 5" />
+
+        <!-- Pilot Seat & Silhouette (Igor Sikorsky) -->
+        <path id="pilot-seat" d="M 400,420 L 400,350 L 440,350 L 440,420 Z" class="heli-fill-darker heli-stroke" />
+        <circle id="pilot-head" cx="420" cy="300" r="15" fill="#1e293b" />
+        <path id="pilot-body" d="M 420,315 L 420,380 M 420,330 L 450,360 M 420,380 L 450,400" stroke="#1e293b" stroke-width="12" stroke-linecap="round" fill="none" />
+        <!-- Fedora Hat (Sikorsky's trademark) -->
+        <path id="pilot-hat" d="M 395,290 C 395,270 445,270 445,290 Z M 385,290 L 455,290" fill="#1e293b" stroke="#1e293b" stroke-width="3"/>
+
+        <!-- Mast & Swashplate -->
+        <rect id="vs-mast" x="532" y="160" width="16" height="120" class="heli-fill-darker heli-stroke" />
+        <ellipse id="vs-swash" cx="540" cy="220" rx="35" ry="8" class="heli-fill-dark heli-stroke" />
+
+        <!-- Main Rotor Blades (3 blades, simplified) -->
+        <path id="vs-blade-1" d="M 500,160 C 300,165 100,170 50,170 C 100,160 300,155 500,155 Z" class="heli-fill-main heli-stroke" />
+        <path id="vs-blade-2" d="M 580,160 C 750,165 950,170 1000,170 C 950,160 750,155 580,155 Z" class="heli-fill-main heli-stroke" />
+
+        <!-- Tail Rotor System (Single tail rotor configuration) -->
+        <circle id="vs-tail-hub" cx="890" cy="390" r="12" class="heli-fill-darker heli-stroke" />
+        <line id="vs-tail-blade-1" x1="890" y1="330" x2="890" y2="450" class="heli-stroke" stroke-width="6" />
+        <line id="vs-tail-blade-2" x1="830" y1="390" x2="950" y2="390" class="heli-stroke" stroke-width="6" />
+    </g>
+
+    <!-- LABELS -->
+    <g>
+        <g id="group-tubular-frame" class="interactive-label" onclick="selectPart('tubular-frame')">
+            <rect x="630" y="520" width="180" height="30" fill="transparent"/>
+            <text x="720" y="540" class="label" text-anchor="middle">Open Tubular Frame</text>
+            <circle cx="720" cy="550" r="4" class="pointer-dot"/>
+            <line x1="720" y1="550" x2="720" y2="430" class="pointer" />
+        </g>
+        <g id="group-main-rotor" class="interactive-label" onclick="selectPart('main-rotor')">
+            <rect x="250" y="80" width="180" height="30" fill="transparent"/>
+            <text x="340" y="100" class="label" text-anchor="middle">Main Lifting Rotor</text>
+            <circle cx="340" cy="110" r="4" class="pointer-dot"/>
+            <line x1="340" y1="110" x2="380" y2="155" class="pointer" />
+        </g>
+        <g id="group-anti-torque" class="interactive-label" onclick="selectPart('anti-torque')">
+            <rect x="880" y="240" width="180" height="30" fill="transparent"/>
+            <text x="970" y="260" class="label" text-anchor="middle">Anti-Torque Tail Rotor</text>
+            <circle cx="970" cy="270" r="4" class="pointer-dot"/>
+            <line x1="970" y1="270" x2="910" y2="330" class="pointer" />
+        </g>
+        <g id="group-exposed-engine" class="interactive-label" onclick="selectPart('exposed-engine')">
+            <rect x="650" y="270" width="160" height="30" fill="transparent"/>
+            <text x="730" y="290" class="label" text-anchor="middle">Exposed Engine</text>
+            <circle cx="730" cy="300" r="4" class="pointer-dot"/>
+            <line x1="730" y1="300" x2="585" y2="360" class="pointer" />
+        </g>
+        <g id="group-pilot" class="interactive-label" onclick="selectPart('pilot')">
+            <rect x="200" y="300" width="160" height="30" fill="transparent"/>
+            <text x="280" y="320" class="label" text-anchor="middle">Open Pilot Seat</text>
+            <circle cx="280" cy="330" r="4" class="pointer-dot"/>
+            <line x1="280" y1="330" x2="395" y2="380" class="pointer" />
+        </g>
+    </g>
+
+    <!-- INFO PANEL -->
+    <g id="info-panel" transform="translate(150, 740)" filter="url(#panel-shadow)">
+        <rect width="800" height="110" rx="12" class="info-box" />
+        <foreignObject x="20" y="15" width="760" height="80">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; padding: 0 10px;">
+                <h3 id="info-title" style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: #e11d48; text-transform: uppercase; letter-spacing: 0.5px;">Sikorsky VS-300 (1939)</h3>
+                <p id="info-desc" style="margin: 0; font-size: 15px; color: #475569; line-height: 1.4;">Click on the labels to explore the Vought-Sikorsky VS-300. Designed by Igor Sikorsky, it was the first practical helicopter in the United States and pioneered the modern single-main/single-tail rotor layout.</p>
+            </div>
+        </foreignObject>
+    </g>
+
+    <script type="text/javascript">
+        <![CDATA[
+        const vsData = {
+            'tubular-frame': { title: 'Open Tubular Frame', desc: 'To save weight and allow for easy modifications during early testing, the fuselage was completely uncovered, exposing the welded steel tube structure.', elements: ['tubular-frame'] },
+            'main-rotor': { title: 'Main Lifting Rotor', desc: 'Powered directly by the engine, this large overhead rotor provided all the vertical lift needed to pull the aircraft into the sky.', elements: ['vs-blade-1', 'vs-blade-2', 'vs-mast', 'vs-swash'] },
+            'anti-torque': { title: 'Anti-Torque Tail Rotor', desc: 'Sikorsky\'s key innovation. Without this vertical rotor pushing sideways, the main rotor\'s torque would cause the entire helicopter body to spin uncontrollably.', elements: ['vs-tail-hub', 'vs-tail-blade-1', 'vs-tail-blade-2'] },
+            'exposed-engine': { title: 'Exposed Engine & Belts', desc: 'A Franklin 75-horsepower engine sat right behind the pilot. Belt drives transferred power from the engine up to the main rotor gearbox.', elements: ['vs-engine', 'vs-belts'] },
+            'pilot': { title: 'Open Pilot Seat', desc: 'Igor Sikorsky famously test-flew the VS-300 himself, always wearing his signature fedora hat, sitting completely exposed to the elements.', elements: ['pilot-seat', 'pilot-head', 'pilot-body', 'pilot-hat'] }
+        };
+
+        function selectPart(partKey) {
+            document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+            document.querySelectorAll('.interactive-label').forEach(el => el.classList.remove('active'));
+            const partData = vsData[partKey];
+            if (!partData) return;
+            document.getElementById('info-title').textContent = partData.title;
+            document.getElementById('info-desc').textContent = partData.desc;
+            partData.elements.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('highlight'); });
+            const labelGroup = document.getElementById('group-' + partKey);
+            if (labelGroup) labelGroup.classList.add('active');
+        }
+        ]]>
+    </script>
+</svg>

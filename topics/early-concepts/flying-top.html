@@ -46,77 +46,7 @@
               <h2>Interactive Flying Top Diagram</h2>
               <p class="mt-2">Click any label to highlight the part and learn how lift works.</p>
               <div class="diagram-container" style="margin:var(--space-4) auto; overflow:auto;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 880" style="width:100%;height:auto;min-width:700px;" id="flyingtop-diagram">
-                  <style>
-                    .bg { fill: #f8fafc; }
-                    .label { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 16px; font-weight: 800; fill: #cbd5e1; text-transform: uppercase; letter-spacing: 1px; pointer-events: none; transition: all 0.3s ease; }
-                    .pointer { stroke: #e2e8f0; stroke-width: 2.5; fill: none; marker-end: url(#arrow-light); pointer-events: none; transition: all 0.3s ease; }
-                    .pointer-dot { fill: #e2e8f0; pointer-events: none; transition: all 0.3s ease; }
-                    .heli-stroke { stroke: #1e293b; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; transition: stroke 0.3s, stroke-width 0.3s; }
-                    .toy-wood { fill: #e6ccb2; stroke: #9c6644; stroke-width: 5; transition: all 0.3s ease; }
-                    .toy-shaft { fill: #ddb892; stroke: #9c6644; stroke-width: 5; transition: all 0.3s ease; }
-                    .action-arrow { fill: none; stroke: #38bdf8; stroke-width: 6; stroke-dasharray: 8, 8; marker-end: url(#arrow-blue); transition: all 0.3s ease; }
-                    .interactive-label { cursor: pointer; }
-                    .interactive-label:hover .label, .interactive-label.active .label { fill: #e11d48; }
-                    .interactive-label:hover .pointer, .interactive-label.active .pointer { stroke: #e11d48; stroke-width: 4; marker-end: url(#arrow-active); }
-                    .interactive-label:hover .pointer-dot, .interactive-label.active .pointer-dot { fill: #e11d48; r: 6; }
-                    .highlight { stroke: #e11d48 !important; stroke-width: 7 !important; }
-                    .info-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
-                  </style>
-                  <defs>
-                    <marker id="arrow-light" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e2e8f0" /></marker>
-                    <marker id="arrow-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" /></marker>
-                    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" /></marker>
-                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.1"/></filter>
-                    <filter id="panel-shadow" x="-5%" y="-10%" width="110%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.08"/></filter>
-                  </defs>
-                  <rect width="100%" height="100%" class="bg" />
-                  <g filter="url(#shadow)">
-                    <rect id="spin-shaft" x="540" y="300" width="20" height="350" rx="10" class="toy-shaft" />
-                    <path id="spin-action" d="M 450,550 C 450,600 650,600 650,550" class="action-arrow" />
-                    <path id="spin-action-2" d="M 650,450 C 650,400 450,400 450,450" class="action-arrow" />
-                    <path id="rotor-left" d="M 550,290 C 400,320 250,290 200,280 C 250,250 400,270 550,290 Z" class="toy-wood" />
-                    <path id="rotor-right" d="M 550,290 C 700,260 850,290 900,300 C 850,330 700,310 550,290 Z" class="toy-wood" />
-                    <circle id="hub-pin" cx="550" cy="290" r="12" fill="#8b5a2b" />
-                    <line id="lift-action-1" x1="300" y1="240" x2="300" y2="150" class="action-arrow" />
-                    <line id="lift-action-2" x1="800" y1="240" x2="800" y2="150" class="action-arrow" />
-                  </g>
-                  <g>
-                    <g id="group-bamboo-rotor" class="interactive-label" onclick="selectPart('bamboo-rotor')">
-                      <rect x="750" y="150" width="120" height="30" fill="transparent"/>
-                      <text x="810" y="170" class="label" text-anchor="middle">Angled Rotor</text>
-                      <circle cx="810" cy="180" r="4" class="pointer-dot"/>
-                      <line x1="810" y1="180" x2="750" y2="280" class="pointer" />
-                    </g>
-                    <g id="group-spin-shaft" class="interactive-label" onclick="selectPart('spin-shaft')">
-                      <rect x="350" y="380" width="100" height="30" fill="transparent"/>
-                      <text x="400" y="400" class="label" text-anchor="middle">Spin Shaft</text>
-                      <circle cx="400" cy="410" r="4" class="pointer-dot"/>
-                      <line x1="400" y1="410" x2="540" y2="450" class="pointer" />
-                    </g>
-                    <g id="group-kinetic-spin" class="interactive-label" onclick="selectPart('kinetic-spin')">
-                      <rect x="700" y="580" width="180" height="30" fill="transparent"/>
-                      <text x="790" y="600" class="label" text-anchor="middle">Kinetic Spinning</text>
-                      <circle cx="790" cy="610" r="4" class="pointer-dot"/>
-                      <line x1="790" y1="610" x2="620" y2="570" class="pointer" />
-                    </g>
-                    <g id="group-aerodynamic-lift" class="interactive-label" onclick="selectPart('aerodynamic-lift')">
-                      <rect x="200" y="80" width="180" height="30" fill="transparent"/>
-                      <text x="290" y="100" class="label" text-anchor="middle">Aerodynamic Lift</text>
-                      <circle cx="290" cy="110" r="4" class="pointer-dot"/>
-                      <line x1="290" y1="110" x2="300" y2="180" class="pointer" />
-                    </g>
-                  </g>
-                  <g id="info-panel" transform="translate(150, 740)" filter="url(#panel-shadow)">
-                    <rect width="800" height="110" rx="12" class="info-box" />
-                    <foreignObject x="20" y="15" width="760" height="80">
-                      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; padding: 0 10px;">
-                        <h3 id="info-title" style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: #e11d48; text-transform: uppercase; letter-spacing: 0.5px;">The Flying Top (Bamboo Copter)</h3>
-                        <p id="info-desc" style="margin: 0; font-size: 15px; color: #475569; line-height: 1.4;">Click on the labels to learn about this ancient Chinese toy (c. 400 BC), considered the first physical realization of rotary-wing flight.</p>
-                      </div>
-                    </foreignObject>
-                  </g>
-                </svg>
+                <object data="../../assets/images/flying-top.svg" type="image/svg+xml" style="width:100%;min-height:500px;display:block"></object>
               </div>
             </div>
             <div id="quick-check"></div>
@@ -145,24 +75,7 @@
       QuizEngine.renderQuickCheck('quick-check', [{question:'The flying top demonstrated:',options:['Jet power','Spinning blades create lift','Engines are needed','Wings must be fixed'],correct:1}]);
     });
 
-    const topData = {
-      'bamboo-rotor': { title: 'Angled Rotor Blades', desc: 'Carved from lightweight wood or bamboo, these blades are pitched at an angle. As they carve through the air, they act like tiny airplane wings.', elements: ['rotor-left', 'rotor-right', 'hub-pin'] },
-      'spin-shaft': { title: 'Central Spin Shaft', desc: 'A simple, lightweight stick. The operator places the shaft between their palms and rubs their hands together quickly to create rapid rotation.', elements: ['spin-shaft'] },
-      'kinetic-spin': { title: 'Kinetic Energy (Spin)', desc: 'The rapid twisting motion provided by human hands transfers kinetic energy to the rotor. The faster it spins, the more air the blades bite into.', elements: ['spin-action', 'spin-action-2'] },
-      'aerodynamic-lift': { title: 'Aerodynamic Lift', desc: 'The spinning, angled blades force air downwards. By Newton\'s third law, this creates an equal and opposite upward force (lift), causing the toy to fly out of the hands.', elements: ['lift-action-1', 'lift-action-2'] }
-    };
 
-    function selectPart(partKey) {
-      document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
-      document.querySelectorAll('.interactive-label').forEach(el => el.classList.remove('active'));
-      const partData = topData[partKey];
-      if (!partData) return;
-      document.getElementById('info-title').textContent = partData.title;
-      document.getElementById('info-desc').textContent = partData.desc;
-      partData.elements.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('highlight'); });
-      const labelGroup = document.getElementById('group-' + partKey);
-      if (labelGroup) labelGroup.classList.add('active');
-    }
   </script>
 </body>
 </html>

@@ -1,0 +1,946 @@
+<svg
+  width="1800"
+  height="1080"
+  viewBox="0 0 1800 1080"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Interactive helicopter parts diagram</title>
+  <desc id="desc">
+    Click a label or helicopter part to highlight it and read an explanation.
+  </desc>
+
+  <defs>
+    <marker
+      id="arrowhead"
+      markerWidth="10"
+      markerHeight="8"
+      refX="9"
+      refY="4"
+      orient="auto"
+      markerUnits="strokeWidth"
+    >
+      <path d="M0,0 L10,4 L0,8 Z" fill="#4a4a4a" />
+    </marker>
+
+    <style>
+      .part {
+        stroke: #222;
+        stroke-width: 4;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        vector-effect: non-scaling-stroke;
+      }
+
+      .body-fill { fill: #cfd8e3; }
+      .glass-fill { fill: #a9bdd0; }
+      .engine-fill { fill: #d6c2a7; }
+      .mech-fill { fill: #d9dfe6; }
+      .accent-fill { fill: #dde7f1; }
+      .warning-fill { fill: #e7d8c6; }
+
+      .line-label {
+        stroke: #4a4a4a;
+        stroke-width: 2.5;
+        fill: none;
+        marker-end: url(#arrowhead);
+        vector-effect: non-scaling-stroke;
+      }
+
+      .label-text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 28px;
+        fill: #111;
+      }
+
+      .label-subtext {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        fill: #444;
+      }
+
+      .clickable {
+        cursor: pointer;
+        transition: opacity 0.18s ease;
+      }
+
+      .clickable:hover {
+        opacity: 0.88;
+      }
+
+      .target {
+        transition: filter 0.2s ease, stroke 0.2s ease, fill 0.2s ease, opacity 0.2s ease;
+      }
+
+      .dimmed {
+        opacity: 0.18;
+      }
+
+      .active-stroke {
+        stroke: #ff8a00 !important;
+        stroke-width: 8 !important;
+      }
+
+      .active-fill {
+        fill: #ffe2b8 !important;
+      }
+
+      .active-dashed {
+        stroke: #ff8a00 !important;
+        stroke-width: 6 !important;
+        opacity: 1 !important;
+      }
+
+      .label-active text {
+        fill: #c75b00 !important;
+        font-weight: 700;
+      }
+
+      .label-active path,
+      .label-active line {
+        stroke: #c75b00 !important;
+      }
+
+      .info-panel {
+        fill: #f4f7fb;
+        stroke: #b8c6d8;
+        stroke-width: 3;
+      }
+
+      .info-panel-accent {
+        fill: #dfe9f5;
+      }
+
+      .info-title {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        fill: #102033;
+      }
+
+      .info-body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 19px;
+        fill: #213040;
+      }
+
+      .info-hint {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 17px;
+        fill: #607080;
+      }
+
+      .button-bg {
+        fill: rgba(255,255,255,0.001);
+        stroke: transparent;
+      }
+
+      .helper-hit {
+        fill: transparent;
+        stroke: transparent;
+        stroke-width: 18;
+      }
+
+      .tiny { font-size: 18px; }
+    </style>
+  </defs>
+
+  <!-- =========================
+       HELICOPTER
+       ========================= -->
+
+  <!-- Fuselage -->
+  <g id="fuselage-group">
+    <path
+      id="fuselage"
+      class="part target body-fill clickable"
+      data-part="fuselage"
+      d="M260 440
+         C310 345, 425 295, 550 295
+         L780 295
+         C905 295, 985 350, 1025 425
+         C1042 457, 1041 500, 1013 528
+         L810 580
+         L455 580
+         C355 580, 285 545, 245 487
+         C226 460, 233 442, 260 440 Z"
+    />
+  </g>
+
+  <!-- Cockpit -->
+  <g id="cockpit-group">
+    <path
+      id="cockpit"
+      class="part target glass-fill clickable"
+      data-part="cockpit"
+      d="M690 315
+         C780 315, 862 345, 915 405
+         L770 430
+         L635 430
+         C645 390, 664 348, 690 315 Z"
+    />
+  </g>
+
+  <!-- Engine compartment -->
+  <g id="engine-group">
+    <rect
+      id="engine"
+      class="part target engine-fill clickable"
+      data-part="engine"
+      x="565"
+      y="355"
+      width="175"
+      height="82"
+      rx="20"
+    />
+    <rect
+      class="part mech-fill"
+      x="590"
+      y="380"
+      width="52"
+      height="28"
+      rx="6"
+    />
+    <circle class="part mech-fill" cx="675" cy="395" r="15" />
+  </g>
+
+  <!-- Air intake -->
+  <g id="air-intake-group">
+    <path
+      id="air-intake"
+      class="part target accent-fill clickable"
+      data-part="air-intake"
+      d="M520 372
+         Q495 380 490 405
+         Q495 430 520 438
+         L560 438
+         Q545 405 560 372 Z"
+    />
+  </g>
+
+  <!-- Exhaust -->
+  <g id="exhaust-group">
+    <rect
+      id="exhaust"
+      class="part target warning-fill clickable"
+      data-part="exhaust"
+      x="752"
+      y="387"
+      width="70"
+      height="22"
+      rx="8"
+    />
+  </g>
+
+  <!-- Landing skids -->
+  <g id="landing-skids-group">
+    <line id="landing-skid-top" class="part target clickable" data-part="landing-skids" x1="355" y1="645" x2="845" y2="645" />
+    <line id="landing-skid-bottom" class="part target clickable" data-part="landing-skids" x1="315" y1="677" x2="885" y2="677" />
+    <line id="landing-skid-strut-left" class="part target clickable" data-part="landing-skids" x1="445" y1="580" x2="390" y2="677" />
+    <line id="landing-skid-strut-right" class="part target clickable" data-part="landing-skids" x1="750" y1="580" x2="795" y2="677" />
+    <rect class="helper-hit clickable" data-part="landing-skids" x="300" y="560" width="600" height="140" rx="20" />
+  </g>
+
+  <!-- Tail boom -->
+  <g id="tail-boom-group">
+    <rect
+      id="tail-boom"
+      class="part target body-fill clickable"
+      data-part="tail-boom"
+      x="1010"
+      y="412"
+      width="365"
+      height="50"
+      rx="18"
+    />
+  </g>
+
+  <!-- Vertical fin -->
+  <g id="vertical-fin-group">
+    <path
+      id="vertical-fin"
+      class="part target accent-fill clickable"
+      data-part="vertical-fin"
+      d="M1288 410
+         L1338 330
+         L1360 410 Z"
+    />
+  </g>
+
+  <!-- Horizontal stabilizer -->
+  <g id="horizontal-stabilizer-group">
+    <path
+      id="horizontal-stabilizer"
+      class="part target accent-fill clickable"
+      data-part="horizontal-stabilizer"
+      d="M1240 472
+         L1325 490
+         L1245 510
+         Z"
+    />
+  </g>
+
+  <!-- Tail rotor -->
+  <g id="tail-rotor-group">
+    <circle
+      id="tail-rotor"
+      class="part target clickable"
+      data-part="tail-rotor"
+      cx="1470"
+      cy="437"
+      r="38"
+      fill="none"
+    />
+    <line class="part target clickable" data-part="tail-rotor" x1="1470" y1="372" x2="1470" y2="502" />
+    <line class="part target clickable" data-part="tail-rotor" x1="1405" y1="437" x2="1535" y2="437" />
+    <circle class="helper-hit clickable" data-part="tail-rotor" cx="1470" cy="437" r="60" />
+  </g>
+
+  <!-- Mast -->
+  <g id="mast-group">
+    <rect
+      id="mast"
+      class="part target glass-fill clickable"
+      data-part="mast"
+      x="602"
+      y="180"
+      width="32"
+      height="115"
+    />
+  </g>
+
+  <!-- Transmission -->
+  <g id="transmission-group">
+    <rect
+      id="transmission"
+      class="part target mech-fill clickable"
+      data-part="transmission"
+      x="573"
+      y="152"
+      width="90"
+      height="36"
+      rx="12"
+    />
+  </g>
+
+  <!-- Swashplate -->
+  <g id="swashplate-group">
+    <ellipse
+      id="swashplate"
+      class="part target mech-fill clickable"
+      data-part="swashplate"
+      cx="618"
+      cy="200"
+      rx="34"
+      ry="14"
+    />
+    <ellipse
+      class="part mech-fill"
+      cx="618"
+      cy="194"
+      rx="28"
+      ry="10"
+    />
+  </g>
+
+  <!-- Hub -->
+  <g id="hub-group">
+    <circle
+      id="hub"
+      class="part target glass-fill clickable"
+      data-part="hub"
+      cx="618"
+      cy="147"
+      r="28"
+    />
+  </g>
+
+  <!-- Pitch links -->
+  <g id="pitch-link-group">
+    <line
+      id="pitch-link-left"
+      class="part target clickable"
+      data-part="pitch-link"
+      x1="603"
+      y1="170"
+      x2="565"
+      y2="133"
+    />
+    <line
+      id="pitch-link-right"
+      class="part target clickable"
+      data-part="pitch-link"
+      x1="633"
+      y1="170"
+      x2="671"
+      y2="133"
+    />
+    <rect class="helper-hit clickable" data-part="pitch-link" x="545" y="118" width="145" height="70" rx="16" />
+  </g>
+
+  <!-- Rotor blades -->
+  <g id="rotor-blades-group">
+    <rect
+      id="rotor-blade-left"
+      class="part target body-fill clickable"
+      data-part="rotor-blade"
+      x="132"
+      y="131"
+      width="485"
+      height="32"
+      rx="15"
+    />
+    <rect
+      id="rotor-blade-right"
+      class="part target body-fill clickable"
+      data-part="rotor-blade"
+      x="619"
+      y="131"
+      width="515"
+      height="32"
+      rx="15"
+    />
+  </g>
+
+  <!-- Main rotor outline -->
+  <g id="main-rotor-group">
+    <path
+      id="main-rotor"
+      class="target clickable"
+      data-part="main-rotor"
+      d="M110 117
+         L1155 117
+         M110 177
+         L1155 177
+         M110 117
+         Q90 147 110 177
+         M1155 117
+         Q1175 147 1155 177"
+      fill="none"
+      stroke="#777"
+      stroke-width="3"
+      stroke-dasharray="10 8"
+    />
+    <rect
+      id="main-rotor-hitarea"
+      class="helper-hit clickable"
+      data-part="main-rotor"
+      x="92"
+      y="108"
+      width="1080"
+      height="82"
+      rx="26"
+    />
+  </g>
+
+  <!-- =========================
+       LABELS
+       ========================= -->
+
+  <g id="label-main-rotor" class="clickable" data-part="main-rotor">
+    <rect class="button-bg" x="45" y="28" width="240" height="84" rx="14" />
+    <text x="55" y="72" class="label-text">Main Rotor</text>
+    <path class="line-label" d="M225 88 L400 126" />
+  </g>
+
+  <g id="label-mast" class="clickable" data-part="mast">
+    <rect class="button-bg" x="370" y="5" width="220" height="100" rx="14" />
+    <text x="395" y="46" class="label-text">Mast</text>
+    <text x="360" y="83" class="label-subtext">(vertical shaft)</text>
+    <path class="line-label" d="M510 60 L603 138" />
+  </g>
+
+  <g id="label-hub" class="clickable" data-part="hub">
+    <rect class="button-bg" x="680" y="18" width="120" height="68" rx="14" />
+    <text x="690" y="62" class="label-text">Hub</text>
+    <path class="line-label" d="M760 74 L645 132" />
+  </g>
+
+  <g id="label-rotor-blade" class="clickable" data-part="rotor-blade">
+    <rect class="button-bg" x="1040" y="0" width="250" height="106" rx="14" />
+    <text x="1065" y="45" class="label-text">Rotor Blade</text>
+    <text x="1077" y="80" class="label-subtext">(one blade)</text>
+    <path class="line-label" d="M1180 58 L965 128" />
+  </g>
+
+  <g id="label-swashplate" class="clickable" data-part="swashplate">
+    <rect class="button-bg" x="720" y="190" width="165" height="70" rx="14" />
+    <text x="730" y="235" class="label-text tiny">Swashplate</text>
+    <path class="line-label" d="M820 240 L658 205" />
+  </g>
+
+  <g id="label-pitch-link" class="clickable" data-part="pitch-link">
+    <rect class="button-bg" x="835" y="120" width="160" height="72" rx="14" />
+    <text x="845" y="165" class="label-text tiny">Pitch Link</text>
+    <path class="line-label" d="M930 170 L662 138" />
+  </g>
+
+  <g id="label-cockpit" class="clickable" data-part="cockpit">
+    <rect class="button-bg" x="900" y="250" width="150" height="68" rx="14" />
+    <text x="915" y="294" class="label-text tiny">Cockpit</text>
+    <path class="line-label" d="M930 302 L854 347" />
+  </g>
+
+  <g id="label-engine" class="clickable" data-part="engine">
+    <rect class="button-bg" x="420" y="258" width="140" height="68" rx="14" />
+    <text x="435" y="302" class="label-text tiny">Engine</text>
+    <path class="line-label" d="M530 307 L615 356" />
+  </g>
+
+  <g id="label-transmission" class="clickable" data-part="transmission">
+    <rect class="button-bg" x="438" y="120" width="190" height="68" rx="14" />
+    <text x="452" y="163" class="label-text tiny">Transmission</text>
+    <path class="line-label" d="M585 170 L575 170" />
+  </g>
+
+  <g id="label-air-intake" class="clickable" data-part="air-intake">
+    <rect class="button-bg" x="285" y="308" width="165" height="66" rx="14" />
+    <text x="300" y="350" class="label-text tiny">Air Intake</text>
+    <path class="line-label" d="M410 350 L502 405" />
+  </g>
+
+  <g id="label-exhaust" class="clickable" data-part="exhaust">
+    <rect class="button-bg" x="845" y="334" width="130" height="66" rx="14" />
+    <text x="858" y="375" class="label-text tiny">Exhaust</text>
+    <path class="line-label" d="M870 380 L820 398" />
+  </g>
+
+  <g id="label-fuselage" class="clickable" data-part="fuselage">
+    <rect class="button-bg" x="55" y="735" width="185" height="72" rx="14" />
+    <text x="70" y="780" class="label-text">Fuselage</text>
+    <path class="line-label" d="M245 760 L420 580" />
+  </g>
+
+  <g id="label-landing-skids" class="clickable" data-part="landing-skids">
+    <rect class="button-bg" x="530" y="725" width="205" height="72" rx="14" />
+    <text x="545" y="770" class="label-text">Landing Skids</text>
+    <path class="line-label" d="M625 725 L625 648" />
+  </g>
+
+  <g id="label-tail-boom" class="clickable" data-part="tail-boom">
+    <rect class="button-bg" x="1130" y="485" width="170" height="68" rx="14" />
+    <text x="1145" y="528" class="label-text tiny">Tail Boom</text>
+    <path class="line-label" d="M1175 490 L1130 448" />
+  </g>
+
+  <g id="label-vertical-fin" class="clickable" data-part="vertical-fin">
+    <rect class="button-bg" x="1320" y="245" width="160" height="68" rx="14" />
+    <text x="1335" y="288" class="label-text tiny">Vertical Fin</text>
+    <path class="line-label" d="M1385 300 L1336 352" />
+  </g>
+
+  <g id="label-horizontal-stabilizer" class="clickable" data-part="horizontal-stabilizer">
+    <rect class="button-bg" x="1330" y="540" width="240" height="74" rx="14" />
+    <text x="1343" y="585" class="label-text tiny">Horizontal Stabilizer</text>
+    <path class="line-label" d="M1360 543 L1302 497" />
+  </g>
+
+  <g id="label-tail-rotor" class="clickable" data-part="tail-rotor">
+    <rect class="button-bg" x="1460" y="300" width="170" height="74" rx="14" />
+    <text x="1478" y="346" class="label-text">Tail Rotor</text>
+    <path class="line-label" d="M1555 360 L1498 404" />
+  </g>
+
+  <!-- =========================
+       INFO PANEL
+       ========================= -->
+
+  <g id="info-box">
+    <rect class="info-panel" x="900" y="720" width="700" height="290" rx="24" />
+    <rect class="info-panel-accent" x="900" y="720" width="700" height="48" rx="24" />
+    <text id="info-title" x="935" y="753" class="info-title">Select a part</text>
+
+    <text id="info-line-1" x="935" y="815" class="info-body">
+      Click a label or a helicopter part to highlight it.
+    </text>
+    <text id="info-line-2" x="935" y="850" class="info-body">
+      The explanation for that part will appear here.
+    </text>
+    <text id="info-line-3" x="935" y="885" class="info-body">
+      This diagram shows flight, control, and structure parts.
+    </text>
+    <text id="info-line-4" x="935" y="920" class="info-body">
+      Compare how power moves from engine to rotors.
+    </text>
+    <text id="info-line-5" x="935" y="962" class="info-hint">
+      Tip: labels and shapes are both interactive.
+    </text>
+  </g>
+
+  <script><![CDATA[
+    (function () {
+      var svg = document.currentScript.ownerDocument.documentElement;
+
+      var partConfig = {
+        "main-rotor": {
+          title: "Main Rotor",
+          lines: [
+            "The main rotor is the whole top spinning assembly.",
+            "It creates most of the lift that raises the helicopter.",
+            "It includes the hub and the rotor blades together.",
+            "This system also helps the helicopter move in the air.",
+            "Think of it as the helicopter's main lifting fan."
+          ],
+          targets: ["main-rotor", "hub", "rotor-blade-left", "rotor-blade-right", "pitch-link-left", "pitch-link-right"],
+          fills: ["hub", "rotor-blade-left", "rotor-blade-right"],
+          labels: ["label-main-rotor"]
+        },
+        "rotor-blade": {
+          title: "Rotor Blade",
+          lines: [
+            "A rotor blade is one long airfoil attached to the hub.",
+            "As it spins, it pushes air downward to help make lift.",
+            "Each blade is only one part of the whole main rotor.",
+            "Several blades together make the rotor system.",
+            "This diagram highlights both blades for easy comparison."
+          ],
+          targets: ["rotor-blade-left", "rotor-blade-right"],
+          fills: ["rotor-blade-left", "rotor-blade-right"],
+          labels: ["label-rotor-blade"]
+        },
+        "hub": {
+          title: "Hub",
+          lines: [
+            "The hub is the center part where rotor blades attach.",
+            "It connects the blades to the mast and rotor controls.",
+            "Forces from the spinning system pass through this point.",
+            "It is the central joint of the main rotor.",
+            "The hub helps hold the rotor assembly together."
+          ],
+          targets: ["hub"],
+          fills: ["hub"],
+          labels: ["label-hub"]
+        },
+        "mast": {
+          title: "Mast",
+          lines: [
+            "The mast is the vertical shaft under the hub.",
+            "It carries rotation upward into the main rotor system.",
+            "The hub sits on top of the mast.",
+            "Power reaches the mast through the transmission.",
+            "It is a key link between the body and the rotor."
+          ],
+          targets: ["mast"],
+          fills: ["mast"],
+          labels: ["label-mast"]
+        },
+        "swashplate": {
+          title: "Swashplate",
+          lines: [
+            "The swashplate helps change how the rotor blades tilt.",
+            "That lets the helicopter move forward, backward, or sideways.",
+            "It transfers pilot control inputs into rotor motion.",
+            "This is one of the most important control parts.",
+            "It helps change blade pitch while the rotor spins."
+          ],
+          targets: ["swashplate"],
+          fills: ["swashplate"],
+          labels: ["label-swashplate"]
+        },
+        "pitch-link": {
+          title: "Pitch Link",
+          lines: [
+            "Pitch links connect the control system to the rotor head.",
+            "They help change the angle, or pitch, of the blades.",
+            "Changing pitch changes lift and direction of motion.",
+            "These small links are important for precise control.",
+            "They work with the swashplate near the hub."
+          ],
+          targets: ["pitch-link-left", "pitch-link-right"],
+          fills: [],
+          labels: ["label-pitch-link"]
+        },
+        "cockpit": {
+          title: "Cockpit",
+          lines: [
+            "The cockpit is where the pilot sits and flies the helicopter.",
+            "It contains the controls, instruments, and main flight view.",
+            "This is the front working area of the aircraft.",
+            "Pilots use it to steer, climb, and land safely.",
+            "It is often covered by transparent windows."
+          ],
+          targets: ["cockpit"],
+          fills: ["cockpit"],
+          labels: ["label-cockpit"]
+        },
+        "engine": {
+          title: "Engine",
+          lines: [
+            "The engine provides the power that turns the rotors.",
+            "It creates mechanical energy for flight.",
+            "That power is sent into the transmission system.",
+            "Without engine power, the rotor system cannot spin normally.",
+            "This drawing shows a simple engine compartment."
+          ],
+          targets: ["engine"],
+          fills: ["engine"],
+          labels: ["label-engine"]
+        },
+        "transmission": {
+          title: "Transmission",
+          lines: [
+            "The transmission carries power from the engine to the rotors.",
+            "It helps route power up to the mast and back to the tail rotor.",
+            "This is part of the helicopter's drivetrain.",
+            "It changes and transfers spinning force where needed.",
+            "It is one reason the whole rotor system can work together."
+          ],
+          targets: ["transmission", "mast"],
+          fills: ["transmission", "mast"],
+          labels: ["label-transmission"]
+        },
+        "air-intake": {
+          title: "Air Intake",
+          lines: [
+            "The air intake lets outside air enter the engine system.",
+            "Engines need air so fuel can burn and make power.",
+            "It is an important opening for airflow.",
+            "The intake helps the engine breathe.",
+            "Its exact shape depends on helicopter design."
+          ],
+          targets: ["air-intake"],
+          fills: ["air-intake"],
+          labels: ["label-air-intake"]
+        },
+        "exhaust": {
+          title: "Exhaust",
+          lines: [
+            "The exhaust is where hot gases leave the engine.",
+            "After fuel burns, the used gases must exit the aircraft.",
+            "That is part of how the engine keeps running.",
+            "Exhaust areas can become very hot.",
+            "This part is often placed outside the cabin area."
+          ],
+          targets: ["exhaust"],
+          fills: ["exhaust"],
+          labels: ["label-exhaust"]
+        },
+        "fuselage": {
+          title: "Fuselage",
+          lines: [
+            "The fuselage is the main body of the helicopter.",
+            "It holds the cabin, cockpit, engine area, and structure.",
+            "Many other parts connect to the fuselage.",
+            "It is the central body shell of the aircraft.",
+            "You can think of it as the helicopter's main frame."
+          ],
+          targets: ["fuselage"],
+          fills: ["fuselage"],
+          labels: ["label-fuselage"]
+        },
+        "landing-skids": {
+          title: "Landing Skids",
+          lines: [
+            "Landing skids support the helicopter on the ground.",
+            "They are used for landing, resting, and takeoff contact.",
+            "Skids are simple and strong compared with wheels.",
+            "They help spread the helicopter's weight.",
+            "Many light helicopters use skids instead of landing gear wheels."
+          ],
+          targets: ["landing-skid-top", "landing-skid-bottom", "landing-skid-strut-left", "landing-skid-strut-right"],
+          fills: [],
+          labels: ["label-landing-skids"]
+        },
+        "tail-boom": {
+          title: "Tail Boom",
+          lines: [
+            "The tail boom is the long rear section behind the fuselage.",
+            "It holds the tail rotor far from the main body.",
+            "That distance helps the tail rotor control yaw effectively.",
+            "It is an important structural extension.",
+            "It also supports tail fins and stabilizers."
+          ],
+          targets: ["tail-boom"],
+          fills: ["tail-boom"],
+          labels: ["label-tail-boom"]
+        },
+        "vertical-fin": {
+          title: "Vertical Fin",
+          lines: [
+            "The vertical fin helps the helicopter stay directionally stable.",
+            "It works a little like a weather vane in airflow.",
+            "It can reduce side-to-side yaw disturbances.",
+            "Some helicopters use it to support tail control.",
+            "It is a fixed stabilizing surface near the tail."
+          ],
+          targets: ["vertical-fin"],
+          fills: ["vertical-fin"],
+          labels: ["label-vertical-fin"]
+        },
+        "horizontal-stabilizer": {
+          title: "Horizontal Stabilizer",
+          lines: [
+            "The horizontal stabilizer helps balance the helicopter in forward flight.",
+            "It can improve pitch stability.",
+            "That helps the body stay better aligned as it moves ahead.",
+            "It is a fixed aerodynamic surface on the tail.",
+            "It supports smoother flight at speed."
+          ],
+          targets: ["horizontal-stabilizer"],
+          fills: ["horizontal-stabilizer"],
+          labels: ["label-horizontal-stabilizer"]
+        },
+        "tail-rotor": {
+          title: "Tail Rotor",
+          lines: [
+            "The tail rotor helps control yaw, which turns the nose left or right.",
+            "It counters the twisting force from the main rotor.",
+            "Without it, the helicopter body would tend to spin.",
+            "It is a key steering and balancing part.",
+            "It is mounted at the end of the tail boom."
+          ],
+          targets: ["tail-rotor-group"],
+          fills: [],
+          labels: ["label-tail-rotor"]
+        }
+      };
+
+      var allTargetIds = [
+        "main-rotor",
+        "hub",
+        "mast",
+        "swashplate",
+        "pitch-link-left",
+        "pitch-link-right",
+        "rotor-blade-left",
+        "rotor-blade-right",
+        "cockpit",
+        "engine",
+        "transmission",
+        "air-intake",
+        "exhaust",
+        "fuselage",
+        "landing-skid-top",
+        "landing-skid-bottom",
+        "landing-skid-strut-left",
+        "landing-skid-strut-right",
+        "tail-boom",
+        "vertical-fin",
+        "horizontal-stabilizer",
+        "tail-rotor-group"
+      ];
+
+      var allLabelIds = [
+        "label-main-rotor",
+        "label-mast",
+        "label-hub",
+        "label-rotor-blade",
+        "label-swashplate",
+        "label-pitch-link",
+        "label-cockpit",
+        "label-engine",
+        "label-transmission",
+        "label-air-intake",
+        "label-exhaust",
+        "label-fuselage",
+        "label-landing-skids",
+        "label-tail-boom",
+        "label-vertical-fin",
+        "label-horizontal-stabilizer",
+        "label-tail-rotor"
+      ];
+
+      function byId(id) {
+        return svg.getElementById(id);
+      }
+
+      function setInfo(title, lines) {
+        byId("info-title").textContent = title;
+        byId("info-line-1").textContent = lines[0] || "";
+        byId("info-line-2").textContent = lines[1] || "";
+        byId("info-line-3").textContent = lines[2] || "";
+        byId("info-line-4").textContent = lines[3] || "";
+        byId("info-line-5").textContent = lines[4] || "";
+      }
+
+      function clearState() {
+        allTargetIds.forEach(function (id) {
+          var el = byId(id);
+          if (!el) return;
+          el.classList.remove("active-stroke", "active-fill", "active-dashed", "dimmed");
+        });
+
+        allLabelIds.forEach(function (id) {
+          var label = byId(id);
+          if (label) label.classList.remove("label-active", "dimmed");
+        });
+
+        var tailGroup = byId("tail-rotor-group");
+        if (tailGroup) {
+          Array.prototype.forEach.call(tailGroup.querySelectorAll(".target"), function (node) {
+            node.classList.remove("active-stroke", "dimmed");
+          });
+        }
+      }
+
+      function dimEverything() {
+        allTargetIds.forEach(function (id) {
+          var el = byId(id);
+          if (el) el.classList.add("dimmed");
+        });
+
+        allLabelIds.forEach(function (id) {
+          var label = byId(id);
+          if (label) label.classList.add("dimmed");
+        });
+
+        var tailGroup = byId("tail-rotor-group");
+        if (tailGroup) {
+          Array.prototype.forEach.call(tailGroup.querySelectorAll(".target"), function (node) {
+            node.classList.add("dimmed");
+          });
+        }
+      }
+
+      function activatePart(partName) {
+        var cfg = partConfig[partName];
+        if (!cfg) return;
+
+        clearState();
+        dimEverything();
+
+        cfg.targets.forEach(function (id) {
+          var el = byId(id);
+          if (!el) return;
+
+          el.classList.remove("dimmed");
+
+          if (id === "main-rotor") {
+            el.classList.add("active-dashed");
+          } else if (id === "tail-rotor-group") {
+            Array.prototype.forEach.call(el.querySelectorAll(".target"), function (node) {
+              node.classList.remove("dimmed");
+              node.classList.add("active-stroke");
+            });
+          } else {
+            el.classList.add("active-stroke");
+          }
+        });
+
+        cfg.fills.forEach(function (id) {
+          var el = byId(id);
+          if (el) el.classList.add("active-fill");
+        });
+
+        cfg.labels.forEach(function (id) {
+          var el = byId(id);
+          if (el) {
+            el.classList.remove("dimmed");
+            el.classList.add("label-active");
+          }
+        });
+
+        setInfo(cfg.title, cfg.lines);
+      }
+
+      Array.prototype.forEach.call(svg.querySelectorAll("[data-part]"), function (node) {
+        node.addEventListener("click", function () {
+          activatePart(node.getAttribute("data-part"));
+        });
+      });
+
+      activatePart("transmission");
+    })();
+  ]]></script>
+</svg>
