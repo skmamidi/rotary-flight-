@@ -4,6 +4,114 @@
 const Glossary = {
   terms: {},
 
+  // Map glossary terms to their most relevant topic/practice page
+  // Paths are relative from topics/glossary/ pages
+  termLinks: {
+    // Introduction
+    'rotary flight': '../introduction/what-is-rotary-flight.html',
+    'fixed-wing': '../introduction/rotary-vs-fixed-wing.html',
+    'rotor': '../introduction/rotor-basics.html',
+    'rotor blade': '../introduction/rotor-basics.html',
+    'lift': '../introduction/lift-in-rotary-flight.html',
+    'drag': '../flight-science/forces-of-flight.html',
+    'thrust': '../flight-science/forces-of-flight.html',
+    'weight': '../flight-science/forces-of-flight.html',
+    'vtol': '../introduction/vtol.html',
+    'hover': '../introduction/hovering.html',
+    'hovering': '../introduction/hovering.html',
+    'airfoil': '../introduction/lift-in-rotary-flight.html',
+    'airflow': '../introduction/lift-in-rotary-flight.html',
+    // Early Concepts
+    'aerial screw': '../early-concepts/da-vinci-aerial-screw.html',
+    'autogyro': '../aircraft-types/autogyros.html',
+    // Pioneers
+    'single rotor': '../aircraft-types/single-rotor.html',
+    // Aircraft Types
+    'tiltrotor': '../aircraft-types/tiltrotors.html',
+    'coaxial rotor': '../aircraft-types/coaxial-rotor.html',
+    'tandem rotor': '../aircraft-types/tandem-rotor.html',
+    'counter-rotating': '../aircraft-types/coaxial-rotor.html',
+    'unpowered rotor': '../aircraft-types/autogyros.html',
+    'forward flight': '../flight-science/forces-of-flight.html',
+    // Flight Science
+    'torque': '../flight-science/torque.html',
+    'anti-torque': '../flight-science/anti-torque-systems.html',
+    'tail rotor': '../flight-science/anti-torque-systems.html',
+    'collective': '../flight-science/collective-control.html',
+    'cyclic': '../flight-science/cyclic-control.html',
+    'yaw': '../flight-science/yaw-pitch-roll.html',
+    'pitch': '../flight-science/yaw-pitch-roll.html',
+    'roll': '../flight-science/yaw-pitch-roll.html',
+    'autorotation': '../flight-science/autorotation.html',
+    'angle of attack': '../flight-science/angle-of-attack.html',
+    'blade pitch': '../flight-science/collective-control.html',
+    'swashplate': '../flight-science/cyclic-control.html',
+    'main rotor': '../introduction/rotor-basics.html',
+    'rotor disk': '../flight-science/cyclic-control.html',
+    'downwash': '../introduction/lift-in-rotary-flight.html',
+    'center of gravity': '../flight-science/stability-and-control.html',
+    'gyroscopic precession': '../flight-science/cyclic-control.html',
+    'translating tendency': '../flight-science/torque.html',
+    'dissymmetry of lift': '../flight-science/rotor-blade-lift.html',
+    'advancing blade': '../flight-science/rotor-blade-lift.html',
+    'retreating blade': '../flight-science/rotor-blade-lift.html',
+    'blade flapping': '../flight-science/rotor-blade-lift.html',
+    'blade coning': '../flight-science/rotor-blade-lift.html',
+    'stall': '../flight-science/angle-of-attack.html',
+    'induced drag': '../flight-science/forces-of-flight.html',
+    'parasitic drag': '../flight-science/forces-of-flight.html',
+    'relative wind': '../flight-science/angle-of-attack.html',
+    'tailwind': '../flight-science/forces-of-flight.html',
+    'headwind': '../flight-science/forces-of-flight.html',
+    'freewheeling unit': '../flight-science/autorotation.html',
+    'driven region': '../flight-science/autorotation.html',
+    'driving region': '../flight-science/autorotation.html',
+    'stalled region': '../flight-science/autorotation.html',
+    'lead-lag': '../flight-science/rotor-blade-lift.html',
+    'phase lag': '../flight-science/cyclic-control.html',
+    'thrust vector': '../flight-science/cyclic-control.html',
+    'longitudinal axis': '../flight-science/yaw-pitch-roll.html',
+    'lateral axis': '../flight-science/yaw-pitch-roll.html',
+    'vertical axis': '../flight-science/yaw-pitch-roll.html',
+    'maneuverability': '../flight-science/stability-and-control.html',
+    'stability': '../flight-science/stability-and-control.html',
+    'inherent instability': '../flight-science/stability-and-control.html',
+    'pendulum effect': '../flight-science/stability-and-control.html',
+    'nose heavy': '../flight-science/stability-and-control.html',
+    'turbulent flow': '../flight-science/angle-of-attack.html',
+    'attached flow': '../flight-science/angle-of-attack.html',
+    'flow separation': '../flight-science/angle-of-attack.html',
+    'Bernoulli\'s principle': '../introduction/lift-in-rotary-flight.html',
+    'pressure difference': '../introduction/lift-in-rotary-flight.html',
+    'kinetic energy': '../flight-science/autorotation.html',
+    // Parts
+    'mast': '../introduction/rotor-basics.html',
+    'hub': '../introduction/rotor-basics.html',
+    'nacelle': '../aircraft-types/tiltrotors.html',
+    'engine': '../introduction/rotor-basics.html',
+    'transmission': '../introduction/rotor-basics.html',
+    'fuselage': '../introduction/rotor-basics.html',
+    'cockpit': '../introduction/rotor-basics.html',
+    'pitch link': '../aircraft-types/helicopters-overview.html',
+    'tail boom': '../introduction/rotor-basics.html',
+    'landing skids': '../aircraft-types/helicopters-overview.html',
+    'horizontal stabilizer': '../flight-science/stability-and-control.html',
+    'vertical fin': '../flight-science/stability-and-control.html',
+    'air intake': '../introduction/rotor-basics.html',
+    'exhaust': '../introduction/rotor-basics.html',
+    'turboshaft engine': '../introduction/rotor-basics.html',
+    'stabilizer bar': '../flight-science/stability-and-control.html',
+    'NOTAR': '../flight-science/anti-torque-systems.html',
+    // Applications
+    'heavy-lift': '../aircraft-types/tandem-rotor.html',
+    'offshore oil rigs': '../applications/transportation.html',
+    'surveillance': '../applications/law-enforcement.html',
+    'winches': '../applications/search-and-rescue.html',
+    'thermal cameras': '../applications/law-enforcement.html',
+    // Practice fallbacks for terms without dedicated pages
+    'rotor rpm': '../olympiad/vocabulary-drill.html',
+  },
+
   async load() {
     try {
       const response = await fetch('../../assets/data/glossary.json');
@@ -171,9 +279,13 @@ const Glossary = {
 
     let html = '';
     filtered.forEach(([term, info]) => {
+      const link = this.termLinks[term];
+      const termHtml = link
+        ? `<a href="${link}" class="vocab-term-link" title="Learn more about ${term}">${term}</a>`
+        : term;
       html += `
         <div class="vocab-card" data-term="${term}">
-          <div class="vocab-term">${term}</div>
+          <div class="vocab-term">${termHtml}</div>
           <div class="vocab-def">${info.def}</div>
           <div class="caption mt-2"><strong>Example:</strong> ${info.example}</div>
         </div>
