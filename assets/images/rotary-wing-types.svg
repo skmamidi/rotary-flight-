@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 850" width="100%" height="100%">
+    <style>
+        .bg { fill: #f8fafc; }
+        
+        /* Typography */
+        .header-title { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 32px; font-weight: 900; fill: #0f172a; letter-spacing: 2px; text-transform: uppercase; text-anchor: middle; }
+        .header-subtitle { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 16px; font-weight: 600; fill: #64748b; letter-spacing: 1px; text-transform: uppercase; text-anchor: middle; }
+        
+        /* Interactive Cards */
+        .card-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 16; transition: all 0.3s ease; }
+        .card-title { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 20px; font-weight: 800; fill: #1e293b; text-anchor: middle; transition: all 0.3s ease; pointer-events: none; }
+        
+        /* Aircraft Illustration Styles */
+        .ac-stroke { stroke: #475569; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; fill: none; transition: all 0.3s ease; }
+        .ac-fill { fill: #e2e8f0; transition: all 0.3s ease; }
+        .ac-fill-dark { fill: #94a3b8; transition: all 0.3s ease; }
+        .ac-glass { fill: #bae6fd; stroke: #475569; stroke-width: 3; transition: all 0.3s ease; }
+        .ac-accent { stroke: #38bdf8; stroke-width: 3; stroke-dasharray: 4 4; fill: none; transition: all 0.3s ease; }
+        
+        /* Interactivity Hover and Active States */
+        .interactive-card { cursor: pointer; }
+        
+        .interactive-card:hover .card-bg,
+        .interactive-card.active .card-bg { stroke: #e11d48; stroke-width: 4; filter: drop-shadow(0 10px 15px rgba(225, 29, 72, 0.15)); }
+        
+        .interactive-card:hover .card-title,
+        .interactive-card.active .card-title { fill: #e11d48; transform: scale(1.05); transform-origin: center; }
+
+        .interactive-card:hover .ac-stroke,
+        .interactive-card.active .ac-stroke { stroke: #e11d48; }
+
+        .interactive-card:hover .ac-fill,
+        .interactive-card.active .ac-fill { fill: #fff1f2; }
+
+        .interactive-card:hover .ac-fill-dark,
+        .interactive-card.active .ac-fill-dark { fill: #fecdd3; }
+
+        .interactive-card:hover .ac-glass,
+        .interactive-card.active .ac-glass { stroke: #e11d48; fill: #ffe4e6; }
+        
+        .interactive-card:hover .ac-accent,
+        .interactive-card.active .ac-accent { stroke: #fb7185; }
+
+        /* Info Panel */
+        .info-box { fill: #ffffff; stroke: #e2e8f0; stroke-width: 2; rx: 12; }
+    </style>
+
+    <defs>
+        <filter id="shadow-light" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.05"/>
+        </filter>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+        </marker>
+        <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" />
+        </marker>
+    </defs>
+
+    <!-- Background -->
+    <rect width="100%" height="100%" class="bg" />
+
+    <!-- Header -->
+    <g transform="translate(650, 70)">
+        <text x="0" y="0" class="header-title">Rotary-Wing Aircraft Configurations</text>
+        <text x="0" y="30" class="header-subtitle">Interactive Guide to Vertical Flight Mechanics</text>
+    </g>
+
+    <!-- CONFIGURATION CARDS -->
+    <g id="cards">
+        
+        <!-- 1. Single Rotor -->
+        <g id="card-single" class="interactive-card" onclick="selectType('single')">
+            <rect x="40" y="150" width="220" height="420" class="card-bg" filter="url(#shadow-light)" />
+            <text x="150" y="210" class="card-title">Single Rotor</text>
+            
+            <g transform="translate(150, 390)">
+                <!-- Skids -->
+                <line x1="-20" y1="20" x2="-20" y2="40" class="ac-stroke"/>
+                <line x1="20" y1="20" x2="20" y2="40" class="ac-stroke"/>
+                <line x1="-35" y1="40" x2="35" y2="40" class="ac-stroke"/>
+                <!-- Tail Boom & Fin -->
+                <path d="M 0 10 L -70 5 L -70 15 Z" class="ac-fill-dark ac-stroke"/>
+                <path d="M -75 -15 L -65 -15 L -65 25 L -75 25 Z" class="ac-fill ac-stroke"/>
+                <!-- Tail Rotor -->
+                <circle cx="-70" cy="5" r="10" class="ac-fill-dark ac-stroke"/>
+                <!-- Fuselage -->
+                <path d="M -20 -10 C -20 -30 30 -30 40 0 C 50 20 -10 25 -20 10 Z" class="ac-fill ac-stroke"/>
+                <!-- Window -->
+                <path d="M 10 -15 C 20 -15 30 -5 30 0 L 10 0 Z" class="ac-glass"/>
+                <!-- Mast -->
+                <rect x="-5" y="-30" width="10" height="20" class="ac-fill-dark ac-stroke"/>
+                <!-- Main Rotor -->
+                <ellipse cx="0" cy="-30" rx="75" ry="3" class="ac-fill-dark ac-stroke"/>
+            </g>
+        </g>
+
+        <!-- 2. Tandem Rotor -->
+        <g id="card-tandem" class="interactive-card" onclick="selectType('tandem')">
+            <rect x="290" y="150" width="220" height="420" class="card-bg" filter="url(#shadow-light)" />
+            <text x="400" y="210" class="card-title">Tandem Rotor</text>
+            
+            <g transform="translate(400, 390)">
+                <!-- Wheels -->
+                <circle cx="-35" cy="35" r="8" class="ac-fill-dark ac-stroke"/>
+                <circle cx="35" cy="35" r="8" class="ac-fill-dark ac-stroke"/>
+                <!-- Fuselage -->
+                <path d="M -50 -10 L 40 -10 C 55 -10 55 20 40 25 L -45 25 C -60 25 -60 -10 -50 -10 Z" class="ac-fill ac-stroke"/>
+                <!-- Window -->
+                <path d="M 35 -5 L 48 -5 L 48 10 L 35 10 Z" class="ac-glass"/>
+                <!-- Pylons -->
+                <path d="M 20 -10 L 40 -10 L 40 -30 L 25 -30 Z" class="ac-fill-dark ac-stroke"/>
+                <path d="M -50 -10 L -30 -10 L -30 -45 L -55 -45 Z" class="ac-fill-dark ac-stroke"/>
+                <!-- Rotors -->
+                <ellipse cx="30" cy="-30" rx="60" ry="3" class="ac-fill-dark ac-stroke"/>
+                <ellipse cx="-40" cy="-45" rx="60" ry="3" class="ac-fill-dark ac-stroke"/>
+            </g>
+        </g>
+
+        <!-- 3. Coaxial Rotor -->
+        <g id="card-coaxial" class="interactive-card" onclick="selectType('coaxial')">
+            <rect x="540" y="150" width="220" height="420" class="card-bg" filter="url(#shadow-light)" />
+            <text x="650" y="210" class="card-title">Coaxial Rotor</text>
+            
+            <g transform="translate(650, 390)">
+                <!-- Skids -->
+                <line x1="-15" y1="20" x2="-15" y2="40" class="ac-stroke"/>
+                <line x1="15" y1="20" x2="15" y2="40" class="ac-stroke"/>
+                <line x1="-30" y1="40" x2="30" y2="40" class="ac-stroke"/>
+                <!-- Tail Boom & Vertical Fin (No Tail Rotor) -->
+                <path d="M -30 0 L -60 -5 L -60 5 Z" class="ac-fill-dark ac-stroke"/>
+                <path d="M -65 -20 L -50 -20 L -55 20 L -65 20 Z" class="ac-fill ac-stroke"/>
+                <!-- Fuselage -->
+                <path d="M -30 -5 C -30 -25 25 -25 35 5 C 40 25 -20 25 -30 5 Z" class="ac-fill ac-stroke"/>
+                <!-- Window -->
+                <path d="M 10 -15 C 20 -15 25 -5 25 5 L 10 5 Z" class="ac-glass"/>
+                <!-- Mast -->
+                <rect x="-5" y="-60" width="10" height="55" class="ac-fill-dark ac-stroke"/>
+                <!-- Dual Rotors -->
+                <ellipse cx="0" cy="-35" rx="65" ry="3" class="ac-fill-dark ac-stroke"/>
+                <ellipse cx="0" cy="-60" rx="65" ry="3" class="ac-fill-dark ac-stroke"/>
+            </g>
+        </g>
+
+        <!-- 4. Autogyro -->
+        <g id="card-autogyro" class="interactive-card" onclick="selectType('autogyro')">
+            <rect x="790" y="150" width="220" height="420" class="card-bg" filter="url(#shadow-light)" />
+            <text x="900" y="210" class="card-title">Autogyro</text>
+            
+            <g transform="translate(900, 390)">
+                <!-- Tail Boom & Stabilizer -->
+                <line x1="-20" y1="5" x2="-70" y2="5" class="ac-stroke"/>
+                <path d="M -75 -15 L -65 -15 L -65 20 L -75 20 Z" class="ac-fill ac-stroke"/>
+                <line x1="-80" y1="5" x2="-60" y2="5" class="ac-stroke"/>
+                <!-- Wheels -->
+                <circle cx="-10" cy="35" r="7" class="ac-fill-dark ac-stroke"/>
+                <circle cx="20" cy="35" r="7" class="ac-fill-dark ac-stroke"/>
+                <line x1="-10" y1="35" x2="0" y2="15" class="ac-stroke"/>
+                <line x1="20" y1="35" x2="10" y2="15" class="ac-stroke"/>
+                <!-- Pusher Propeller -->
+                <line x1="-25" y1="-15" x2="-25" y2="25" class="ac-stroke" stroke-width="6"/>
+                <!-- Fuselage Pod -->
+                <path d="M -20 -5 C -20 -20 25 -10 25 10 C 25 25 -15 25 -20 5 Z" class="ac-fill ac-stroke"/>
+                <!-- Open Cockpit -->
+                <path d="M 0 -10 C 10 -10 15 -5 15 0 L 0 0 Z" class="ac-glass"/>
+                <!-- Mast -->
+                <path d="M -5 -5 L 5 -40 L 10 -40 Z" class="ac-fill-dark ac-stroke"/>
+                <!-- Free Spinning Rotor -->
+                <ellipse cx="5" cy="-40" rx="65" ry="3" class="ac-fill-dark ac-stroke"/>
+                <!-- Airflow Arrows (Autorotation) -->
+                <path d="M -30 -10 L -30 -25" class="ac-accent" marker-end="url(#arrow-blue)"/>
+                <path d="M 40 -10 L 40 -25" class="ac-accent" marker-end="url(#arrow-blue)"/>
+            </g>
+        </g>
+
+        <!-- 5. Tiltrotor -->
+        <g id="card-tiltrotor" class="interactive-card" onclick="selectType('tiltrotor')">
+            <rect x="1040" y="150" width="220" height="420" class="card-bg" filter="url(#shadow-light)" />
+            <text x="1150" y="210" class="card-title">Tiltrotor</text>
+            
+            <g transform="translate(1150, 390)">
+                <!-- Landing Gear -->
+                <line x1="-30" y1="20" x2="-30" y2="40" class="ac-stroke"/>
+                <circle cx="-30" cy="40" r="6" class="ac-fill-dark ac-stroke"/>
+                <line x1="20" y1="20" x2="20" y2="40" class="ac-stroke"/>
+                <circle cx="20" cy="40" r="6" class="ac-fill-dark ac-stroke"/>
+                <!-- Tail Fin -->
+                <path d="M -60 -20 L -40 -20 L -50 10 L -65 10 Z" class="ac-fill-dark ac-stroke"/>
+                <!-- Airplane Fuselage -->
+                <path d="M -60 0 L 40 -5 C 55 -5 60 5 60 15 C 60 25 40 25 20 25 L -55 15 Z" class="ac-fill ac-stroke"/>
+                <!-- Window -->
+                <path d="M 35 -5 L 50 -2 L 50 10 L 35 10 Z" class="ac-glass"/>
+                <!-- Stub Wing -->
+                <path d="M -15 -5 L 15 -5 L 10 5 L -10 5 Z" class="ac-fill-dark ac-stroke"/>
+                <!-- Nacelle (Vertical Position) -->
+                <path d="M -5 -40 L 15 -40 C 15 -20 15 5 5 15 C -5 5 -5 -20 -5 -40 Z" class="ac-fill-dark ac-stroke"/>
+                <!-- Massive Proprotor -->
+                <ellipse cx="5" cy="-40" rx="60" ry="3" class="ac-fill-dark ac-stroke"/>
+                <!-- Tilt Action Indicator -->
+                <path d="M 25 -30 A 35 35 0 0 1 45 -5" class="ac-accent" marker-end="url(#arrow-blue)"/>
+            </g>
+        </g>
+    </g>
+
+    <!-- INTERACTIVE INFO PANEL -->
+    <g id="info-panel" transform="translate(150, 620)" filter="url(#shadow-light)">
+        <rect width="1000" height="150" class="info-box" />
+        
+        <foreignObject x="40" y="30" width="920" height="110">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;">
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <span id="info-badge" style="background-color: #64748b; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 14px; margin-right: 15px; letter-spacing: 0.5px;">AIRCRAFT TYPE</span>
+                    <h3 id="info-title" style="margin: 0; font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: 0.5px;">Select a configuration</h3>
+                </div>
+                <p id="info-desc" style="margin: 0; font-size: 16px; color: #475569; line-height: 1.6;">Click on any of the five rotary-wing aircraft cards above to explore its unique mechanical capabilities, aerodynamic advantages, and key differences from standard helicopters.</p>
+            </div>
+        </foreignObject>
+    </g>
+
+    <!-- JAVASCRIPT FOR INTERACTIVITY -->
+    <script type="text/javascript">
+        <![CDATA[
+        const acData = {
+            'single': { 
+                title: 'Single Main Rotor (Conventional)', 
+                desc: 'The most common configuration in the world. It utilizes a large main rotor for lift and thrust, paired with a small, vertically-mounted tail rotor. The tail rotor is essential to counteract the torque (spinning force) generated by the main rotor, keeping the fuselage straight. While versatile, the tail rotor consumes up to 20% of engine power without providing any lift.' 
+            },
+            'tandem': { 
+                title: 'Tandem Rotor', 
+                desc: 'Features two large main horizontal rotors (usually front and rear) that spin in opposite directions. Because the rotors counteract each other\'s torque, no tail rotor is needed, meaning 100% of engine power is used for lift. This makes them exceptional for heavy lifting (like the CH-47 Chinook) and provides a highly forgiving center of gravity for cargo.' 
+            },
+            'coaxial': { 
+                title: 'Coaxial Rotor', 
+                desc: 'Employs two rotors mounted one above the other on the same central mast, spinning in opposite directions. This entirely eliminates torque and the need for a tail boom, resulting in an incredibly compact footprint (ideal for landing on naval ships). It boasts extreme maneuverability and is largely immune to crosswind issues, though the rotor mast mechanics are highly complex.' 
+            },
+            'autogyro': { 
+                title: 'Autogyro (Gyroplane)', 
+                desc: 'A safe and simple hybrid between an airplane and a helicopter. A standard engine-driven propeller provides forward thrust. The top lifting rotor is completely unpowered; instead, the forward motion forces wind UP through the blades, causing them to spin automatically (autorotation) and generate lift. They cannot hover in place without a strong headwind, but cannot stall.' 
+            },
+            'tiltrotor': { 
+                title: 'Tiltrotor', 
+                desc: 'An advanced configuration that combines the vertical hover capabilities of a helicopter with the immense speed and range of a fixed-wing turboprop airplane. Large wing-mounted engine nacelles point vertically for takeoff and landing, then physically pivot horizontally 90 degrees for forward flight. Extremely complex to engineer, but vastly outperforms traditional helicopters in speed.' 
+            }
+        };
+
+        function selectType(id) {
+            // 1. Clear previous active states
+            document.querySelectorAll('.interactive-card').forEach(el => el.classList.remove('active'));
+
+            // 2. Get data for selected aircraft
+            const data = acData[id];
+            if (!data) return;
+
+            // 3. Update the info panel text & colors
+            document.getElementById('info-title').textContent = data.title;
+            document.getElementById('info-desc').textContent = data.desc;
+            document.getElementById('info-badge').style.backgroundColor = '#e11d48';
+
+            // 4. Highlight the selected card
+            const cardGroup = document.getElementById('card-' + id);
+            if (cardGroup) {
+                cardGroup.classList.add('active');
+            }
+        }
+        ]]>
+    </script>
+</svg>
