@@ -37,18 +37,85 @@
               <div class="callout-icon">🎯</div>
               <div><strong>Why this matters</strong><p class="mt-2">Diagram questions test your visual recall. Practice until you can name rotor parts instantly.</p></div>
             </div>
-            <div class="card card-blue mt-5">
-              <h2>Helicopter Parts</h2>
-              <p>Review the rotor basics page for a labeled diagram. Key parts to know:</p>
-              <ul style="margin-left:var(--space-5)">
-                <li>Main rotor</li>
-                <li>Rotor blade</li>
-                <li>Hub</li>
-                <li>Mast</li>
-                <li>Tail rotor</li>
-                <li>Fuselage</li>
-              </ul>
+
+            <!-- Interactive Diagram -->
+            <div class="card card-purple mt-5">
+              <h2>🚁 Label the Helicopter</h2>
+              <p class="mt-2">Each orange circle is numbered. Match the number to the correct part name below.</p>
+              <div class="diagram-container" style="margin:var(--space-4) auto;max-width:420px">
+                <svg viewBox="0 0 420 320" style="width:100%;height:auto" id="heli-diagram">
+                  <!-- Fuselage -->
+                  <ellipse cx="210" cy="240" rx="130" ry="35" fill="#EEF5FB" stroke="#173B6D" stroke-width="3"/>
+                  <!-- Cockpit window -->
+                  <rect x="165" y="200" width="90" height="45" rx="12" fill="#ffffff" stroke="#173B6D" stroke-width="2"/>
+                  <rect x="175" y="210" width="25" height="18" rx="4" fill="#4DA8FF"/>
+                  <rect x="220" y="210" width="25" height="18" rx="4" fill="#4DA8FF"/>
+                  <!-- Mast -->
+                  <line x1="210" y1="200" x2="210" y2="120" stroke="#6C7A89" stroke-width="6" id="part-mast"/>
+                  <!-- Hub -->
+                  <circle cx="210" cy="120" r="14" fill="#29C7B8" stroke="#173B6D" stroke-width="2" id="part-hub"/>
+                  <!-- Main rotor blade (horizontal) -->
+                  <rect x="70" y="114" width="280" height="12" rx="6" fill="#4DA8FF" stroke="#173B6D" stroke-width="2" id="part-blade-h"/>
+                  <!-- Main rotor blade (vertical) -->
+                  <rect x="204" y="30" width="12" height="180" rx="6" fill="#4DA8FF" stroke="#173B6D" stroke-width="2" id="part-blade-v"/>
+                  <!-- Tail boom -->
+                  <line x1="340" y1="230" x2="400" y2="195" stroke="#173B6D" stroke-width="4"/>
+                  <!-- Tail rotor -->
+                  <rect x="395" y="160" width="10" height="70" fill="#4DA8FF" stroke="#173B6D" stroke-width="2" id="part-tailrotor"/>
+                  <!-- Skids -->
+                  <line x1="150" y1="275" x2="270" y2="275" stroke="#6C7A89" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="170" y1="275" x2="160" y2="250" stroke="#6C7A89" stroke-width="3"/>
+                  <line x1="250" y1="275" x2="260" y2="250" stroke="#6C7A89" stroke-width="3"/>
+
+                  <!-- Hotspot numbers -->
+                  <circle cx="210" cy="160" r="16" fill="#FF8A3D" opacity="0.9" style="cursor:pointer" class="diagram-hotspot" data-num="1"/>
+                  <text x="210" y="166" text-anchor="middle" fill="white" font-size="12" font-weight="bold" pointer-events="none">1</text>
+
+                  <circle cx="210" cy="120" r="16" fill="#FF8A3D" opacity="0.9" style="cursor:pointer" class="diagram-hotspot" data-num="2"/>
+                  <text x="210" y="126" text-anchor="middle" fill="white" font-size="12" font-weight="bold" pointer-events="none">2</text>
+
+                  <circle cx="280" cy="120" r="16" fill="#FF8A3D" opacity="0.9" style="cursor:pointer" class="diagram-hotspot" data-num="3"/>
+                  <text x="280" y="126" text-anchor="middle" fill="white" font-size="12" font-weight="bold" pointer-events="none">3</text>
+
+                  <circle cx="400" cy="195" r="16" fill="#FF8A3D" opacity="0.9" style="cursor:pointer" class="diagram-hotspot" data-num="4"/>
+                  <text x="400" y="201" text-anchor="middle" fill="white" font-size="12" font-weight="bold" pointer-events="none">4</text>
+
+                  <circle cx="210" cy="240" r="16" fill="#FF8A3D" opacity="0.9" style="cursor:pointer" class="diagram-hotspot" data-num="5"/>
+                  <text x="210" y="246" text-anchor="middle" fill="white" font-size="12" font-weight="bold" pointer-events="none">5</text>
+
+                  <circle cx="210" cy="72" r="16" fill="#FF8A3D" opacity="0.9" style="cursor:pointer" class="diagram-hotspot" data-num="6"/>
+                  <text x="210" y="78" text-anchor="middle" fill="white" font-size="12" font-weight="bold" pointer-events="none">6</text>
+                </svg>
+              </div>
+
+              <div id="labeling-form" class="mt-4"></div>
+              <div id="labeling-feedback" class="feedback-box mt-3"></div>
+              <div class="flex gap-3 mt-4">
+                <button class="btn btn-primary" id="check-labels-btn">Check Labels</button>
+                <button class="btn btn-secondary hidden" id="retry-labels-btn">Try Again</button>
+              </div>
             </div>
+
+            <!-- Spot the Part Quiz -->
+            <div class="card card-coral mt-5">
+              <h2>👁️ Spot the Part</h2>
+              <p class="mt-2">A part will flash on the diagram above. Pick its name from the choices below.</p>
+              <div class="mini-game mt-4">
+                <div id="spot-part-question" class="question-text" style="text-align:center">Click "Start Quiz" to begin!</div>
+                <div id="spot-part-options" class="answer-options mt-4" style="max-width:500px;margin:var(--space-4) auto"></div>
+                <div id="spot-part-feedback" class="feedback-box mt-3"></div>
+                <div class="flex justify-center gap-3 mt-4">
+                  <button class="btn btn-primary" id="start-spot-btn">Start Quiz</button>
+                  <button class="btn btn-secondary hidden" id="next-spot-btn">Next Part</button>
+                </div>
+                <div id="spot-score" class="game-score mt-3" style="display:none">Score: <span id="spot-score-val">0</span> / <span id="spot-total-val">0</span></div>
+              </div>
+            </div>
+
+            <!-- Quick Check -->
+            <div id="quick-check"></div>
+
+            <div class="topic-footer" id="topic-footer"></div>
           </div>
         </div>
       </div>
@@ -60,10 +127,296 @@
       </div>
     </footer>
   </div>
+
   <script src="../../assets/js/app-shell.js"></script>
   <script src="../../assets/js/navigation.js"></script>
   <script src="../../assets/js/progress.js"></script>
   <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/quizzes.js"></script>
   <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Navigation.renderTopicFooter('diagram-labeling');
+
+      // --- Labeling Activity ---
+      const labelAnswers = [
+        { num: 1, name: 'Mast', id: 'part-mast' },
+        { num: 2, name: 'Hub', id: 'part-hub' },
+        { num: 3, name: 'Rotor blade', id: 'part-blade-h' },
+        { num: 4, name: 'Tail rotor', id: 'part-tailrotor' },
+        { num: 5, name: 'Fuselage', id: null }, // ellipse has no id, handled separately
+        { num: 6, name: 'Main rotor', id: null }
+      ];
+      const labelOptions = ['Mast', 'Hub', 'Rotor blade', 'Tail rotor', 'Fuselage', 'Main rotor'];
+
+      function renderLabelForm() {
+        const container = document.getElementById('labeling-form');
+        container.innerHTML = '';
+        const grid = document.createElement('div');
+        grid.className = 'label-grid';
+        labelAnswers.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'label-row';
+          row.innerHTML = `
+            <span class="label-badge">${item.num}</span>
+            <select class="label-select" data-num="${item.num}">
+              <option value="">-- Select part --</option>
+              ${labelOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+            </select>
+          `;
+          grid.appendChild(row);
+        });
+        container.appendChild(grid);
+      }
+
+      renderLabelForm();
+
+      document.getElementById('check-labels-btn').addEventListener('click', () => {
+        const selects = document.querySelectorAll('.label-select');
+        let correctCount = 0;
+        selects.forEach(sel => {
+          const num = parseInt(sel.dataset.num);
+          const correctName = labelAnswers.find(a => a.num === num).name;
+          const isCorrect = sel.value === correctName;
+          if (isCorrect) correctCount++;
+          sel.classList.remove('correct', 'incorrect');
+          sel.classList.add(isCorrect ? 'correct' : 'incorrect');
+        });
+
+        const allCorrect = correctCount === labelAnswers.length;
+        const fb = document.getElementById('labeling-feedback');
+        fb.className = `feedback-box show ${allCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+        fb.innerHTML = `
+          <div style="font-size:1.5rem">${allCorrect ? '🚁' : '🔧'}</div>
+          <div>
+            <strong>${allCorrect ? 'Diagram mastered!' : `${correctCount} out of ${labelAnswers.length} correct`}</strong>
+            <p class="mt-2">${allCorrect ? 'You can name every part. Olympiad ready!' : 'Incorrect labels are highlighted. Try again!'}</p>
+          </div>
+        `;
+        document.getElementById('check-labels-btn').classList.add('hidden');
+        document.getElementById('retry-labels-btn').classList.remove('hidden');
+        if (allCorrect) App.addXP(20);
+      });
+
+      document.getElementById('retry-labels-btn').addEventListener('click', () => {
+        renderLabelForm();
+        document.getElementById('labeling-feedback').className = 'feedback-box';
+        document.getElementById('labeling-feedback').innerHTML = '';
+        document.getElementById('check-labels-btn').classList.remove('hidden');
+        document.getElementById('retry-labels-btn').classList.add('hidden');
+      });
+
+      // --- Spot the Part Quiz ---
+      const spotParts = [
+        { name: 'Mast', id: 'part-mast', hint: 'The vertical shaft connecting the rotor to the engine' },
+        { name: 'Hub', id: 'part-hub', hint: 'The central part that holds the blades together' },
+        { name: 'Rotor blade', id: 'part-blade-h', hint: 'The long airfoil that spins and creates lift' },
+        { name: 'Tail rotor', id: 'part-tailrotor', hint: 'The small rotor on the tail that counters torque' },
+        { name: 'Fuselage', id: null, hint: 'The main body of the helicopter' }, // no id, use ellipse
+        { name: 'Main rotor', id: null, hint: 'The entire spinning assembly on top' }
+      ];
+
+      let spotQueue = [];
+      let spotIndex = 0;
+      let spotScore = 0;
+
+      function highlightPart(part) {
+        // Clear previous highlights
+        document.querySelectorAll('#heli-diagram [id^="part-"]').forEach(el => {
+          el.style.filter = '';
+          el.classList.remove('pulse-highlight');
+        });
+        document.querySelectorAll('.diagram-hotspot').forEach(el => {
+          el.style.filter = '';
+          el.classList.remove('pulse-highlight');
+        });
+
+        if (part.id) {
+          const el = document.getElementById(part.id);
+          if (el) {
+            el.style.filter = 'drop-shadow(0 0 8px #FF8A3D)';
+            el.classList.add('pulse-highlight');
+          }
+        } else if (part.name === 'Fuselage') {
+          // Highlight the fuselage ellipse (first ellipse)
+          const el = document.querySelector('#heli-diagram ellipse');
+          if (el) {
+            el.style.filter = 'drop-shadow(0 0 8px #FF8A3D)';
+            el.classList.add('pulse-highlight');
+          }
+        } else if (part.name === 'Main rotor') {
+          // Highlight both blades + hub
+          ['part-blade-h', 'part-blade-v', 'part-hub'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+              el.style.filter = 'drop-shadow(0 0 8px #FF8A3D)';
+              el.classList.add('pulse-highlight');
+            }
+          });
+        }
+      }
+
+      function clearHighlight() {
+        document.querySelectorAll('#heli-diagram [id^="part-"]').forEach(el => {
+          el.style.filter = '';
+          el.classList.remove('pulse-highlight');
+        });
+        document.querySelectorAll('#heli-diagram ellipse').forEach(el => {
+          el.style.filter = '';
+          el.classList.remove('pulse-highlight');
+        });
+      }
+
+      function renderSpotQuestion() {
+        if (spotIndex >= spotQueue.length) {
+          document.getElementById('spot-part-question').textContent = `Quiz complete! You scored ${spotScore} out of ${spotQueue.length}.`;
+          document.getElementById('spot-part-options').innerHTML = '';
+          document.getElementById('start-spot-btn').textContent = 'Restart Quiz';
+          document.getElementById('start-spot-btn').classList.remove('hidden');
+          document.getElementById('next-spot-btn').classList.add('hidden');
+          clearHighlight();
+          if (spotScore === spotQueue.length) App.addXP(25);
+          return;
+        }
+
+        const part = spotQueue[spotIndex];
+        highlightPart(part);
+        document.getElementById('spot-part-question').innerHTML = `<span class="question-number">${spotIndex + 1}</span> Which part is highlighted?`;
+
+        // Generate 4 options: correct + 3 random wrong
+        const wrongOptions = spotParts.filter(p => p.name !== part.name).sort(() => Math.random() - 0.5).slice(0, 3);
+        const options = [...wrongOptions, part].sort(() => Math.random() - 0.5);
+
+        const optsContainer = document.getElementById('spot-part-options');
+        optsContainer.innerHTML = '';
+        options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'answer-option';
+          btn.textContent = opt.name;
+          btn.addEventListener('click', () => checkSpotAnswer(opt.name, part.name, btn));
+          optsContainer.appendChild(btn);
+        });
+
+        document.getElementById('spot-part-feedback').className = 'feedback-box';
+        document.getElementById('spot-part-feedback').innerHTML = '';
+        document.getElementById('next-spot-btn').classList.add('hidden');
+      }
+
+      function checkSpotAnswer(selected, correct, btn) {
+        const isCorrect = selected === correct;
+        if (isCorrect) spotScore++;
+        document.getElementById('spot-score-val').textContent = spotScore;
+        document.getElementById('spot-total-val').textContent = spotIndex + 1;
+
+        const fb = document.getElementById('spot-part-feedback');
+        fb.className = `feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+        fb.innerHTML = `
+          <div style="font-size:1.5rem">${isCorrect ? '✅' : '❌'}</div>
+          <div>
+            <strong>${isCorrect ? 'Correct!' : `That was the ${correct}.`}</strong>
+            <p class="mt-2">${spotParts.find(p => p.name === correct).hint}</p>
+          </div>
+        `;
+
+        // Disable all options and highlight correct
+        document.querySelectorAll('#spot-part-options .answer-option').forEach(opt => {
+          opt.disabled = true;
+          if (opt.textContent === correct) opt.classList.add('correct');
+          else if (opt === btn) opt.classList.add('incorrect');
+        });
+
+        document.getElementById('next-spot-btn').classList.remove('hidden');
+      }
+
+      document.getElementById('start-spot-btn').addEventListener('click', () => {
+        spotQueue = [...spotParts].sort(() => Math.random() - 0.5);
+        spotIndex = 0;
+        spotScore = 0;
+        document.getElementById('spot-score').style.display = 'block';
+        document.getElementById('spot-score-val').textContent = '0';
+        document.getElementById('spot-total-val').textContent = '0';
+        document.getElementById('start-spot-btn').classList.add('hidden');
+        renderSpotQuestion();
+      });
+
+      document.getElementById('next-spot-btn').addEventListener('click', () => {
+        spotIndex++;
+        renderSpotQuestion();
+      });
+
+      // --- Quick Check ---
+      QuizEngine.renderQuickCheck('quick-check', [
+        { question: 'What is the main body of the helicopter called?', options: ['Mast', 'Fuselage', 'Hub', 'Blade'], correct: 1 },
+        { question: 'Which part connects the blades to the mast?', options: ['Hub', 'Tail rotor', 'Fuselage', 'Skid'], correct: 0 },
+        { question: 'The tail rotor primarily does what?', options: ['Creates main lift', 'Counters torque', 'Holds fuel', 'Controls altitude'], correct: 1 },
+        { question: 'What is the complete spinning assembly on top called?', options: ['Tail rotor', 'Mast', 'Main rotor', 'Hub'], correct: 2 }
+      ]);
+    });
+  </script>
+
+  <style>
+    .label-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-3);
+    }
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--cloud-white);
+      border: 2px solid var(--soft-background);
+      border-radius: var(--radius-md);
+    }
+    .label-badge {
+      width: 32px;
+      height: 32px;
+      background: var(--sky-blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .label-select {
+      flex: 1;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--soft-background);
+      font-size: 1rem;
+      background: white;
+      cursor: pointer;
+    }
+    .label-select.correct {
+      border-color: var(--success-green);
+      background: #d4edda;
+    }
+    .label-select.incorrect {
+      border-color: var(--alert-coral);
+      background: #f8d7da;
+    }
+
+    .pulse-highlight {
+      animation: pulse-orange 1.2s infinite;
+    }
+    @keyframes pulse-orange {
+      0% { filter: drop-shadow(0 0 4px #FF8A3D); }
+      50% { filter: drop-shadow(0 0 12px #FF8A3D); }
+      100% { filter: drop-shadow(0 0 4px #FF8A3D); }
+    }
+
+    #spot-part-options .answer-option {
+      text-align: center;
+      justify-content: center;
+    }
+    #spot-part-options .answer-option:disabled {
+      cursor: default;
+      opacity: 0.9;
+    }
+  </style>
 </body>
 </html>
