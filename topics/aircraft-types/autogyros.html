@@ -15,7 +15,6 @@
   <div class="page-wrapper">
     <nav class="top-nav sticky-nav" id="top-nav"></nav>
     <div class="breadcrumbs" id="breadcrumbs"></div>
-
     <main class="main-content" id="main-content">
       <section class="hero hero-page">
         <div class="container hero-inner">
@@ -31,33 +30,114 @@
           </div>
         </div>
       </section>
-
       <div class="container section">
         <div class="topic-layout">
           <aside id="side-nav"></aside>
           <div>
             <div class="callout callout-warning">
               <div class="callout-icon">⚠️</div>
-              <div>
-                <strong>Critical Distinction</strong>
-                <p class="mt-2">Autogyros are <strong>not</strong> helicopters. This is one of the most commonly missed questions on rotary flight tests. Read carefully.</p>
-              </div>
+              <div><strong>Critical Distinction</strong><p class="mt-2">Autogyros are <strong>not</strong> helicopters. This is one of the most commonly missed questions on rotary flight tests. Read carefully.</p></div>
             </div>
-
             <div class="callout callout-mission mt-4">
               <div class="callout-icon">🎯</div>
-              <div>
-                <strong>Why this matters</strong>
-                <p class="mt-2">Science Olympiad tests frequently ask students to distinguish autogyros from helicopters. Knowing the difference in rotor power and hover ability earns easy points.</p>
-              </div>
+              <div><strong>Why this matters</strong><p class="mt-2">Science Olympiad tests frequently ask students to distinguish autogyros from helicopters. Knowing the difference in rotor power and hover ability earns easy points.</p></div>
             </div>
-
             <div class="card card-blue mt-5">
               <h2>What Is an Autogyro?</h2>
               <p>An <span class="glossary-chip" data-term="autogyro">autogyro</span> (also called a gyrocopter) has a rotor like a helicopter, but the rotor is <strong>not powered by the engine</strong> for lift. Instead, the rotor spins because air passes through it as the aircraft moves forward.</p>
               <p>Forward thrust comes from a separate <strong>propeller</strong>, similar to an airplane. The unpowered rotor simply autorotates, creating lift from the airflow.</p>
             </div>
-
+            <div class="card card-purple mt-5">
+              <h2>Interactive Autogyro Diagram</h2>
+              <p class="mt-2">Click any label to highlight the part and learn how an autogyro works.</p>
+              <div class="diagram-container" style="margin:var(--space-4) auto; overflow:auto;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 880" style="width:100%;height:auto;min-width:700px;" id="autogyro-diagram">
+                  <style>
+                    .bg { fill: #f8fafc; }
+                    .label { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 16px; font-weight: 800; fill: #cbd5e1; text-transform: uppercase; letter-spacing: 1px; pointer-events: none; transition: all 0.3s ease; }
+                    .pointer { stroke: #e2e8f0; stroke-width: 2.5; fill: none; marker-end: url(#arrow-light); pointer-events: none; transition: all 0.3s ease; }
+                    .pointer-dot { fill: #e2e8f0; pointer-events: none; transition: all 0.3s ease; }
+                    .heli-stroke { stroke: #1e293b; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; transition: stroke 0.3s, stroke-width 0.3s; }
+                    .heli-fill-main { fill: #e2e8f0; transition: all 0.3s ease;}
+                    .heli-fill-dark { fill: #cbd5e1; transition: all 0.3s ease;}
+                    .heli-fill-darker { fill: #94a3b8; transition: all 0.3s ease;}
+                    .action-arrow { fill: none; stroke: #38bdf8; stroke-width: 4; stroke-dasharray: 6, 6; marker-end: url(#arrow-blue); transition: all 0.3s ease; }
+                    .interactive-label { cursor: pointer; }
+                    .interactive-label:hover .label, .interactive-label.active .label { fill: #e11d48; }
+                    .interactive-label:hover .pointer, .interactive-label.active .pointer { stroke: #e11d48; stroke-width: 4; marker-end: url(#arrow-active); }
+                    .interactive-label:hover .pointer-dot, .interactive-label.active .pointer-dot { fill: #e11d48; r: 6; }
+                    .highlight { stroke: #e11d48 !important; stroke-width: 7 !important; }
+                    .info-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+                  </style>
+                  <defs>
+                    <marker id="arrow-light" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e2e8f0" /></marker>
+                    <marker id="arrow-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" /></marker>
+                    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" /></marker>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.1"/></filter>
+                    <filter id="panel-shadow" x="-5%" y="-10%" width="110%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.08"/></filter>
+                  </defs>
+                  <rect width="100%" height="100%" class="bg" />
+                  <g filter="url(#shadow)">
+                    <path id="auto-fuselage" d="M 250,420 C 350,380 550,380 650,400 C 800,420 850,430 880,420 C 880,440 850,450 700,460 C 500,470 300,480 250,450 Z" class="heli-fill-main heli-stroke" />
+                    <path id="auto-cockpit" d="M 500,385 C 520,385 540,385 560,400 L 500,400 Z" class="heli-fill-darker heli-stroke" />
+                    <path id="windshield" d="M 480,400 L 500,375" class="heli-stroke" />
+                    <path id="stub-wing" d="M 420,440 L 400,480 L 460,490 L 500,450 Z" class="heli-fill-dark heli-stroke" />
+                    <path id="auto-tail-fin" d="M 850,425 L 870,330 L 910,340 L 890,425 Z" class="heli-fill-dark heli-stroke" />
+                    <path id="auto-tail-stab" d="M 820,430 L 850,450 L 920,440 L 880,425 Z" class="heli-fill-darker heli-stroke" />
+                    <ellipse id="front-prop-hub" cx="240" cy="435" rx="10" ry="25" class="heli-fill-darker heli-stroke" />
+                    <path id="front-prop-blade-1" d="M 240,410 L 220,300 L 250,300 Z" class="heli-fill-dark heli-stroke" />
+                    <path id="front-prop-blade-2" d="M 240,460 L 220,570 L 250,570 Z" class="heli-fill-dark heli-stroke" />
+                    <line id="thrust-arrow" x1="280" y1="520" x2="150" y2="520" class="action-arrow" />
+                    <line id="auto-gear-1" x1="420" y1="480" x2="420" y2="540" class="heli-stroke" />
+                    <line id="auto-gear-2" x1="460" y1="480" x2="460" y2="540" class="heli-stroke" />
+                    <circle id="auto-wheel-1" cx="420" cy="550" r="15" class="heli-fill-darker heli-stroke" />
+                    <circle id="auto-wheel-2" cx="460" cy="550" r="15" class="heli-fill-darker heli-stroke" />
+                    <circle id="auto-wheel-tail" cx="870" cy="470" r="8" class="heli-fill-darker heli-stroke" />
+                    <path id="auto-mast" d="M 520,385 L 530,220 L 550,220 L 540,385 Z" class="heli-fill-darker heli-stroke" />
+                    <ellipse id="auto-hub" cx="540" cy="220" rx="30" ry="8" class="heli-fill-dark heli-stroke" />
+                    <path id="auto-blade-1" d="M 510,220 C 350,225 150,230 100,230 C 150,220 350,215 510,215 Z" class="heli-fill-main heli-stroke" />
+                    <path id="auto-blade-2" d="M 570,220 C 730,225 930,230 980,230 C 930,220 730,215 570,215 Z" class="heli-fill-main heli-stroke" />
+                    <path id="airflow-1" d="M 300,280 C 300,250 350,240 350,200" class="action-arrow" />
+                    <path id="airflow-2" d="M 780,280 C 780,250 730,240 730,200" class="action-arrow" />
+                  </g>
+                  <g>
+                    <g id="group-front-propeller" class="interactive-label" onclick="selectPart('front-propeller')">
+                      <rect x="50" y="380" width="160" height="30" fill="transparent"/>
+                      <text x="130" y="400" class="label" text-anchor="middle">Powered Propeller</text>
+                      <circle cx="130" cy="410" r="4" class="pointer-dot"/>
+                      <line x1="130" y1="410" x2="230" y2="435" class="pointer" />
+                    </g>
+                    <g id="group-unpowered-rotor" class="interactive-label" onclick="selectPart('unpowered-rotor')">
+                      <rect x="250" y="100" width="180" height="30" fill="transparent"/>
+                      <text x="340" y="120" class="label" text-anchor="middle">Free-Spinning Rotor</text>
+                      <circle cx="340" cy="130" r="4" class="pointer-dot"/>
+                      <line x1="340" y1="130" x2="380" y2="215" class="pointer" />
+                    </g>
+                    <g id="group-autorotation" class="interactive-label" onclick="selectPart('autorotation')">
+                      <rect x="700" y="120" width="180" height="30" fill="transparent"/>
+                      <text x="790" y="140" class="label" text-anchor="middle">Autorotation (Airflow)</text>
+                      <circle cx="790" cy="150" r="4" class="pointer-dot"/>
+                      <line x1="790" y1="150" x2="740" y2="210" class="pointer" />
+                    </g>
+                    <g id="group-airplane-fuselage" class="interactive-label" onclick="selectPart('airplane-fuselage')">
+                      <rect x="680" y="520" width="180" height="30" fill="transparent"/>
+                      <text x="770" y="540" class="label" text-anchor="middle">Airplane Fuselage</text>
+                      <circle cx="770" cy="550" r="4" class="pointer-dot"/>
+                      <line x1="770" y1="550" x2="680" y2="455" class="pointer" />
+                    </g>
+                  </g>
+                  <g id="info-panel" transform="translate(150, 740)" filter="url(#panel-shadow)">
+                    <rect width="800" height="110" rx="12" class="info-box" />
+                    <foreignObject x="20" y="15" width="760" height="80">
+                      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; padding: 0 10px;">
+                        <h3 id="info-title" style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: #e11d48; text-transform: uppercase; letter-spacing: 0.5px;">The Autogyro (1920s)</h3>
+                        <p id="info-desc" style="margin: 0; font-size: 15px; color: #475569; line-height: 1.4;">Click the labels to learn about Juan de la Cierva's Autogyro. It is the missing link between airplanes and helicopters, utilizing forward thrust to spin an unpowered lifting rotor.</p>
+                      </div>
+                    </foreignObject>
+                  </g>
+                </svg>
+              </div>
+            </div>
             <div class="card card-coral mt-5">
               <h2>Why It Is Not a Helicopter</h2>
               <table class="compare-table">
@@ -73,7 +153,6 @@
                 </tbody>
               </table>
             </div>
-
             <div class="interactive-slider mt-6">
               <h3>Interactive: Helicopter vs Autogyro Mode</h3>
               <p>Toggle to see how rotor power differs.</p>
@@ -87,14 +166,10 @@
                 <div class="mt-2 caption" id="mode-detail">The main rotor is connected to the engine via the transmission.</div>
               </div>
             </div>
-
             <div id="quick-check"></div>
-
             <div class="callout callout-olympiad mt-6">
               <div class="callout-icon">🏆</div>
-              <div>
-                <strong>Olympiad Edge</strong>
-                <p class="mt-2">This is a <strong>high-frequency trap</strong>. Remember:</p>
+              <div><strong>Olympiad Edge</strong><p class="mt-2">This is a <strong>high-frequency trap</strong>. Remember:</p>
                 <ul style="margin-left:var(--space-4);margin-top:var(--space-2)">
                   <li>Autogyro rotor = unpowered (autorotates from airflow)</li>
                   <li>Helicopter rotor = powered by engine</li>
@@ -104,7 +179,6 @@
                 <p class="mt-2">If a test says "an autogyro is a type of helicopter," that statement is <strong>false</strong>.</p>
               </div>
             </div>
-
             <div class="mt-6">
               <h3>Key Vocabulary</h3>
               <div class="vocab-grid">
@@ -113,24 +187,18 @@
                 <div class="vocab-card"><div class="vocab-term">Propeller</div><div class="vocab-def">Spinning blade that creates forward thrust.</div></div>
               </div>
             </div>
-
             <div class="topic-footer" id="topic-footer"></div>
           </div>
         </div>
       </div>
     </main>
-
     <footer class="page-footer">
       <div class="container flex justify-between items-center flex-wrap gap-3">
         <div>Rotary Flight Mission</div>
-        <div class="flex gap-4">
-          <a href="../../index.html">Home</a>
-          <a href="../../study-path.html">Study Path</a>
-        </div>
+        <div class="flex gap-4"><a href="../../index.html">Home</a><a href="../../study-path.html">Study Path</a></div>
       </div>
     </footer>
   </div>
-
   <script src="../../assets/js/app-shell.js"></script>
   <script src="../../assets/js/navigation.js"></script>
   <script src="../../assets/js/progress.js"></script>
@@ -160,6 +228,25 @@
         { question: 'An autogyro uses a propeller for:', options: ['Lift', 'Forward thrust', 'Braking', 'Steering'], correct: 1 }
       ]);
     });
+
+    const autoData = {
+      'front-propeller': { title: 'Powered Front Propeller', desc: 'Unlike a helicopter, an autogyro\'s engine powers a standard airplane propeller in the front. This provides forward thrust to pull the aircraft through the air.', elements: ['front-prop-hub', 'front-prop-blade-1', 'front-prop-blade-2', 'thrust-arrow'] },
+      'unpowered-rotor': { title: 'Free-Spinning Lifting Rotor', desc: 'The top rotor is NOT connected to the engine during flight. It spins freely on a mast, acting somewhat like a circular wing or parachute.', elements: ['auto-mast', 'auto-hub', 'auto-blade-1', 'auto-blade-2'] },
+      'autorotation': { title: 'Autorotation (Airflow Upwards)', desc: 'As the front prop pulls the aircraft forward, wind blows UP through the unpowered top rotor. This upward airflow forces the blades to spin rapidly, generating aerodynamic lift.', elements: ['airflow-1', 'airflow-2'] },
+      'airplane-fuselage': { title: 'Airplane-style Fuselage', desc: 'Autogyros use standard airplane controls (rudder, elevators, and sometimes ailerons on stub wings) to steer, making their bodies look very much like planes of the era.', elements: ['auto-fuselage', 'auto-tail-fin', 'auto-tail-stab', 'stub-wing'] }
+    };
+
+    function selectPart(partKey) {
+      document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+      document.querySelectorAll('.interactive-label').forEach(el => el.classList.remove('active'));
+      const partData = autoData[partKey];
+      if (!partData) return;
+      document.getElementById('info-title').textContent = partData.title;
+      document.getElementById('info-desc').textContent = partData.desc;
+      partData.elements.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('highlight'); });
+      const labelGroup = document.getElementById('group-' + partKey);
+      if (labelGroup) labelGroup.classList.add('active');
+    }
   </script>
 </body>
 </html>
