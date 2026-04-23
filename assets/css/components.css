@@ -346,6 +346,19 @@
   text-decoration: none;
 }
 
+.btn-success {
+  background: var(--success-green);
+  color: white;
+  border-color: var(--success-green);
+}
+
+.btn-success:hover {
+  background: #2e9e54;
+  border-color: #2e9e54;
+  color: white;
+  text-decoration: none;
+}
+
 .btn-sm {
   padding: var(--space-2) var(--space-3);
   font-size: 0.875rem;
