@@ -8,8 +8,8 @@
 .theme-introduction .card-blue {
   border-top-color: var(--rotor-teal);
 }
-.theme-introduction .side-nav-list a.active,
-.theme-introduction .side-nav-list a:hover {
+.theme-introduction .side-nav-section .side-nav-list a.active,
+.theme-introduction .side-nav-section .side-nav-list a:hover {
   color: var(--rotor-teal);
 }
 
@@ -23,6 +23,12 @@
 .theme-pioneers .card-yellow {
   border-top-color: var(--sun-yellow);
 }
+.theme-early-concepts .side-nav-section .side-nav-list a.active,
+.theme-early-concepts .side-nav-section .side-nav-list a:hover,
+.theme-pioneers .side-nav-section .side-nav-list a.active,
+.theme-pioneers .side-nav-section .side-nav-list a:hover {
+  color: var(--sun-yellow);
+}
 
 /* Flight Science - blue + orange */
 .theme-flight-science .hero-page {
@@ -32,8 +38,8 @@
 .theme-flight-science .card-orange {
   border-top-color: var(--lift-orange);
 }
-.theme-flight-science .side-nav-list a.active,
-.theme-flight-science .side-nav-list a:hover {
+.theme-flight-science .side-nav-section .side-nav-list a.active,
+.theme-flight-science .side-nav-section .side-nav-list a:hover {
   color: var(--lift-orange);
 }
 
@@ -45,8 +51,8 @@
 .theme-aircraft-types .card-purple {
   border-top-color: var(--purple-accent);
 }
-.theme-aircraft-types .side-nav-list a.active,
-.theme-aircraft-types .side-nav-list a:hover {
+.theme-aircraft-types .side-nav-section .side-nav-list a.active,
+.theme-aircraft-types .side-nav-section .side-nav-list a:hover {
   color: var(--purple-accent);
 }
 
@@ -58,11 +64,19 @@
 .theme-applications .card-teal {
   border-top-color: var(--success-green);
 }
+.theme-applications .side-nav-section .side-nav-list a.active,
+.theme-applications .side-nav-section .side-nav-list a:hover {
+  color: var(--success-green);
+}
 
 /* Future - teal + violet */
 .theme-future .hero-page {
   background: linear-gradient(135deg, #e6fdfb 0%, #f3f0ff 100%);
   border-bottom-color: var(--rotor-teal);
+}
+.theme-future .side-nav-section .side-nav-list a.active,
+.theme-future .side-nav-section .side-nav-list a:hover {
+  color: var(--rotor-teal);
 }
 
 /* Olympiad - navy + gold */
@@ -76,9 +90,17 @@
 .theme-olympiad .card {
   border-top: 4px solid var(--sun-yellow);
 }
+.theme-olympiad .side-nav-section .side-nav-list a.active,
+.theme-olympiad .side-nav-section .side-nav-list a:hover {
+  color: var(--deep-navy);
+}
 
 /* Glossary - soft blue */
 .theme-glossary .hero-page {
   background: var(--soft-background);
   border-bottom-color: var(--sky-blue);
+}
+.theme-glossary .side-nav-section .side-nav-list a.active,
+.theme-glossary .side-nav-section .side-nav-list a:hover {
+  color: var(--sky-blue);
 }
