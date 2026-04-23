@@ -221,6 +221,7 @@ const Navigation = {
     const footer = document.getElementById('topic-footer');
     if (!footer) return;
     const { prev, next } = this.getNextPrev();
+    const isComplete = App.isPageComplete(pageId);
     let html = '';
     if (prev) {
       html += `<a href="${this.getRelativePath(prev[1].path)}" class="nav-btn prev">
@@ -230,8 +231,8 @@ const Navigation = {
     } else {
       html += `<span></span>`;
     }
-    html += `<button class="btn btn-primary btn-sm" id="mark-complete-btn" data-page="${pageId}">
-      ${App.isPageComplete(pageId) ? '✓ Completed' : 'Mark Complete'}
+    html += `<button class="btn ${isComplete ? 'btn-secondary' : 'btn-primary'} btn-sm" id="mark-complete-btn" data-page="${pageId}">
+      ${isComplete ? 'Mark Incomplete' : 'Mark Complete'}
     </button>`;
     if (next) {
       html += `<a href="${this.getRelativePath(next[1].path)}" class="nav-btn next">
@@ -246,13 +247,30 @@ const Navigation = {
     const btn = document.getElementById('mark-complete-btn');
     if (btn) {
       btn.addEventListener('click', () => {
-        const completed = App.markPageComplete(pageId);
-        if (completed) {
-          btn.textContent = '✓ Completed';
-          btn.disabled = true;
+        if (App.isPageComplete(pageId)) {
+          App.unmarkPageComplete(pageId);
+          btn.textContent = 'Mark Complete';
+          btn.classList.remove('btn-secondary');
+          btn.classList.add('btn-primary');
+          App.showToast('Page unmarked. -10 XP', 'info');
+        } else {
+          App.markPageComplete(pageId);
+          btn.textContent = 'Mark Incomplete';
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-secondary');
           App.showToast('Page completed! +10 XP', 'success');
-          Navigation.renderSideNav();
         }
+        const marker = document.getElementById('completion-marker');
+        if (marker) {
+          if (App.isPageComplete(pageId)) {
+            marker.innerHTML = '✓ Completed';
+            marker.classList.remove('incomplete');
+          } else {
+            marker.innerHTML = '○ Not completed';
+            marker.classList.add('incomplete');
+          }
+        }
+        Navigation.renderSideNav();
       });
     }
   }
