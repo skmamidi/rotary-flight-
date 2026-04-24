@@ -42,6 +42,33 @@
               <h2>Observing Birds</h2>
               <p>Early humans watched birds soar and wondered how they stayed aloft. They noticed wings, feathers, and the importance of air.</p>
             </div>
+            <div class="card card-purple mt-5">
+              <h2>Nature's Spinning Clues</h2>
+              <p>The spinning "maple helicopter" is one of nature's clearest hints that rotation can slow a fall and create stability. Technically, scientists were studying the winged maple seed, called a <strong>samara</strong>, but to many observers it looked like a tiny spinning leaf drifting to the ground.</p>
+              <div class="two-col mt-5">
+                <div>
+                  <div class="svg-embed-wrapper" style="aspect-ratio:1200/900">
+                    <object data="../../assets/images/maple-seed-inspiration.svg" type="image/svg+xml" aria-label="Illustration of a spinning maple seed showing autorotation"></object>
+                  </div>
+                </div>
+                <div>
+                  <div class="callout callout-funfact" style="margin-top:0">
+                    <div class="callout-icon">🍁</div>
+                    <div><strong>Why inventors cared</strong><p class="mt-2">A spinning seed showed that air can keep an object turning as it falls. That idea helped later scientists think about rotor blades, autorotation, and how shape affects stability.</p></div>
+                  </div>
+                  <div class="card card-teal" style="margin-top:var(--space-4)">
+                    <h3>What We Learned</h3>
+                    <p>Watching maple seeds taught researchers several important lessons:</p>
+                    <ul style="margin-top:var(--space-3); padding-left:1.2rem;">
+                      <li>Spin can make a falling object descend more slowly.</li>
+                      <li>A curved wing can push air downward even without an engine.</li>
+                      <li>Rotation can make motion steadier and more predictable.</li>
+                      <li>Nature often solves flight problems before humans build machines.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="card card-teal mt-5">
               <h2>Inspiration vs Engineering</h2>
               <p>Observation inspired ideas, but engineering was needed to make them real. Nature showed what was possible; inventors had to figure out how to build it.</p>
@@ -70,7 +97,8 @@
       Navigation.renderTopicFooter('ancient-ideas');
       if (App.isPageComplete('ancient-ideas')) { document.getElementById('completion-marker').innerHTML = '✓ Completed'; document.getElementById('completion-marker').classList.remove('incomplete'); }
       QuizEngine.renderQuickCheck('quick-check', [
-        { question: 'Early flight ideas came from:', options: ['Watching birds','Reading books','Building engines','Mining rocks'], correct: 0 }
+        { question: 'Early flight ideas came from:', options: ['Watching birds','Reading books','Building engines','Mining rocks'], correct: 0 },
+        { question: 'The spinning maple “helicopter” is really a:', options: ['Leaf fan','Winged seed','Bird feather','Tiny propeller'], correct: 1 }
       ]);
     });
   </script>
