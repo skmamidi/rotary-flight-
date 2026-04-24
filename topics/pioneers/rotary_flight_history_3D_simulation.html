@@ -39,7 +39,7 @@
   <section class="panel info" id="infoPanel"></section>
   <section class="panel timelinePanel"><div class="tlHead"><strong>Milestones</strong><span>Each stop generates a different 3D aircraft or experiment</span></div><div class="tlScroll"><div class="timeline" id="timelineButtons"></div></div></section>
 </div>
-<div class="centerLabel" id="centerLabel"><strong>Ancient seed idea</strong><span>spin creates lift-like motion</span></div><div class="hint">The scene is procedural: rotors, air streams, historic platforms, and labels are rebuilt from data for each milestone.</div><div class="boot" id="bootError"></div>
+<div class="centerLabel" id="centerLabel"><strong>Ancient seed idea</strong><span>spin creates lift-like motion</span></div><div class="boot" id="bootError"></div>
 <script>
 window.addEventListener('error',function(e){var b=document.getElementById('bootError');if(!b)return;b.style.display='block';b.innerHTML='<b>3D scene failed to start.</b><br>'+String(e.message||e.error||'Unknown error')+'<br><br>Run through a local web server: <code>python3 -m http.server 8000</code>, then open <code>http://localhost:8000/</code>.'});
 </script>
@@ -115,10 +115,6 @@ handleResize();build(0);requestAnimationFrame(animate);
     var centerLabel=document.querySelector('.centerLabel');
     if(centerLabel){
       centerLabel.style.bottom='calc(124px + var(--safeB) + '+offset+'px)';
-    }
-    var hint=document.querySelector('.hint');
-    if(hint){
-      hint.style.bottom='calc(120px + var(--safeB) + '+offset+'px)';
     }
   }
   window.addEventListener('load',adjustHud);
