@@ -31,10 +31,16 @@
           <div>
             <div class="card card-blue">
               <div class="flex gap-2 flex-wrap">
+                <a href="glossary-all.html" class="btn btn-sm btn-secondary">All</a>
                 <a href="glossary-a-f.html" class="btn btn-sm btn-primary">A-F</a>
                 <a href="glossary-g-l.html" class="btn btn-sm btn-secondary">G-L</a>
                 <a href="glossary-m-r.html" class="btn btn-sm btn-secondary">M-R</a>
                 <a href="glossary-s-z.html" class="btn btn-sm btn-secondary">S-Z</a>
+              </div>
+              <div class="flex gap-2 flex-wrap mt-3 items-center">
+                <span style="font-size:0.85rem;color:var(--steel-gray);font-weight:600">Sort:</span>
+                <button class="btn btn-sm btn-primary" id="sort-alpha">A-Z</button>
+                <button class="btn btn-sm btn-secondary" id="sort-random">Random</button>
               </div>
               <input type="text" placeholder="Search terms..." class="mt-3" style="width:100%;padding:var(--space-3);border-radius:var(--radius-md);border:2px solid var(--soft-background);font-family:inherit" id="glossary-search">
             </div>

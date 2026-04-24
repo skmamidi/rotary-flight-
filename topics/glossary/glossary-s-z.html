@@ -31,11 +31,18 @@
           <div>
             <div class="card card-blue">
               <div class="flex gap-2 flex-wrap">
+                <a href="glossary-all.html" class="btn btn-sm btn-secondary">All</a>
                 <a href="glossary-a-f.html" class="btn btn-sm btn-secondary">A-F</a>
                 <a href="glossary-g-l.html" class="btn btn-sm btn-secondary">G-L</a>
                 <a href="glossary-m-r.html" class="btn btn-sm btn-secondary">M-R</a>
                 <a href="glossary-s-z.html" class="btn btn-sm btn-primary">S-Z</a>
               </div>
+              <div class="flex gap-2 flex-wrap mt-3 items-center">
+                <span style="font-size:0.85rem;color:var(--steel-gray);font-weight:600">Sort:</span>
+                <button class="btn btn-sm btn-primary" id="sort-alpha">A-Z</button>
+                <button class="btn btn-sm btn-secondary" id="sort-random">Random</button>
+              </div>
+              <input type="text" placeholder="Search terms..." class="mt-3" style="width:100%;padding:var(--space-3);border-radius:var(--radius-md);border:2px solid var(--soft-background);font-family:inherit" id="glossary-search">
             </div>
             <div class="vocab-grid mt-5" id="glossary-content" data-range="s-z"></div>
           </div>
@@ -55,7 +62,17 @@
   <script src="../../assets/js/glossary.js"></script>
   <script src="../../assets/js/accessibility.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => { Glossary.init(); });
+    document.addEventListener('DOMContentLoaded', () => {
+      Glossary.init();
+      const search = document.getElementById('glossary-search');
+      search.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        document.querySelectorAll('.vocab-card').forEach(card => {
+          const term = card.dataset.term || '';
+          card.style.display = term.includes(q) ? 'block' : 'none';
+        });
+      });
+    });
   </script>
 </body>
 </html>

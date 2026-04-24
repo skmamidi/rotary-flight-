@@ -61,6 +61,7 @@ const Navigation = {
     'practice-quiz-medium': { title: 'Practice Quiz: Medium', path: 'topics/olympiad/practice-quiz-medium.html', section: 'olympiad' },
     'practice-quiz-hard': { title: 'Practice Quiz: Hard', path: 'topics/olympiad/practice-quiz-hard.html', section: 'olympiad' },
     'state-level-mock-test': { title: 'State-Level Mock Test', path: 'topics/olympiad/state-level-mock-test.html', section: 'olympiad' },
+    'glossary-all': { title: 'Glossary All Terms', path: 'topics/glossary/glossary-all.html', section: 'glossary' },
     'glossary-a-f': { title: 'Glossary A-F', path: 'topics/glossary/glossary-a-f.html', section: 'glossary' },
     'glossary-g-l': { title: 'Glossary G-L', path: 'topics/glossary/glossary-g-l.html', section: 'glossary' },
     'glossary-m-r': { title: 'Glossary M-R', path: 'topics/glossary/glossary-m-r.html', section: 'glossary' },

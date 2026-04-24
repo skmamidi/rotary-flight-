@@ -3,6 +3,7 @@
 
 const Glossary = {
   terms: {},
+  sortOrder: 'alpha', // 'alpha' | 'random'
 
   // Map glossary terms to their most relevant topic/practice page
   // Paths are relative from topics/glossary/ pages
@@ -222,6 +223,7 @@ const Glossary = {
   init() {
     this.load().then(() => {
       this.bindChips();
+      this.bindSortControls();
       this.renderGlossaryPage();
     });
   },
@@ -270,12 +272,24 @@ const Glossary = {
   renderGlossaryPage() {
     const container = document.getElementById('glossary-content');
     if (!container) return;
-    const range = container.dataset.range; // e.g., 'a-f'
-    const [start, end] = range.split('-');
-    const filtered = Object.entries(this.terms).filter(([term]) => {
-      const first = term[0];
-      return first >= start && first <= end;
-    });
+    const range = container.dataset.range; // e.g., 'a-f' or 'all'
+    let filtered;
+    if (range === 'all') {
+      filtered = Object.entries(this.terms);
+    } else {
+      const [start, end] = range.split('-');
+      filtered = Object.entries(this.terms).filter(([term]) => {
+        const first = term[0];
+        return first >= start && first <= end;
+      });
+    }
+
+    // Sort: alphabetical by default, random when toggled
+    if (this.sortOrder === 'alpha') {
+      filtered.sort((a, b) => a[0].localeCompare(b[0], undefined, { sensitivity: 'base' }));
+    } else if (this.sortOrder === 'random') {
+      this.shuffleArray(filtered);
+    }
 
     let html = '';
     filtered.forEach(([term, info]) => {
@@ -292,6 +306,46 @@ const Glossary = {
       `;
     });
     container.innerHTML = html;
+    this.updateSortButtons();
+  },
+
+  shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  },
+
+  bindSortControls() {
+    const alphaBtn = document.getElementById('sort-alpha');
+    const randomBtn = document.getElementById('sort-random');
+    if (!alphaBtn || !randomBtn) return;
+
+    alphaBtn.addEventListener('click', () => {
+      this.sortOrder = 'alpha';
+      this.renderGlossaryPage();
+    });
+    randomBtn.addEventListener('click', () => {
+      this.sortOrder = 'random';
+      this.renderGlossaryPage();
+    });
+  },
+
+  updateSortButtons() {
+    const alphaBtn = document.getElementById('sort-alpha');
+    const randomBtn = document.getElementById('sort-random');
+    if (!alphaBtn || !randomBtn) return;
+    if (this.sortOrder === 'alpha') {
+      alphaBtn.classList.add('btn-primary');
+      alphaBtn.classList.remove('btn-secondary');
+      randomBtn.classList.add('btn-secondary');
+      randomBtn.classList.remove('btn-primary');
+    } else {
+      randomBtn.classList.add('btn-primary');
+      randomBtn.classList.remove('btn-secondary');
+      alphaBtn.classList.add('btn-secondary');
+      alphaBtn.classList.remove('btn-primary');
+    }
   },
 
   search(query) {
