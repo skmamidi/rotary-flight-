@@ -28,6 +28,7 @@
 
     .sort-btn {
       transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+      touch-action: manipulation;
     }
 
     .sort-btn:hover:not(:disabled),
@@ -54,6 +55,10 @@
       color: #721c24;
     }
 
+    .sort-btn.touch-dragging {
+      opacity: 0.35;
+    }
+
     .sort-status {
       display: flex;
       flex-wrap: wrap;
@@ -70,6 +75,22 @@
     .sort-feedback {
       margin-top: var(--space-4);
       min-height: 64px;
+    }
+
+    .sort-touch-ghost {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 1000;
+      pointer-events: none;
+      padding: var(--space-2) var(--space-3);
+      background: var(--cloud-white);
+      border: 2px solid var(--sky-blue);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+      font-weight: 700;
+      color: var(--ink);
+      transform: translate(-50%, -50%);
     }
   </style>
 </head>
@@ -263,6 +284,7 @@
       }));
       let selectedButton = null;
       let draggedButton = null;
+      let touchDragState = null;
 
       const renderSortStats = () => {
         const buttons = Array.from(document.querySelectorAll('.sort-btn'));
@@ -289,6 +311,39 @@
         zoneCards.forEach(card => card.classList.remove('active-target'));
       };
 
+      const findZoneCardFromPoint = (clientX, clientY) => {
+        const element = document.elementFromPoint(clientX, clientY);
+        return element ? element.closest('.sort-zone') : null;
+      };
+
+      const clearActiveTargetHighlight = () => {
+        zoneCards.forEach(card => card.classList.remove('active-target'));
+      };
+
+      const updateActiveTouchTarget = zoneCard => {
+        clearActiveTargetHighlight();
+        if (zoneCard) {
+          zoneCard.classList.add('active-target');
+        }
+      };
+
+      const endTouchDrag = () => {
+        if (!touchDragState) {
+          return;
+        }
+
+        if (touchDragState.button.hasPointerCapture && touchDragState.button.hasPointerCapture(touchDragState.pointerId)) {
+          touchDragState.button.releasePointerCapture(touchDragState.pointerId);
+        }
+        touchDragState.button.classList.remove('touch-dragging');
+        touchDragState.ghost.remove();
+        touchDragState = null;
+        draggedButton = null;
+        if (!selectedButton) {
+          clearActiveTargetHighlight();
+        }
+      };
+
       const bindSortButton = (btn) => {
         btn.addEventListener('click', () => {
           if (btn.disabled) return;
@@ -312,6 +367,80 @@
 
         btn.addEventListener('dragend', () => {
           draggedButton = null;
+        });
+
+        btn.addEventListener('pointerdown', event => {
+          if (btn.disabled || event.pointerType === 'mouse') {
+            return;
+          }
+
+          const ghost = document.createElement('div');
+          ghost.className = 'sort-touch-ghost';
+          ghost.textContent = btn.textContent.trim();
+          document.body.appendChild(ghost);
+
+          touchDragState = {
+            button: btn,
+            ghost,
+            pointerId: event.pointerId,
+            startX: event.clientX,
+            startY: event.clientY,
+            currentZone: null,
+            moved: false
+          };
+
+          btn.setPointerCapture(event.pointerId);
+          draggedButton = btn;
+          btn.classList.add('touch-dragging');
+          ghost.style.left = `${event.clientX}px`;
+          ghost.style.top = `${event.clientY - 8}px`;
+        });
+
+        btn.addEventListener('pointermove', event => {
+          if (!touchDragState || touchDragState.pointerId !== event.pointerId) {
+            return;
+          }
+
+          const moveX = event.clientX - touchDragState.startX;
+          const moveY = event.clientY - touchDragState.startY;
+          if (!touchDragState.moved && Math.hypot(moveX, moveY) > 10) {
+            touchDragState.moved = true;
+            clearSelection();
+          }
+
+          if (!touchDragState.moved) {
+            return;
+          }
+
+          event.preventDefault();
+          touchDragState.ghost.style.left = `${event.clientX}px`;
+          touchDragState.ghost.style.top = `${event.clientY - 8}px`;
+          touchDragState.currentZone = findZoneCardFromPoint(event.clientX, event.clientY);
+          updateActiveTouchTarget(touchDragState.currentZone);
+        });
+
+        btn.addEventListener('pointerup', event => {
+          if (!touchDragState || touchDragState.pointerId !== event.pointerId) {
+            return;
+          }
+
+          if (touchDragState.moved) {
+            event.preventDefault();
+            const dropZone = touchDragState.currentZone || findZoneCardFromPoint(event.clientX, event.clientY);
+            const dropButton = touchDragState.button;
+            endTouchDrag();
+            if (dropZone) {
+              scorePlacement(dropButton, dropZone.dataset.zone);
+            }
+          } else {
+            endTouchDrag();
+          }
+        });
+
+        btn.addEventListener('pointercancel', event => {
+          if (touchDragState && touchDragState.pointerId === event.pointerId) {
+            endTouchDrag();
+          }
         });
       };
 
@@ -380,6 +509,7 @@
         rotaryZone.innerHTML = '';
         sortFeedback.className = 'feedback-box sort-feedback';
         sortFeedback.innerHTML = '';
+        endTouchDrag();
         clearSelection();
         draggedButton = null;
 
