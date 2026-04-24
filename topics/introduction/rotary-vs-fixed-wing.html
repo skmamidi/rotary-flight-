@@ -10,6 +10,68 @@
   <link rel="stylesheet" href="../../assets/css/themes.css">
   <link rel="stylesheet" href="../../assets/css/animations.css">
   <link rel="stylesheet" href="../../assets/css/quiz.css">
+  <style>
+    .sort-zone {
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .sort-zone:hover,
+    .sort-zone:focus-within {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .sort-zone.active-target {
+      border-color: var(--sky-blue);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+    }
+
+    .sort-btn {
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .sort-btn:hover:not(:disabled),
+    .sort-btn:focus-visible:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.14);
+    }
+
+    .sort-btn.selected {
+      background: #e0efff;
+      border-color: var(--sky-blue);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    .sort-btn.correct {
+      background: #d4edda;
+      border-color: var(--success-green);
+      color: #155724;
+    }
+
+    .sort-btn.incorrect {
+      background: #f8d7da;
+      border-color: var(--alert-coral);
+      color: #721c24;
+    }
+
+    .sort-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 239, 255, 0.85));
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+    }
+
+    .sort-feedback {
+      margin-top: var(--space-4);
+      min-height: 64px;
+    }
+  </style>
 </head>
 <body class="theme-introduction">
   <div class="page-wrapper">
@@ -100,29 +162,40 @@
 
             <div class="interactive-slider mt-6">
               <h3>Interactive: Sort the Features</h3>
-              <p>Click each feature to see if it belongs to fixed-wing or rotary-wing aircraft.</p>
+              <p>Sort each feature into the box you think is correct. Drag a feature card or tap a card, then tap a box. You will get instant right or wrong feedback.</p>
               <div class="row gap-3 mt-3" id="sort-game">
                 <div class="col-6 col-sm-12">
-                  <div style="background:var(--soft-background);padding:var(--space-4);border-radius:var(--radius-md)">
+                  <div class="sort-zone" data-zone="fixed" tabindex="0" style="background:var(--soft-background);padding:var(--space-4);border-radius:var(--radius-md);border:2px solid var(--border-light)">
                     <strong>Fixed-Wing Traits</strong>
                     <div class="drop-zone" id="fixed-zone" style="min-height:100px;margin-top:var(--space-2)"></div>
                   </div>
                 </div>
                 <div class="col-6 col-sm-12">
-                  <div style="background:var(--soft-background);padding:var(--space-4);border-radius:var(--radius-md)">
+                  <div class="sort-zone" data-zone="rotary" tabindex="0" style="background:var(--soft-background);padding:var(--space-4);border-radius:var(--radius-md);border:2px solid var(--border-light)">
                     <strong>Rotary-Wing Traits</strong>
                     <div class="drop-zone" id="rotary-zone" style="min-height:100px;margin-top:var(--space-2)"></div>
                   </div>
                 </div>
               </div>
               <div class="flex gap-2 flex-wrap mt-3" id="sort-items">
-                <button class="draggable-item sort-btn" data-answer="rotary">Can hover</button>
-                <button class="draggable-item sort-btn" data-answer="fixed">Needs runway</button>
-                <button class="draggable-item sort-btn" data-answer="rotary">Spins blades</button>
-                <button class="draggable-item sort-btn" data-answer="fixed">Fixed wing</button>
-                <button class="draggable-item sort-btn" data-answer="rotary">No runway needed</button>
-                <button class="draggable-item sort-btn" data-answer="fixed">Usually faster</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="rotary">Can hover</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="fixed">Needs runway</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="rotary">Spins blades</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="fixed">Fixed wing</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="rotary">No runway needed</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="fixed">Usually faster</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="rotary">Vertical takeoff</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="fixed">Best for long trips</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="rotary">Can fly sideways</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="fixed">Glides with wings</button>
+                <button class="draggable-item sort-btn" draggable="true" data-answer="rotary">Works in tight landing areas</button>
               </div>
+              <div class="sort-status">
+                <div id="sort-progress"><strong>Sorted:</strong> 0 / 11</div>
+                <div id="sort-score"><strong>Score:</strong> 0 correct</div>
+                <button type="button" class="btn btn-secondary btn-sm" id="reset-sort">Try Again</button>
+              </div>
+              <div id="sort-feedback" class="feedback-box sort-feedback" aria-live="polite"></div>
             </div>
 
             <div id="quick-check"></div>
@@ -176,15 +249,154 @@
         document.getElementById('completion-marker').classList.remove('incomplete');
       }
       // Sort game
-      document.querySelectorAll('.sort-btn').forEach(btn => {
+      const sortItems = document.getElementById('sort-items');
+      const fixedZone = document.getElementById('fixed-zone');
+      const rotaryZone = document.getElementById('rotary-zone');
+      const sortFeedback = document.getElementById('sort-feedback');
+      const progressEl = document.getElementById('sort-progress');
+      const scoreEl = document.getElementById('sort-score');
+      const resetSortBtn = document.getElementById('reset-sort');
+      const zoneCards = document.querySelectorAll('.sort-zone');
+      const initialButtons = Array.from(document.querySelectorAll('.sort-btn')).map(btn => ({
+        label: btn.textContent.trim(),
+        answer: btn.dataset.answer
+      }));
+      let selectedButton = null;
+      let draggedButton = null;
+
+      const renderSortStats = () => {
+        const buttons = Array.from(document.querySelectorAll('.sort-btn'));
+        const sortedCount = buttons.filter(btn => btn.disabled).length;
+        const correctCount = buttons.filter(btn => btn.classList.contains('correct')).length;
+        progressEl.innerHTML = `<strong>Sorted:</strong> ${sortedCount} / ${buttons.length}`;
+        scoreEl.innerHTML = `<strong>Score:</strong> ${correctCount} correct`;
+      };
+
+      const setFeedback = (isCorrect, featureText, chosenZone) => {
+        const zoneLabel = chosenZone === 'fixed' ? 'Fixed-Wing Traits' : 'Rotary-Wing Traits';
+        const correctLabel = chosenZone === 'fixed' ? 'rotary-wing' : 'fixed-wing';
+        sortFeedback.className = `feedback-box sort-feedback show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+        sortFeedback.innerHTML = isCorrect
+          ? `<strong>Correct.</strong> "${featureText}" belongs in <strong>${zoneLabel}</strong>.`
+          : `<strong>Not quite.</strong> "${featureText}" is a <strong>${correctLabel}</strong> trait, not a ${chosenZone}-wing trait.`;
+      };
+
+      const clearSelection = () => {
+        if (selectedButton) {
+          selectedButton.classList.remove('selected');
+        }
+        selectedButton = null;
+        zoneCards.forEach(card => card.classList.remove('active-target'));
+      };
+
+      const bindSortButton = (btn) => {
         btn.addEventListener('click', () => {
-          const ans = btn.dataset.answer;
-          const target = ans === 'fixed' ? document.getElementById('fixed-zone') : document.getElementById('rotary-zone');
-          btn.disabled = true;
-          btn.style.opacity = '0.6';
-          target.appendChild(btn);
+          if (btn.disabled) return;
+          const isSelected = selectedButton === btn;
+          clearSelection();
+          if (!isSelected) {
+            selectedButton = btn;
+            btn.classList.add('selected');
+            zoneCards.forEach(card => card.classList.add('active-target'));
+          }
+        });
+
+        btn.addEventListener('dragstart', event => {
+          if (btn.disabled) {
+            event.preventDefault();
+            return;
+          }
+          draggedButton = btn;
+          clearSelection();
+        });
+
+        btn.addEventListener('dragend', () => {
+          draggedButton = null;
+        });
+      };
+
+      const scorePlacement = (btn, chosenZone) => {
+        const isCorrect = btn.dataset.answer === chosenZone;
+        btn.disabled = true;
+        btn.classList.remove('selected');
+        btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+        const targetZone = chosenZone === 'fixed' ? fixedZone : rotaryZone;
+        targetZone.appendChild(btn);
+        setFeedback(isCorrect, btn.textContent.trim(), chosenZone);
+        renderSortStats();
+        clearSelection();
+        draggedButton = null;
+
+        if (Array.from(document.querySelectorAll('.sort-btn')).every(item => item.disabled)) {
+          const correctCount = document.querySelectorAll('.sort-btn.correct').length;
+          const totalCount = document.querySelectorAll('.sort-btn').length;
+          App.showToast(`Sorting complete: ${correctCount} of ${totalCount} correct`, correctCount === totalCount ? 'success' : 'info');
+        }
+      };
+
+      zoneCards.forEach(card => {
+        const chosenZone = card.dataset.zone;
+        const innerZone = chosenZone === 'fixed' ? fixedZone : rotaryZone;
+
+        card.addEventListener('click', event => {
+          if (event.target.closest('.sort-btn')) return;
+          if (selectedButton) {
+            scorePlacement(selectedButton, chosenZone);
+          }
+        });
+
+        card.addEventListener('keydown', event => {
+          if ((event.key === 'Enter' || event.key === ' ') && selectedButton) {
+            event.preventDefault();
+            scorePlacement(selectedButton, chosenZone);
+          }
+        });
+
+        innerZone.addEventListener('dragover', event => {
+          event.preventDefault();
+          card.classList.add('active-target');
+        });
+
+        innerZone.addEventListener('dragleave', () => {
+          if (!selectedButton) {
+            card.classList.remove('active-target');
+          }
+        });
+
+        innerZone.addEventListener('drop', event => {
+          event.preventDefault();
+          if (draggedButton) {
+            scorePlacement(draggedButton, chosenZone);
+          }
         });
       });
+
+      document.querySelectorAll('.sort-btn').forEach(bindSortButton);
+      renderSortStats();
+
+      resetSortBtn.addEventListener('click', () => {
+        sortItems.innerHTML = '';
+        fixedZone.innerHTML = '';
+        rotaryZone.innerHTML = '';
+        sortFeedback.className = 'feedback-box sort-feedback';
+        sortFeedback.innerHTML = '';
+        clearSelection();
+        draggedButton = null;
+
+        initialButtons.forEach(({ label, answer }) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'draggable-item sort-btn';
+          btn.draggable = true;
+          btn.dataset.answer = answer;
+          btn.textContent = label;
+          sortItems.appendChild(btn);
+          bindSortButton(btn);
+        });
+
+        renderSortStats();
+      });
+
       QuizEngine.renderQuickCheck('quick-check', [
         { question: 'Which aircraft needs forward motion over a fixed wing to create lift?', options: ['Helicopter', 'Airplane', 'Autogyro', 'Tiltrotor'], correct: 1 },
         { question: 'Which can hover without moving forward?', options: ['Airplane', 'Glider', 'Helicopter', 'None'], correct: 2 },
