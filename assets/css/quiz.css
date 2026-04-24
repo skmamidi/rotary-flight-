@@ -26,6 +26,7 @@
   gap: var(--space-3);
   font-size: 0.9rem;
   color: var(--steel-gray);
+  flex-wrap: wrap;
 }
 
 .quiz-progress-bar {
@@ -53,6 +54,7 @@
   font-weight: 700;
   color: var(--deep-navy);
   margin-bottom: var(--space-4);
+  overflow-wrap: anywhere;
 }
 
 .question-number {
@@ -78,7 +80,7 @@
 
 .answer-option {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--soft-background);
@@ -120,10 +122,11 @@
 .tf-buttons {
   display: flex;
   gap: var(--space-4);
+  flex-wrap: wrap;
 }
 
 .tf-btn {
-  flex: 1;
+  flex: 1 1 220px;
   padding: var(--space-4);
   border-radius: var(--radius-md);
   font-weight: 700;
@@ -168,6 +171,7 @@
   text-align: center;
   font-weight: 600;
   transition: all var(--transition-fast);
+  overflow-wrap: anywhere;
 }
 
 .match-item:hover {
@@ -211,6 +215,7 @@
   font-weight: 600;
   cursor: grab;
   user-select: none;
+  text-align: center;
 }
 
 .draggable-item:active {
@@ -229,6 +234,7 @@
   display: flex;
   gap: var(--space-3);
   align-items: flex-start;
+  overflow-wrap: anywhere;
 }
 
 .feedback-correct {
@@ -436,7 +442,7 @@
 .game-canvas {
   width: 100%;
   max-width: 600px;
-  height: 320px;
+  height: clamp(220px, 48vw, 320px);
   background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 60%, #90EE90 60%, #228B22 100%);
   border-radius: var(--radius-md);
   margin: var(--space-4) auto;
@@ -499,3 +505,81 @@
 .heatmap-good { background: #fff3cd; color: #856404; }
 .heatmap-weak { background: #f8d7da; color: #721c24; }
 .heatmap-none { background: var(--soft-background); color: var(--steel-gray); }
+
+@media (max-width: 768px) {
+  .quiz-container,
+  .mini-game,
+  .quick-check {
+    padding: var(--space-4);
+  }
+
+  .quiz-header {
+    align-items: flex-start;
+  }
+
+  .quiz-progress-bar {
+    width: min(100%, 220px);
+  }
+
+  .question-text {
+    font-size: 1rem;
+  }
+
+  .answer-option {
+    padding: var(--space-3);
+  }
+
+  .matching-pairs {
+    grid-template-columns: 1fr;
+  }
+
+  .drop-zone {
+    min-height: 72px;
+  }
+
+  .score-summary {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .score-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .score-circle::before {
+    width: 94px;
+    height: 94px;
+  }
+
+  .score-text {
+    font-size: 1.5rem;
+  }
+
+  .game-score {
+    font-size: 1.25rem;
+  }
+
+  .label-slot {
+    min-width: 72px;
+    max-width: 34vw;
+    height: 32px;
+    font-size: 0.75rem;
+    padding: 0 var(--space-1);
+  }
+
+  .heatmap-grid,
+  .vocab-grid,
+  .flashcard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-game .row,
+  .score-summary .flex {
+    gap: var(--space-3);
+  }
+
+  .mini-game .btn,
+  .score-summary .btn {
+    width: 100%;
+  }
+}

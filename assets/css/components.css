@@ -85,10 +85,15 @@
 }
 
 @media (max-width: 1024px) {
+  .top-nav .container {
+    position: relative;
+    flex-wrap: wrap;
+  }
+
   .nav-links {
     display: none;
     position: absolute;
-    top: 60px;
+    top: calc(100% + var(--space-2));
     left: 0;
     right: 0;
     background: var(--deep-navy);
@@ -182,6 +187,7 @@
   display: flex;
   gap: var(--space-3);
   margin-top: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .tag {
@@ -302,6 +308,8 @@
   border-radius: var(--radius-md);
   font-weight: 700;
   font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
   transition: all var(--transition-fast);
   text-decoration: none;
   border: 2px solid transparent;
@@ -678,6 +686,7 @@
   border-collapse: collapse;
   margin: var(--space-5) 0;
   font-size: 0.95rem;
+  table-layout: fixed;
 }
 
 .compare-table th, .compare-table td {
@@ -861,6 +870,7 @@
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   margin: var(--space-5) 0;
+  overflow-x: hidden;
 }
 
 .slider-control {
@@ -892,6 +902,69 @@
   width: 100%;
   height: 100%;
   display: block;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-6) 0;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .hero-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .callout {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .callout-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .btn,
+  .topic-footer .nav-btn {
+    width: 100%;
+  }
+
+  .topic-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topic-footer > span:empty {
+    display: none;
+  }
+
+  .topic-footer .nav-btn.next {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .compare-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .interactive-slider {
+    padding: var(--space-4);
+  }
+
+  .slider-labels {
+    gap: var(--space-2);
+    font-size: 0.8rem;
+  }
 }
 
 /* Printable */

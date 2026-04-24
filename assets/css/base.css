@@ -16,6 +16,7 @@
   --purple-accent: #7A6FF0;
   --steel-gray: #6C7A89;
   --soft-background: #EEF5FB;
+  --border-light: rgba(23, 59, 109, 0.12);
 
   /* Typography */
   --font-heading: 'Nunito', 'Fredoka', sans-serif;
@@ -58,6 +59,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -67,9 +69,17 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-img, svg, video {
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+object,
+iframe,
+embed {
   display: block;
   max-width: 100%;
 }
@@ -90,6 +100,17 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+}
+
+table {
+  max-width: 100%;
+}
+
+input,
+button,
+select,
+textarea {
+  min-width: 0;
 }
 
 /* Typography Scale */
