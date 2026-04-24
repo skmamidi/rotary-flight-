@@ -1,0 +1,215 @@
+<svg id="challenges-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initChallenges()" style="user-select: none; -webkit-user-select: none; touch-action: none;">
+  <style>
+    text { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; }
+    .bg { fill: #f8fafc; }
+    .title { font-size: 30px; font-weight: 900; fill: #0f172a; letter-spacing: 1px; }
+    .subtitle { font-size: 15px; font-weight: 600; fill: #64748b; text-transform: uppercase; }
+    .panel { fill: #ffffff; stroke: #e2e8f0; stroke-width: 2; rx: 12; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.04)); }
+    .info-title { font-size: 18px; font-weight: 800; fill: #0f172a; }
+    .info-body { font-size: 14px; fill: #475569; }
+    .tab { cursor: pointer; transition: all 0.2s ease; }
+    .tab-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; transition: all 0.2s ease; }
+    .tab-text { font-size: 16px; font-weight: 700; fill: #64748b; text-anchor: middle; transition: all 0.2s ease; pointer-events: none; }
+    .tab:hover .tab-bg { stroke: #94a3b8; }
+    .tab.active .tab-bg { fill: #0f172a; stroke: #0f172a; }
+    .tab.active .tab-text { fill: #ffffff; }
+    .heli-stroke { stroke: #475569; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .heli-fill { fill: #e2e8f0; stroke: #475569; stroke-width: 3; }
+    .heli-dark { fill: #334155; }
+    .highlight-ring { fill: none; stroke-width: 4; rx: 12; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+    .highlight-ring.active { opacity: 1; }
+    .challenge-icon { font-size: 22px; pointer-events: none; }
+    .arrow { stroke-width: 3; fill: none; stroke-linecap: round; marker-end: url(#arrow-head); opacity: 0; transition: opacity 0.3s ease; }
+    .arrow.active { opacity: 1; }
+  </style>
+
+  <defs>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" />
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Title -->
+  <text x="600" y="50" class="title" text-anchor="middle">Early Helicopter Challenges</text>
+  <text x="600" y="78" class="subtitle" text-anchor="middle">Tap a challenge to explore</text>
+
+  <!-- Tabs -->
+  <g class="tab" id="tab-0" transform="translate(100, 110)" onclick="selectChallenge(0)">
+    <rect width="230" height="46" class="tab-bg" />
+    <text x="115" y="30" class="tab-text">Weak Engines</text>
+  </g>
+  <g class="tab" id="tab-1" transform="translate(350, 110)" onclick="selectChallenge(1)">
+    <rect width="230" height="46" class="tab-bg" />
+    <text x="115" y="30" class="tab-text">Heavy Materials</text>
+  </g>
+  <g class="tab" id="tab-2" transform="translate(600, 110)" onclick="selectChallenge(2)">
+    <rect width="230" height="46" class="tab-bg" />
+    <text x="115" y="30" class="tab-text">Poor Control</text>
+  </g>
+  <g class="tab" id="tab-3" transform="translate(850, 110)" onclick="selectChallenge(3)">
+    <rect width="230" height="46" class="tab-bg" />
+    <text x="115" y="30" class="tab-text">Torque &amp; Stability</text>
+  </g>
+
+  <!-- Helicopter Diagram -->
+  <g transform="translate(600, 420)">
+    <!-- Landing Skids -->
+    <path d="M -140 180 L -140 200 M 140 180 L 140 200 M -160 200 Q 0 220 160 200" class="heli-stroke" />
+    <path d="M -120 180 L -120 200 M 120 180 L 120 200" class="heli-stroke" stroke-width="2" />
+
+    <!-- Fuselage -->
+    <ellipse cx="0" cy="80" rx="130" ry="70" class="heli-fill" />
+    <!-- Cockpit window -->
+    <path d="M -90 60 Q -50 40 0 40 Q 50 40 90 60 Q 70 100 0 100 Q -70 100 -90 60" fill="#bfdbfe" stroke="#475569" stroke-width="2" />
+    <!-- Engine block highlight area (invisible hit target) -->
+    <rect x="-60" y="100" width="120" height="50" rx="8" fill="transparent" />
+
+    <!-- Tail boom -->
+    <path d="M 120 80 L 280 40 L 280 70 L 130 110" class="heli-fill" />
+    <!-- Tail rotor -->
+    <rect x="270" y="20" width="8" height="60" rx="2" class="heli-dark" />
+    <circle cx="274" cy="50" r="4" fill="#cbd5e1" />
+
+    <!-- Main mast -->
+    <rect x="-8" y="-60" width="16" height="70" class="heli-dark" />
+
+    <!-- Main rotor blades -->
+    <g id="rotor-group">
+      <ellipse cx="0" cy="-60" rx="160" ry="12" class="heli-fill" />
+      <ellipse cx="0" cy="-60" rx="12" ry="160" class="heli-fill" />
+      <circle cx="0" cy="-60" r="16" class="heli-dark" />
+    </g>
+
+    <!-- Challenge Highlight Rings -->
+    <!-- Weak Engines: engine area (bottom center) -->
+    <rect x="-70" y="95" width="140" height="60" rx="10" class="highlight-ring" stroke="#f59e0b" id="hl-0" />
+    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-0">&#9889;</text>
+
+    <!-- Heavy Materials: fuselage -->
+    <ellipse cx="0" cy="80" rx="142" ry="82" class="highlight-ring" stroke="#64748b" id="hl-1" />
+    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-1">&#9874;</text>
+
+    <!-- Poor Control: cockpit -->
+    <path d="M -100 55 Q -50 30 0 30 Q 50 30 100 55 Q 80 110 0 110 Q -80 110 -100 55" class="highlight-ring" stroke="#38bdf8" id="hl-2" />
+    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-2">&#128737;</text>
+
+    <!-- Torque & Stability: rotor + tail -->
+    <ellipse cx="0" cy="-60" rx="175" ry="25" class="highlight-ring" stroke="#e11d48" id="hl-3a" />
+    <rect x="260" y="10" width="30" height="80" rx="4" class="highlight-ring" stroke="#e11d48" id="hl-3b" />
+    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-3">&#128260;</text>
+
+    <!-- Torque arrows (hidden by default) -->
+    <path d="M -80 -60 A 80 80 0 1 1 80 -60" class="arrow" stroke="#e11d48" id="arrow-torque" fill="none" />
+    <text x="0" y="-160" class="arrow" fill="#e11d48" font-size="14" font-weight="800" text-anchor="middle" id="text-torque">Torque Reaction</text>
+  </g>
+
+  <!-- Info Panel -->
+  <g transform="translate(150, 620)">
+    <rect width="900" height="180" class="panel" />
+    <text x="30" y="40" class="info-title" id="info-title">Select a challenge above</text>
+    <text x="30" y="70" class="info-body" id="info-line-1">Early inventors faced four major obstacles.</text>
+    <text x="30" y="95" class="info-body" id="info-line-2">Click or tap any tab to see how it affected helicopter development.</text>
+    <text x="30" y="120" class="info-body" id="info-line-3" />
+    <text x="30" y="145" class="info-body" id="info-line-4" />
+  </g>
+
+  <script type="text/javascript">
+    <![CDATA[
+    const challenges = [
+      {
+        title: "Weak Engines",
+        lines: [
+          "Early engines were too heavy and produced too little power.",
+          "They could not spin a rotor fast enough to generate lift.",
+          "Power-to-weight ratio was the single biggest barrier.",
+          "The internal combustion engine finally made flight possible."
+        ]
+      },
+      {
+        title: "Heavy Materials",
+        lines: [
+          "Strong but lightweight materials simply did not exist.",
+          "Wood and fabric were light but not strong enough.",
+          "Metal was strong but added too much weight.",
+          "Every gram mattered — early designs had tiny margins."
+        ]
+      },
+      {
+        title: "Poor Control",
+        lines: [
+          "Getting a model to lift off was one thing; steering it was another.",
+          "There were no reliable control surfaces or feedback systems.",
+          "Pilots could not counter drift, tilt, or sudden gusts.",
+          "Autogyros later helped prove that controlled rotary flight was possible."
+        ]
+      },
+      {
+        title: "Torque & Stability",
+        lines: [
+          "When the main rotor spins, the fuselage wants to spin the opposite way.",
+          "This is Newton's Third Law: every action has an equal and opposite reaction.",
+          "Solutions included tail rotors, coaxial rotors, and NOTAR systems.",
+          "Solving torque was essential for stable, controlled flight."
+        ]
+      }
+    ];
+
+    function initChallenges() {
+      selectChallenge(0);
+    }
+
+    function selectChallenge(index) {
+      // Update tabs
+      for (let i = 0; i < 4; i++) {
+        const tab = document.getElementById('tab-' + i);
+        if (i === index) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      }
+
+      // Update highlights
+      for (let i = 0; i < 4; i++) {
+        const hl = document.getElementById('hl-' + i);
+        const icon = document.getElementById('icon-' + i);
+        if (hl) hl.classList.remove('active');
+        if (icon) icon.setAttribute('opacity', '0');
+      }
+      const hl3a = document.getElementById('hl-3a');
+      const hl3b = document.getElementById('hl-3b');
+      if (hl3a) hl3a.classList.remove('active');
+      if (hl3b) hl3b.classList.remove('active');
+
+      if (index === 3) {
+        if (hl3a) hl3a.classList.add('active');
+        if (hl3b) hl3b.classList.add('active');
+      } else {
+        const hl = document.getElementById('hl-' + index);
+        if (hl) hl.classList.add('active');
+      }
+      const icon = document.getElementById('icon-' + index);
+      if (icon) icon.setAttribute('opacity', '1');
+
+      // Torque arrow
+      const arrow = document.getElementById('arrow-torque');
+      const arrowText = document.getElementById('text-torque');
+      if (arrow) arrow.classList.toggle('active', index === 3);
+      if (arrowText) arrowText.classList.toggle('active', index === 3);
+
+      // Update info panel
+      const c = challenges[index];
+      document.getElementById('info-title').textContent = c.title;
+      for (let i = 0; i < 4; i++) {
+        const lineEl = document.getElementById('info-line-' + (i + 1));
+        if (lineEl) lineEl.textContent = c.lines[i] || '';
+      }
+    }
+    ]]>
+  </script>
+</svg>
