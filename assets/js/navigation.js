@@ -23,6 +23,7 @@ const Navigation = {
     'juan-de-la-cierva': { title: 'Juan de la Cierva', path: 'topics/pioneers/juan-de-la-cierva.html', section: 'pioneers' },
     'arthur-m-young': { title: 'Arthur M. Young', path: 'topics/pioneers/arthur-m-young.html', section: 'pioneers' },
     'pioneer-timeline': { title: 'Pioneer Timeline', path: 'topics/pioneers/pioneer-timeline.html', section: 'pioneers' },
+    'pioneer-history': { title: 'Pioneer History', path: 'topics/pioneers/rotary_flight_history_3D_simulation.html', section: 'pioneers' },
     'helicopters-overview': { title: 'Helicopters Overview', path: 'topics/aircraft-types/helicopters-overview.html', section: 'aircraft-types' },
     'single-rotor': { title: 'Single Rotor', path: 'topics/aircraft-types/single-rotor.html', section: 'aircraft-types' },
     'tandem-rotor': { title: 'Tandem Rotor', path: 'topics/aircraft-types/tandem-rotor.html', section: 'aircraft-types' },
