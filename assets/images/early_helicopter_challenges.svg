@@ -15,7 +15,7 @@ text{fill:var(--ink)}
 <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#ff6961"/></marker>
 </defs>
 <rect width="1600" height="1000" fill="url(#sky)"/>
-<circle cx="1390" cy="105" r="46" fill="#ffe48a" opacity=".9"/><g opacity=".18"><circle cx="250" cy="105" r="2" fill="white"/><circle cx="335" cy="75" r="1.5" fill="white"/><circle cx="1290" cy="165" r="1.6" fill="white"/><circle cx="1210" cy="70" r="2" fill="white"/></g>
+<!-- Decorative sky objects removed to avoid distracting fly-by/overlap effects on small screens. -->
 <text x="50" y="54" class="h1">Why Early Helicopters Failed</text>
 <text x="52" y="84" class="small wrap" data-wrap="900">Explore the engineering traps: power-to-weight, heavy materials, unstable controls, and torque reaction.</text>
 <g id="tabs">
@@ -24,7 +24,7 @@ text{fill:var(--ink)}
 <g class="tab" data-tab="control" transform="translate(676,112)"><rect rx="18" width="305" height="58"/><text x="35" y="37" class="tabText">3. Control breakthroughs</text></g>
 <g class="tab" data-tab="torque" transform="translate(1010,112)"><rect rx="18" width="350" height="58"/><text x="38" y="37" class="tabText">4. Torque &amp; stability</text></g>
 </g>
-<g id="globalBadge" transform="translate(1240,42)"><rect class="glass" rx="18" width="310" height="48"/><text x="22" y="30" class="pillText">Touch sliders, tabs, and invention buttons</text></g>
+<g id="globalBadge" transform="translate(1190,42)"><rect class="glass" rx="18" width="360" height="48"/><text x="22" y="30" class="pillText wrap" data-wrap="320">Touch sliders, tabs, and invention buttons</text></g>
 
 <!-- POWER TAB -->
 <g id="scene-power" class="scene active">
@@ -54,7 +54,7 @@ text{fill:var(--ink)}
 <path id="weightArrow" d="M170 198 L170 278" stroke="#ff6961" stroke-width="12" marker-end="url(#arrowRed)" opacity=".7"/>
 </g>
 <g transform="translate(1190,330)"><rect class="soft" width="380" height="330" rx="24"/><text x="26" y="44" class="h3">Flight verdict</text><text id="powerVerdict" x="26" y="88" class="h2 bad">Too weak/heavy</text><text id="powerTip" x="26" y="126" class="callout wrap" data-wrap="300">Increase power or reduce engine weight.</text><g transform="translate(26,190)"><text class="small" y="0">Power-to-weight meter</text><rect x="0" y="20" width="320" height="28" rx="14" fill="#071b31"/><rect id="pwBar" x="0" y="20" width="110" height="28" rx="14" fill="#ff6961"/><text id="pwText" x="0" y="72" class="value">0.34 hp/lb</text></g></g>
-<text x="84" y="910" class="tiny">Historical anchor: practical helicopters had to wait for engines with much better power-to-weight ratios, then still needed good control systems.</text>
+<text x="84" y="910" class="tiny wrap" data-wrap="1380">Historical anchor: practical helicopters had to wait for engines with much better power-to-weight ratios, then still needed good control systems.</text>
 </g>
 
 <!-- MATERIALS TAB -->
@@ -67,7 +67,7 @@ text{fill:var(--ink)}
 <g class="slider" data-id="matStrength" transform="translate(34,240)"><text class="label" x="0" y="-26">Strength / stiffness</text><line class="track" x1="0" y1="0" x2="380" y2="0"/><line id="matStrengthFill" class="fillTrack" x1="0" y1="0" x2="220" y2="0"/><line class="hit" x1="0" y1="0" x2="380" y2="0"/><circle id="matStrengthKnob" class="knob" cx="220" cy="0" r="15"/><text id="matStrengthVal" class="value" x="0" y="42">strength index 58</text></g>
 <g transform="translate(28,340)"><rect class="glass" rx="18" width="410" height="76"/><text id="matClass" x="18" y="31" class="value">Mixed early structure</text><text id="matTip" x="18" y="58" class="tiny wrap" data-wrap="370">Try lighter + stronger to approach modern composite behavior.</text></g></g>
 <g transform="translate(635,330)"><text x="0" y="0" class="h3">Rotor blade stress test</text><g id="bladeGroup" transform="translate(0,55)"><path id="blade" d="M0 85 C160 40 350 45 550 75 C585 80 588 115 552 120 C350 150 160 145 0 100 Z" fill="#d8e7f6" stroke="#7bb8e8" stroke-width="4"/><line x1="38" y1="94" x2="530" y2="94" stroke="#304e68" stroke-width="4" opacity=".65"/><g id="cracks" opacity="0"><path d="M225 75 l-18 20 l24 15 l-15 22" fill="none" stroke="#ff6961" stroke-width="5"/><path d="M382 68 l-20 24 l24 15" fill="none" stroke="#ff6961" stroke-width="5"/></g><text id="bladeLabel" x="178" y="210" class="h2">Bends too much</text></g>
-<g transform="translate(15,340)"><rect class="soft" width="580" height="125" rx="22"/><text x="22" y="34" class="small">Educational model:</text><text id="matVerdict" x="22" y="68" class="h2 bad">Fails: too heavy or too weak</text><text x="22" y="101" class="tiny">Modern rotor blades often use aluminum/titanium alloys, fiberglass, carbon-fiber composites, and sandwich/honeycomb structures for high strength-to-weight and fatigue resistance.</text></g></g>
+<g transform="translate(15,340)"><rect class="soft" width="650" height="150" rx="22"/><text x="22" y="34" class="small">Educational model:</text><text id="matVerdict" x="22" y="68" class="h2 bad">Fails: too heavy or too weak</text><text x="22" y="101" class="tiny wrap" data-wrap="590">Modern rotor blades use light alloys, fiberglass, carbon fiber, and sandwich/honeycomb structures for high strength-to-weight and fatigue resistance.</text></g></g>
 </g>
 
 <!-- CONTROL TAB -->
@@ -100,11 +100,11 @@ text{fill:var(--ink)}
 const S={hp:110,engWeight:320,matWeight:58,matStrength:58,control:new Set(),torque:'none'};
 const $=id=>document.getElementById(id);
 function textLines(text,width,fontSize){const maxChars=Math.max(8,Math.floor(width/(fontSize*.55)));const words=String(text).split(/\s+/);let lines=[],line='';for(const w of words){const test=line?line+' '+w:w;if(test.length<=maxChars){line=test}else{if(line)lines.push(line);line=w}}if(line)lines.push(line);return lines}
-function wrapText(el,text){const width=Number(el.getAttribute('data-wrap')||0);if(!width)return;const cls=el.getAttribute('class')||'';const fs=cls.includes('h2')?24:cls.includes('h3')?20:cls.includes('value')?20:cls.includes('tiny')?13:cls.includes('callout')?17:16;const lh=fs*1.35;const x=el.getAttribute('x')||0;const y=el.getAttribute('y')||0;el.textContent='';textLines(text,width,fs).forEach((line,i)=>{const t=document.createElementNS('http://www.w3.org/2000/svg','tspan');t.setAttribute('x',x);t.setAttribute('dy',i?lh:0);if(!i)t.setAttribute('y',y);t.textContent=line;el.appendChild(t)});}
-function wrapAll(){document.querySelectorAll('text[data-wrap]').forEach(el=>wrapText(el,el.textContent));}
+function wrapText(el,text){const width=Number(el.getAttribute('data-wrap')||0);if(!width)return;if(text!==undefined&&!el.getAttribute('data-raw'))el.setAttribute('data-raw',text);const raw=text!==undefined?text:(el.getAttribute('data-raw')||el.textContent);const cls=el.getAttribute('class')||'';const fs=cls.includes('h2')?24:cls.includes('h3')?20:cls.includes('value')?20:cls.includes('tiny')?13:cls.includes('callout')?17:16;const lh=fs*1.35;const x=el.getAttribute('x')||0;const y=el.getAttribute('y')||0;el.textContent='';textLines(raw,width,fs).forEach((line,i)=>{const t=document.createElementNS('http://www.w3.org/2000/svg','tspan');t.setAttribute('x',x);t.setAttribute('dy',i?lh:0);if(!i)t.setAttribute('y',y);t.textContent=line;el.appendChild(t)});}
+function wrapAll(){document.querySelectorAll('text[data-wrap]').forEach(el=>wrapText(el,el.getAttribute('data-raw')||el.textContent));}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function colorScore(score){return score>78?'#83f29b':score>52?'#ffe066':'#ff6961'}
-function setText(id,t){const e=$(id); if(!e)return; if(e.hasAttribute('data-wrap'))wrapText(e,t); else e.textContent=t}
+function setText(id,t){const e=$(id); if(!e)return; if(e.hasAttribute('data-wrap')){e.setAttribute('data-raw',t);wrapText(e,t);} else e.textContent=t}
 function setAttrs(id,o){const e=$(id); if(e)Object.entries(o).forEach(([k,v])=>e.setAttribute(k,v))}
 const sliders={hp:{min:45,max:260,len:360,x:34,y:128,w:360,fill:'hpFill',knob:'hpKnob',val:'hpVal',fmt:v=>Math.round(v)+' hp'},engWeight:{min:120,max:620,len:360,x:34,y:248,w:360,fill:'engWeightFill',knob:'engWeightKnob',val:'engWeightVal',fmt:v=>Math.round(v)+' lb'},matWeight:{min:10,max:100,len:380,x:34,y:120,w:380,fill:'matWeightFill',knob:'matWeightKnob',val:'matWeightVal',fmt:v=>'density index '+Math.round(v)},matStrength:{min:10,max:100,len:380,x:34,y:240,w:380,fill:'matStrengthFill',knob:'matStrengthKnob',val:'matStrengthVal',fmt:v=>'strength index '+Math.round(v)}};
 function updateSlider(id){const c=sliders[id],v=S[id],p=(v-c.min)/(c.max-c.min),x=p*c.len; setAttrs(c.fill,{x2:x}); setAttrs(c.knob,{cx:x}); setText(c.val,c.fmt(v));}
