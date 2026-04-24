@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#eef8ff"/>
+      <stop offset="55%" stop-color="#f9fcff"/>
+      <stop offset="100%" stop-color="#fff6ec"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="12%" r="58%">
+      <stop offset="0%" stop-color="#fff6c5" stop-opacity="0.8"/>
+      <stop offset="55%" stop-color="#fff6c5" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#fff6c5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wingFront" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#d67f39"/>
+      <stop offset="35%" stop-color="#c45e28"/>
+      <stop offset="70%" stop-color="#9f3f22"/>
+      <stop offset="100%" stop-color="#7d2d1b"/>
+    </linearGradient>
+    <linearGradient id="wingBack" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#efb36d"/>
+      <stop offset="100%" stop-color="#b95227"/>
+    </linearGradient>
+    <linearGradient id="seedBody" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#7e4d2f"/>
+      <stop offset="100%" stop-color="#57301c"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#3e5f7b" flood-opacity="0.18"/>
+    </filter>
+    <filter id="blurSmall">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5d7d96"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#sky)"/>
+  <rect width="1200" height="900" fill="url(#sunGlow)"/>
+
+  <g opacity="0.22" filter="url(#blurSmall)">
+    <ellipse cx="810" cy="205" rx="180" ry="66" fill="#f0a96d" transform="rotate(-18 810 205)"/>
+    <ellipse cx="715" cy="315" rx="160" ry="58" fill="#e98953" transform="rotate(8 715 315)"/>
+  </g>
+
+  <g opacity="0.42" fill="none" stroke="#8cc3e8" stroke-width="6" stroke-linecap="round">
+    <path d="M334 626c-32-81-22-167 40-243" stroke-dasharray="10 16"/>
+    <path d="M314 672c-44-95-31-218 48-322" stroke-dasharray="10 18"/>
+    <path d="M871 635c62-61 90-141 74-224" stroke-dasharray="10 16"/>
+    <path d="M896 690c80-78 114-182 91-290" stroke-dasharray="12 18"/>
+  </g>
+
+  <g opacity="0.18" fill="none" stroke="#4ca3d9" stroke-width="2">
+    <path d="M215 518c73 23 117 72 146 136"/>
+    <path d="M963 369c-7 69-35 124-89 185"/>
+    <path d="M479 763c141 25 278-2 398-78"/>
+    <path d="M329 347c48-25 96-34 161-29"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <g opacity="0.18" transform="translate(305 194) rotate(-36 295 240)">
+      <ellipse cx="228" cy="414" rx="48" ry="62" fill="#794123"/>
+      <path d="M238 382c118-58 304-179 406-302 26-31 71-70 126-87-37 60-82 128-133 192-88 111-214 220-336 264-29 11-51 7-63-7z" fill="#cf7a44"/>
+    </g>
+    <g opacity="0.32" transform="translate(154 91) rotate(-19 390 264)">
+      <ellipse cx="228" cy="414" rx="48" ry="62" fill="#7d4628"/>
+      <path d="M238 382c118-58 304-179 406-302 26-31 71-70 126-87-37 60-82 128-133 192-88 111-214 220-336 264-29 11-51 7-63-7z" fill="url(#wingBack)"/>
+    </g>
+
+    <g id="samara" transform="translate(0 0) rotate(11 604 436)">
+      <ellipse cx="462" cy="604" rx="62" ry="78" fill="url(#seedBody)"/>
+      <ellipse cx="454" cy="590" rx="30" ry="20" fill="#966343" opacity="0.42"/>
+      <path d="M476 564c158-77 408-239 546-405 36-44 96-95 171-120-50 81-111 171-181 258-118 148-290 294-454 353-39 14-69 9-82-16z" fill="url(#wingFront)"/>
+      <path d="M520 549c145-75 344-213 478-367 29-34 69-71 114-92-84 134-193 263-327 381-60 52-154 118-229 141-19 6-31 4-36-6z" fill="#f7c98d" opacity="0.38"/>
+      <path d="M502 554c84-46 217-137 327-247" fill="none" stroke="#fbe0b8" stroke-opacity="0.58" stroke-width="8" stroke-linecap="round"/>
+      <path d="M509 552c173-90 377-251 498-411" fill="none" stroke="#7d2d1b" stroke-opacity="0.36" stroke-width="5" stroke-linecap="round"/>
+      <path d="M470 534c11 19 15 41 13 66" fill="none" stroke="#c89f7d" stroke-width="6" stroke-linecap="round"/>
+      <path d="M432 604c15 16 33 24 52 24" fill="none" stroke="#a06b4e" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g>
+    <circle cx="228" cy="706" r="7" fill="#5d7d96"/>
+    <path d="M235 706h124" fill="none" stroke="#5d7d96" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="377" y="692" font-family="Nunito, Segoe UI, sans-serif" font-size="28" font-weight="800" fill="#26415a">Slow spinning descent</text>
+    <text x="377" y="726" font-family="Inter, Segoe UI, sans-serif" font-size="22" fill="#536f87">The wing twists air downward and falls more gently.</text>
+  </g>
+
+  <g>
+    <circle cx="1003" cy="222" r="7" fill="#5d7d96"/>
+    <path d="M996 222H882" fill="none" stroke="#5d7d96" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="770" y="188" font-family="Nunito, Segoe UI, sans-serif" font-size="28" font-weight="800" fill="#26415a">Autorotation in nature</text>
+    <text x="720" y="222" font-family="Inter, Segoe UI, sans-serif" font-size="22" fill="#536f87">As the seed falls, airflow keeps the wing spinning.</text>
+  </g>
+
+  <g>
+    <circle cx="730" cy="742" r="7" fill="#5d7d96"/>
+    <path d="M723 742H606" fill="none" stroke="#5d7d96" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="436" y="708" font-family="Nunito, Segoe UI, sans-serif" font-size="28" font-weight="800" fill="#26415a">One wing, stable fall</text>
+    <text x="386" y="742" font-family="Inter, Segoe UI, sans-serif" font-size="22" fill="#536f87">Scientists learned that spin can trade speed for control.</text>
+  </g>
+
+  <g transform="translate(58 54)">
+    <rect width="324" height="110" rx="22" fill="#ffffff" fill-opacity="0.78" stroke="#d7e7f2" stroke-width="2"/>
+    <text x="28" y="44" font-family="Nunito, Segoe UI, sans-serif" font-size="22" font-weight="900" letter-spacing="1.2" fill="#b95b27">MAPLE SEED INSPIRATION</text>
+    <text x="28" y="76" font-family="Inter, Segoe UI, sans-serif" font-size="22" fill="#35536a">The famous “helicopter” maple seed is a</text>
+    <text x="28" y="104" font-family="Inter, Segoe UI, sans-serif" font-size="22" fill="#35536a">natural example of rotary-style falling flight.</text>
+  </g>
+</svg>
