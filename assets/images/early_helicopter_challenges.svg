@@ -1,215 +1,126 @@
-<svg id="challenges-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" onload="initChallenges()" style="user-select: none; -webkit-user-select: none; touch-action: none;">
-  <style>
-    text { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; }
-    .bg { fill: #f8fafc; }
-    .title { font-size: 30px; font-weight: 900; fill: #0f172a; letter-spacing: 1px; }
-    .subtitle { font-size: 15px; font-weight: 600; fill: #64748b; text-transform: uppercase; }
-    .panel { fill: #ffffff; stroke: #e2e8f0; stroke-width: 2; rx: 12; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.04)); }
-    .info-title { font-size: 18px; font-weight: 800; fill: #0f172a; }
-    .info-body { font-size: 14px; fill: #475569; }
-    .tab { cursor: pointer; transition: all 0.2s ease; }
-    .tab-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; transition: all 0.2s ease; }
-    .tab-text { font-size: 16px; font-weight: 700; fill: #64748b; text-anchor: middle; transition: all 0.2s ease; pointer-events: none; }
-    .tab:hover .tab-bg { stroke: #94a3b8; }
-    .tab.active .tab-bg { fill: #0f172a; stroke: #0f172a; }
-    .tab.active .tab-text { fill: #ffffff; }
-    .heli-stroke { stroke: #475569; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-    .heli-fill { fill: #e2e8f0; stroke: #475569; stroke-width: 3; }
-    .heli-dark { fill: #334155; }
-    .highlight-ring { fill: none; stroke-width: 4; rx: 12; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-    .highlight-ring.active { opacity: 1; }
-    .challenge-icon { font-size: 22px; pointer-events: none; }
-    .arrow { stroke-width: 3; fill: none; stroke-linecap: round; marker-end: url(#arrow-head); opacity: 0; transition: opacity 0.3s ease; }
-    .arrow.active { opacity: 1; }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1040" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" style="max-width:100%;height:auto;display:block;" role="img" aria-labelledby="title desc">
+<title id="title">Why Early Helicopters Failed — Interactive STEM Simulator</title>
+<desc id="desc">An interactive educational SVG with four tabs showing power-to-weight, materials, control, and torque/stability challenges in early helicopter design.</desc>
+<style>
+:root{--bg:#071427;--panel:#102848;--panel2:#15365f;--ink:#eef8ff;--muted:#b7d5eb;--cyan:#58d9ff;--green:#83f29b;--yellow:#ffe066;--orange:#ffad5a;--red:#ff6961;--purple:#caa7ff;--line:#79bdf4;}
+svg{font-family:Inter, ui-rounded, system-ui, -apple-system, Segoe UI, sans-serif;background:linear-gradient(180deg,#071427,#0a1d36 45%,#0d2a45);touch-action:manipulation;user-select:none;-webkit-user-select:none;max-width:100%;height:auto;display:block} text{dominant-baseline:auto}.wrap tspan{pointer-events:none}
+text{fill:var(--ink)}
+.small{font-size:16px;fill:var(--muted)}.tiny{font-size:13px;fill:#a9c5dc}.label{font-size:18px;font-weight:700}.h1{font-size:36px;font-weight:900}.h2{font-size:24px;font-weight:900}.h3{font-size:20px;font-weight:800}.value{font-size:20px;font-weight:900}.callout{font-size:17px;fill:#e8f5ff}.tabText{font-size:17px;font-weight:900;pointer-events:none}.pillText{font-size:14px;font-weight:800}.buttonText{font-size:16px;font-weight:900;pointer-events:none}.panel{fill:rgba(16,40,72,.92);stroke:#2d6ea2;stroke-width:2}.soft{fill:rgba(21,54,95,.92);stroke:#3d89bf;stroke-width:1.5}.glass{fill:rgba(255,255,255,.08);stroke:rgba(255,255,255,.25);stroke-width:1}.good{fill:var(--green)}.warn{fill:var(--yellow)}.bad{fill:var(--red)}.cyan{fill:var(--cyan)}.tab{cursor:pointer}.tab rect{fill:#12325a;stroke:#3e83bb;stroke-width:2}.tab.active rect{fill:#1d5b8f;stroke:#76dcff;filter:url(#glow)}.subtleLine{stroke:#75b7e8;stroke-width:2;opacity:.55}.track{stroke:#7593ac;stroke-width:12;stroke-linecap:round}.fillTrack{stroke:#64dcff;stroke-width:12;stroke-linecap:round}.knob{fill:#fff;stroke:#54d6ff;stroke-width:4;cursor:pointer}.hit{stroke:transparent;stroke-width:34;stroke-linecap:round;cursor:pointer}.touchButton{cursor:pointer}.touchButton rect,.touchButton circle{transition:transform .15s ease;transform-box:fill-box;transform-origin:center}.touchButton:active rect,.touchButton:active circle,.tab:active rect{transform:scale(.98)}.hidden{display:none}.rotor{transform-origin:center;animation:spin 4s linear infinite}.fastRotor{transform-origin:center;animation:spin .8s linear infinite}.pulse{animation:pulse 1.4s ease-in-out infinite}.wobble{animation:wobble .9s ease-in-out infinite}.float{animation:float 2.8s ease-in-out infinite}.shake{animation:shake .16s linear infinite}.arrowFlow{stroke-dasharray:10 10;animation:dash 1s linear infinite}.spark{animation:spark 1s ease-in-out infinite alternate}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.45}}@keyframes float{50%{transform:translateY(-8px)}}@keyframes wobble{25%{transform:rotate(2deg)}75%{transform:rotate(-2deg)}}@keyframes shake{25%{transform:translate(3px,-1px)}50%{transform:translate(-3px,1px)}75%{transform:translate(2px,2px)}}@keyframes dash{to{stroke-dashoffset:-20}}@keyframes spark{from{opacity:.25}to{opacity:1}}.scene{display:none}.scene.active{display:block}.okStroke{stroke:var(--green)}.badStroke{stroke:var(--red)}
+</style>
+<defs>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#143d69"/><stop offset="1" stop-color="#061628"/></linearGradient>
+<linearGradient id="metal" x1="0" x2="1"><stop offset="0" stop-color="#a8b5c7"/><stop offset=".5" stop-color="#f1f5f9"/><stop offset="1" stop-color="#70839d"/></linearGradient>
+<marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#8ee9ff"/></marker>
+<marker id="arrowRed" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#ff6961"/></marker>
+</defs>
+<rect width="1600" height="1000" fill="url(#sky)"/>
+<circle cx="1390" cy="105" r="46" fill="#ffe48a" opacity=".9"/><g opacity=".18"><circle cx="250" cy="105" r="2" fill="white"/><circle cx="335" cy="75" r="1.5" fill="white"/><circle cx="1290" cy="165" r="1.6" fill="white"/><circle cx="1210" cy="70" r="2" fill="white"/></g>
+<text x="50" y="54" class="h1">Why Early Helicopters Failed</text>
+<text x="52" y="84" class="small wrap" data-wrap="900">Explore the engineering traps: power-to-weight, heavy materials, unstable controls, and torque reaction.</text>
+<g id="tabs">
+<g class="tab active" data-tab="power" transform="translate(48,112)"><rect rx="18" width="305" height="58"/><text x="28" y="37" class="tabText">1. Engine power vs weight</text></g>
+<g class="tab" data-tab="materials" transform="translate(372,112)"><rect rx="18" width="285" height="58"/><text x="34" y="37" class="tabText">2. Materials balance</text></g>
+<g class="tab" data-tab="control" transform="translate(676,112)"><rect rx="18" width="305" height="58"/><text x="35" y="37" class="tabText">3. Control breakthroughs</text></g>
+<g class="tab" data-tab="torque" transform="translate(1010,112)"><rect rx="18" width="350" height="58"/><text x="38" y="37" class="tabText">4. Torque &amp; stability</text></g>
+</g>
+<g id="globalBadge" transform="translate(1240,42)"><rect class="glass" rx="18" width="310" height="48"/><text x="22" y="30" class="pillText">Touch sliders, tabs, and invention buttons</text></g>
 
-  <defs>
-    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48" />
-    </marker>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.08"/>
-    </filter>
-  </defs>
+<!-- POWER TAB -->
+<g id="scene-power" class="scene active">
+<rect class="panel" x="48" y="198" width="1504" height="740" rx="28"/>
+<text x="82" y="242" class="h2">Can your early helicopter lift off?</text>
+<text x="82" y="274" class="small wrap" data-wrap="1380">Early inventors often had engines that were powerful enough to spin parts, but too weak and heavy for useful vertical flight.</text>
+<g transform="translate(86,315)">
+<rect class="soft" width="442" height="450" rx="24"/>
+<text x="26" y="42" class="h3">Adjust the engine</text>
+<text x="26" y="74" class="small">Goal: high power, low engine mass, safe total weight.</text>
+<g class="slider" data-id="hp" transform="translate(34,128)"><text class="label" x="0" y="-26">Engine strength</text><line class="track" x1="0" y1="0" x2="360" y2="0"/><line id="hpFill" class="fillTrack" x1="0" y1="0" x2="180" y2="0"/><line class="hit" x1="0" y1="0" x2="360" y2="0"/><circle id="hpKnob" class="knob" cx="180" cy="0" r="15"/><text id="hpVal" class="value" x="0" y="42">110 hp</text><text class="tiny" x="250" y="42">more blade power</text></g>
+<g class="slider" data-id="engWeight" transform="translate(34,248)"><text class="label" x="0" y="-26">Engine weight</text><line class="track" x1="0" y1="0" x2="360" y2="0"/><line id="engWeightFill" class="fillTrack" x1="0" y1="0" x2="180" y2="0"/><line class="hit" x1="0" y1="0" x2="360" y2="0"/><circle id="engWeightKnob" class="knob" cx="180" cy="0" r="15"/><text id="engWeightVal" class="value" x="0" y="42">320 lb</text><text class="tiny" x="250" y="42">more mass to lift</text></g>
+<g transform="translate(28,340)"><rect class="glass" rx="18" width="384" height="84"/><text x="18" y="28" class="small">Simplified lift score uses power loading:</text><text id="powerMath" x="18" y="58" class="value">0.34 hp/lb → not enough</text></g>
+</g>
+<g id="powerCraft" transform="translate(675,455)">
+<g id="powerBody" class="wobble">
+<ellipse cx="170" cy="112" rx="130" ry="48" fill="#e7f0fa" stroke="#274f72" stroke-width="4"/>
+<rect id="engineBlock" x="105" y="82" width="100" height="58" rx="14" fill="#ffad5a" stroke="#7a3d00" stroke-width="3"/>
+<circle cx="86" cy="111" r="24" fill="#9bdfff" opacity=".8"/><path d="M35 130 Q170 178 305 130" fill="none" stroke="#dce8f5" stroke-width="10" stroke-linecap="round"/>
+<line x1="170" y1="65" x2="170" y2="20" stroke="#eaf9ff" stroke-width="10" stroke-linecap="round"/>
+<g id="mainRotorPower" class="rotor" transform="translate(170,18)"><ellipse cx="0" cy="0" rx="190" ry="10" fill="#d7e7f6"/><ellipse cx="0" cy="0" rx="15" ry="15" fill="#84e5ff"/></g>
+<line x1="292" y1="108" x2="440" y2="80" stroke="#dce8f5" stroke-width="13" stroke-linecap="round"/>
+<g class="rotor" transform="translate(456,77)"><ellipse cx="0" cy="0" rx="8" ry="48" fill="#d7e7f6"/><ellipse cx="0" cy="0" rx="48" ry="8" fill="#d7e7f6"/><circle r="8" fill="#84e5ff"/></g>
+<line x1="70" y1="152" x2="255" y2="152" stroke="#dce8f5" stroke-width="7"/><line x1="92" y1="152" x2="62" y2="188" stroke="#dce8f5" stroke-width="7"/><line x1="230" y1="152" x2="262" y2="188" stroke="#dce8f5" stroke-width="7"/><line x1="42" y1="188" x2="282" y2="188" stroke="#dce8f5" stroke-width="8" stroke-linecap="round"/>
+</g>
+<path id="liftArrow" d="M170 315 L170 228" stroke="#83f29b" stroke-width="12" marker-end="url(#arrow)" opacity=".55"/>
+<path id="weightArrow" d="M170 198 L170 278" stroke="#ff6961" stroke-width="12" marker-end="url(#arrowRed)" opacity=".7"/>
+</g>
+<g transform="translate(1190,330)"><rect class="soft" width="380" height="330" rx="24"/><text x="26" y="44" class="h3">Flight verdict</text><text id="powerVerdict" x="26" y="88" class="h2 bad">Too weak/heavy</text><text id="powerTip" x="26" y="126" class="callout wrap" data-wrap="300">Increase power or reduce engine weight.</text><g transform="translate(26,190)"><text class="small" y="0">Power-to-weight meter</text><rect x="0" y="20" width="320" height="28" rx="14" fill="#071b31"/><rect id="pwBar" x="0" y="20" width="110" height="28" rx="14" fill="#ff6961"/><text id="pwText" x="0" y="72" class="value">0.34 hp/lb</text></g></g>
+<text x="84" y="910" class="tiny">Historical anchor: practical helicopters had to wait for engines with much better power-to-weight ratios, then still needed good control systems.</text>
+</g>
 
-  <rect width="100%" height="100%" class="bg" />
+<!-- MATERIALS TAB -->
+<g id="scene-materials" class="scene">
+<rect class="panel" x="48" y="198" width="1504" height="740" rx="28"/>
+<text x="82" y="242" class="h2">Heavy structures can erase lift</text>
+<text x="82" y="274" class="small wrap" data-wrap="1380">A rotorcraft needs materials that are light, strong, fatigue-resistant, and stiff enough to hold blade shape.</text>
+<g transform="translate(82,318)"><rect class="soft" width="470" height="445" rx="24"/><text x="26" y="42" class="h3">Build a rotor blade material</text>
+<g class="slider" data-id="matWeight" transform="translate(34,120)"><text class="label" x="0" y="-26">Material weight</text><line class="track" x1="0" y1="0" x2="380" y2="0"/><line id="matWeightFill" class="fillTrack" x1="0" y1="0" x2="220" y2="0"/><line class="hit" x1="0" y1="0" x2="380" y2="0"/><circle id="matWeightKnob" class="knob" cx="220" cy="0" r="15"/><text id="matWeightVal" class="value" x="0" y="42">density index 58</text></g>
+<g class="slider" data-id="matStrength" transform="translate(34,240)"><text class="label" x="0" y="-26">Strength / stiffness</text><line class="track" x1="0" y1="0" x2="380" y2="0"/><line id="matStrengthFill" class="fillTrack" x1="0" y1="0" x2="220" y2="0"/><line class="hit" x1="0" y1="0" x2="380" y2="0"/><circle id="matStrengthKnob" class="knob" cx="220" cy="0" r="15"/><text id="matStrengthVal" class="value" x="0" y="42">strength index 58</text></g>
+<g transform="translate(28,340)"><rect class="glass" rx="18" width="410" height="76"/><text id="matClass" x="18" y="31" class="value">Mixed early structure</text><text id="matTip" x="18" y="58" class="tiny wrap" data-wrap="370">Try lighter + stronger to approach modern composite behavior.</text></g></g>
+<g transform="translate(635,330)"><text x="0" y="0" class="h3">Rotor blade stress test</text><g id="bladeGroup" transform="translate(0,55)"><path id="blade" d="M0 85 C160 40 350 45 550 75 C585 80 588 115 552 120 C350 150 160 145 0 100 Z" fill="#d8e7f6" stroke="#7bb8e8" stroke-width="4"/><line x1="38" y1="94" x2="530" y2="94" stroke="#304e68" stroke-width="4" opacity=".65"/><g id="cracks" opacity="0"><path d="M225 75 l-18 20 l24 15 l-15 22" fill="none" stroke="#ff6961" stroke-width="5"/><path d="M382 68 l-20 24 l24 15" fill="none" stroke="#ff6961" stroke-width="5"/></g><text id="bladeLabel" x="178" y="210" class="h2">Bends too much</text></g>
+<g transform="translate(15,340)"><rect class="soft" width="580" height="125" rx="22"/><text x="22" y="34" class="small">Educational model:</text><text id="matVerdict" x="22" y="68" class="h2 bad">Fails: too heavy or too weak</text><text x="22" y="101" class="tiny">Modern rotor blades often use aluminum/titanium alloys, fiberglass, carbon-fiber composites, and sandwich/honeycomb structures for high strength-to-weight and fatigue resistance.</text></g></g>
+</g>
 
-  <!-- Title -->
-  <text x="600" y="50" class="title" text-anchor="middle">Early Helicopter Challenges</text>
-  <text x="600" y="78" class="subtitle" text-anchor="middle">Tap a challenge to explore</text>
+<!-- CONTROL TAB -->
+<g id="scene-control" class="scene">
+<rect class="panel" x="48" y="198" width="1504" height="740" rx="28"/>
+<text x="82" y="242" class="h2">Lift-off is not enough — can the pilot control it?</text>
+<text x="82" y="274" class="small wrap" data-wrap="1380">Early machines could hop, shake, drift, or spin. Reliable control required several linked inventions.</text>
+<g transform="translate(86,315)"><rect class="soft" width="455" height="465" rx="24"/><text x="26" y="42" class="h3">Add engineering breakthroughs</text>
+<g id="controlButtons"></g>
+<g transform="translate(26,365)"><text class="small" y="0">Control percentage</text><rect x="0" y="22" width="392" height="32" rx="16" fill="#06172a"/><rect id="controlBar" x="0" y="22" width="42" height="32" rx="16" fill="#ff6961"/><text id="controlPct" x="0" y="84" class="h2">10%</text></g></g>
+<g transform="translate(655,320)"><g id="controlCraft" class="shake"><ellipse cx="160" cy="155" rx="120" ry="45" fill="#e7f0fa" stroke="#274f72" stroke-width="4"/><circle cx="85" cy="148" r="25" fill="#9bdfff"/><line x1="160" y1="105" x2="160" y2="55" stroke="#eaf9ff" stroke-width="10" stroke-linecap="round"/><g class="rotor" transform="translate(160,52)"><ellipse cx="0" cy="0" rx="190" ry="9" fill="#d7e7f6"/><circle r="14" fill="#84e5ff"/></g><line x1="272" y1="150" x2="435" y2="115" stroke="#dce8f5" stroke-width="13" stroke-linecap="round"/><g class="rotor" transform="translate(454,110)"><ellipse cx="0" cy="0" rx="8" ry="44" fill="#d7e7f6"/><ellipse cx="0" cy="0" rx="44" ry="8" fill="#d7e7f6"/><circle r="7" fill="#84e5ff"/></g><g id="swashViz" opacity="0"><ellipse cx="160" cy="93" rx="54" ry="12" fill="none" stroke="#ffe066" stroke-width="5" transform="rotate(-12 160 93)"/><line x1="125" y1="84" x2="84" y2="48" stroke="#ffe066" stroke-width="4"/><line x1="196" y1="101" x2="245" y2="47" stroke="#ffe066" stroke-width="4"/></g><g id="pitchViz" opacity="0"><line x1="-10" y1="38" x2="80" y2="10" stroke="#83f29b" stroke-width="5"/><line x1="240" y1="20" x2="330" y2="42" stroke="#83f29b" stroke-width="5"/></g><g id="collectViz" opacity="0"><path d="M30 260 L30 195" stroke="#83f29b" stroke-width="8" marker-end="url(#arrow)"/><path d="M295 260 L295 195" stroke="#83f29b" stroke-width="8" marker-end="url(#arrow)"/></g><g id="damperViz" opacity="0"><rect x="118" y="115" width="84" height="14" rx="7" fill="#caa7ff"/><text x="212" y="128" class="tiny">dampers</text></g></g>
+<g transform="translate(0,360)"><rect class="soft" width="610" height="130" rx="24"/><text id="controlVerdict" x="26" y="42" class="h2 bad">Unstable hop</text><text id="controlExplain" x="26" y="78" class="callout wrap" data-wrap="555">Add cyclic + collective + swashplate + damping to turn a jump into controlled flight.</text></g></g>
+</g>
 
-  <!-- Tabs -->
-  <g class="tab" id="tab-0" transform="translate(100, 110)" onclick="selectChallenge(0)">
-    <rect width="230" height="46" class="tab-bg" />
-    <text x="115" y="30" class="tab-text">Weak Engines</text>
-  </g>
-  <g class="tab" id="tab-1" transform="translate(350, 110)" onclick="selectChallenge(1)">
-    <rect width="230" height="46" class="tab-bg" />
-    <text x="115" y="30" class="tab-text">Heavy Materials</text>
-  </g>
-  <g class="tab" id="tab-2" transform="translate(600, 110)" onclick="selectChallenge(2)">
-    <rect width="230" height="46" class="tab-bg" />
-    <text x="115" y="30" class="tab-text">Poor Control</text>
-  </g>
-  <g class="tab" id="tab-3" transform="translate(850, 110)" onclick="selectChallenge(3)">
-    <rect width="230" height="46" class="tab-bg" />
-    <text x="115" y="30" class="tab-text">Torque &amp; Stability</text>
-  </g>
+<!-- TORQUE TAB -->
+<g id="scene-torque" class="scene">
+<rect class="panel" x="48" y="198" width="1504" height="740" rx="28"/>
+<text x="82" y="242" class="h2">Torque reaction: the body wants to spin the other way</text>
+<text x="82" y="274" class="small wrap" data-wrap="1380">A single main rotor twists the fuselage in the opposite direction unless an anti-torque system balances it.</text>
+<g transform="translate(86,315)"><rect class="soft" width="455" height="465" rx="24"/><text x="26" y="42" class="h3">Choose a stability solution</text>
+<g id="torqueButtons"></g>
+<g transform="translate(26,332)"><text class="small" y="0">Anti-torque balance</text><rect x="0" y="24" width="390" height="32" rx="16" fill="#06172a"/><rect id="torqueBar" x="0" y="24" width="30" height="32" rx="16" fill="#ff6961"/><text id="torquePct" x="0" y="86" class="h2">8%</text></g></g>
+<g transform="translate(640,330)"><g id="torqueCraft" class="shake"><ellipse cx="170" cy="155" rx="125" ry="45" fill="#e7f0fa" stroke="#274f72" stroke-width="4"/><line x1="170" y1="105" x2="170" y2="55" stroke="#eaf9ff" stroke-width="10" stroke-linecap="round"/><g id="singleRotor" class="rotor" transform="translate(170,52)"><ellipse cx="0" cy="0" rx="195" ry="9" fill="#d7e7f6"/><circle r="14" fill="#84e5ff"/></g><g id="coaxRotor" opacity="0" transform="translate(170,34)"><g class="rotor"><ellipse cx="0" cy="0" rx="190" ry="8" fill="#d7e7f6"/></g><g class="rotor" style="animation-direction:reverse" transform="translate(0,30)"><ellipse cx="0" cy="0" rx="175" ry="8" fill="#a8f4ff"/></g></g><line id="tailBoom" x1="290" y1="150" x2="460" y2="112" stroke="#dce8f5" stroke-width="13" stroke-linecap="round"/><g id="tailRotorViz" opacity="0" class="fastRotor" transform="translate(480,108)"><ellipse cx="0" cy="0" rx="8" ry="50" fill="#83f29b"/><ellipse cx="0" cy="0" rx="50" ry="8" fill="#83f29b"/><circle r="8" fill="#fff"/></g><path id="spinArrow" d="M76 82 C10 145 62 236 145 245" fill="none" stroke="#ff6961" stroke-width="9" marker-end="url(#arrowRed)" opacity=".9"/><path id="antiArrow" d="M510 170 C570 140 565 80 500 58" fill="none" stroke="#83f29b" stroke-width="9" marker-end="url(#arrow)" opacity="0"/></g>
+<g transform="translate(0,355)"><rect class="soft" width="620" height="138" rx="24"/><text id="torqueVerdict" x="26" y="42" class="h2 bad">Spins out</text><text id="torqueExplain" x="26" y="78" class="callout wrap" data-wrap="560">Try a tail rotor or coaxial counter-rotating rotors to cancel torque.</text><text class="tiny wrap" data-wrap="560" x="26" y="112">Bonus: fins and stabilizers help steady forward flight, but they do not by themselves cancel hover torque.</text></g></g>
+</g>
 
-  <!-- Helicopter Diagram -->
-  <g transform="translate(600, 420)">
-    <!-- Landing Skids -->
-    <path d="M -140 180 L -140 200 M 140 180 L 140 200 M -160 200 Q 0 220 160 200" class="heli-stroke" />
-    <path d="M -120 180 L -120 200 M 120 180 L 120 200" class="heli-stroke" stroke-width="2" />
-
-    <!-- Fuselage -->
-    <ellipse cx="0" cy="80" rx="130" ry="70" class="heli-fill" />
-    <!-- Cockpit window -->
-    <path d="M -90 60 Q -50 40 0 40 Q 50 40 90 60 Q 70 100 0 100 Q -70 100 -90 60" fill="#bfdbfe" stroke="#475569" stroke-width="2" />
-    <!-- Engine block highlight area (invisible hit target) -->
-    <rect x="-60" y="100" width="120" height="50" rx="8" fill="transparent" />
-
-    <!-- Tail boom -->
-    <path d="M 120 80 L 280 40 L 280 70 L 130 110" class="heli-fill" />
-    <!-- Tail rotor -->
-    <rect x="270" y="20" width="8" height="60" rx="2" class="heli-dark" />
-    <circle cx="274" cy="50" r="4" fill="#cbd5e1" />
-
-    <!-- Main mast -->
-    <rect x="-8" y="-60" width="16" height="70" class="heli-dark" />
-
-    <!-- Main rotor blades -->
-    <g id="rotor-group">
-      <ellipse cx="0" cy="-60" rx="160" ry="12" class="heli-fill" />
-      <ellipse cx="0" cy="-60" rx="12" ry="160" class="heli-fill" />
-      <circle cx="0" cy="-60" r="16" class="heli-dark" />
-    </g>
-
-    <!-- Challenge Highlight Rings -->
-    <!-- Weak Engines: engine area (bottom center) -->
-    <rect x="-70" y="95" width="140" height="60" rx="10" class="highlight-ring" stroke="#f59e0b" id="hl-0" />
-    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-0">&#9889;</text>
-
-    <!-- Heavy Materials: fuselage -->
-    <ellipse cx="0" cy="80" rx="142" ry="82" class="highlight-ring" stroke="#64748b" id="hl-1" />
-    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-1">&#9874;</text>
-
-    <!-- Poor Control: cockpit -->
-    <path d="M -100 55 Q -50 30 0 30 Q 50 30 100 55 Q 80 110 0 110 Q -80 110 -100 55" class="highlight-ring" stroke="#38bdf8" id="hl-2" />
-    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-2">&#128737;</text>
-
-    <!-- Torque & Stability: rotor + tail -->
-    <ellipse cx="0" cy="-60" rx="175" ry="25" class="highlight-ring" stroke="#e11d48" id="hl-3a" />
-    <rect x="260" y="10" width="30" height="80" rx="4" class="highlight-ring" stroke="#e11d48" id="hl-3b" />
-    <text x="0" y="175" class="challenge-icon" text-anchor="middle" id="icon-3">&#128260;</text>
-
-    <!-- Torque arrows (hidden by default) -->
-    <path d="M -80 -60 A 80 80 0 1 1 80 -60" class="arrow" stroke="#e11d48" id="arrow-torque" fill="none" />
-    <text x="0" y="-160" class="arrow" fill="#e11d48" font-size="14" font-weight="800" text-anchor="middle" id="text-torque">Torque Reaction</text>
-  </g>
-
-  <!-- Info Panel -->
-  <g transform="translate(150, 620)">
-    <rect width="900" height="180" class="panel" />
-    <text x="30" y="40" class="info-title" id="info-title">Select a challenge above</text>
-    <text x="30" y="70" class="info-body" id="info-line-1">Early inventors faced four major obstacles.</text>
-    <text x="30" y="95" class="info-body" id="info-line-2">Click or tap any tab to see how it affected helicopter development.</text>
-    <text x="30" y="120" class="info-body" id="info-line-3" />
-    <text x="30" y="145" class="info-body" id="info-line-4" />
-  </g>
-
-  <script type="text/javascript">
-    <![CDATA[
-    const challenges = [
-      {
-        title: "Weak Engines",
-        lines: [
-          "Early engines were too heavy and produced too little power.",
-          "They could not spin a rotor fast enough to generate lift.",
-          "Power-to-weight ratio was the single biggest barrier.",
-          "The internal combustion engine finally made flight possible."
-        ]
-      },
-      {
-        title: "Heavy Materials",
-        lines: [
-          "Strong but lightweight materials simply did not exist.",
-          "Wood and fabric were light but not strong enough.",
-          "Metal was strong but added too much weight.",
-          "Every gram mattered — early designs had tiny margins."
-        ]
-      },
-      {
-        title: "Poor Control",
-        lines: [
-          "Getting a model to lift off was one thing; steering it was another.",
-          "There were no reliable control surfaces or feedback systems.",
-          "Pilots could not counter drift, tilt, or sudden gusts.",
-          "Autogyros later helped prove that controlled rotary flight was possible."
-        ]
-      },
-      {
-        title: "Torque & Stability",
-        lines: [
-          "When the main rotor spins, the fuselage wants to spin the opposite way.",
-          "This is Newton's Third Law: every action has an equal and opposite reaction.",
-          "Solutions included tail rotors, coaxial rotors, and NOTAR systems.",
-          "Solving torque was essential for stable, controlled flight."
-        ]
-      }
-    ];
-
-    function initChallenges() {
-      selectChallenge(0);
-    }
-
-    function selectChallenge(index) {
-      // Update tabs
-      for (let i = 0; i < 4; i++) {
-        const tab = document.getElementById('tab-' + i);
-        if (i === index) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
-        }
-      }
-
-      // Update highlights
-      for (let i = 0; i < 4; i++) {
-        const hl = document.getElementById('hl-' + i);
-        const icon = document.getElementById('icon-' + i);
-        if (hl) hl.classList.remove('active');
-        if (icon) icon.setAttribute('opacity', '0');
-      }
-      const hl3a = document.getElementById('hl-3a');
-      const hl3b = document.getElementById('hl-3b');
-      if (hl3a) hl3a.classList.remove('active');
-      if (hl3b) hl3b.classList.remove('active');
-
-      if (index === 3) {
-        if (hl3a) hl3a.classList.add('active');
-        if (hl3b) hl3b.classList.add('active');
-      } else {
-        const hl = document.getElementById('hl-' + index);
-        if (hl) hl.classList.add('active');
-      }
-      const icon = document.getElementById('icon-' + index);
-      if (icon) icon.setAttribute('opacity', '1');
-
-      // Torque arrow
-      const arrow = document.getElementById('arrow-torque');
-      const arrowText = document.getElementById('text-torque');
-      if (arrow) arrow.classList.toggle('active', index === 3);
-      if (arrowText) arrowText.classList.toggle('active', index === 3);
-
-      // Update info panel
-      const c = challenges[index];
-      document.getElementById('info-title').textContent = c.title;
-      for (let i = 0; i < 4; i++) {
-        const lineEl = document.getElementById('info-line-' + (i + 1));
-        if (lineEl) lineEl.textContent = c.lines[i] || '';
-      }
-    }
-    ]]>
-  </script>
+<g id="footer" transform="translate(50,960)"><text class="tiny wrap" data-wrap="1480">Simplified for Grade 5 STEM: values are scaled teaching indices, not certified aircraft design limits. The history/science notes are based on NASA, FAA, Sikorsky Archives, ASME, and aerospace education sources.</text></g>
+<script><![CDATA[
+(function(){
+const S={hp:110,engWeight:320,matWeight:58,matStrength:58,control:new Set(),torque:'none'};
+const $=id=>document.getElementById(id);
+function textLines(text,width,fontSize){const maxChars=Math.max(8,Math.floor(width/(fontSize*.55)));const words=String(text).split(/\s+/);let lines=[],line='';for(const w of words){const test=line?line+' '+w:w;if(test.length<=maxChars){line=test}else{if(line)lines.push(line);line=w}}if(line)lines.push(line);return lines}
+function wrapText(el,text){const width=Number(el.getAttribute('data-wrap')||0);if(!width)return;const cls=el.getAttribute('class')||'';const fs=cls.includes('h2')?24:cls.includes('h3')?20:cls.includes('value')?20:cls.includes('tiny')?13:cls.includes('callout')?17:16;const lh=fs*1.35;const x=el.getAttribute('x')||0;const y=el.getAttribute('y')||0;el.textContent='';textLines(text,width,fs).forEach((line,i)=>{const t=document.createElementNS('http://www.w3.org/2000/svg','tspan');t.setAttribute('x',x);t.setAttribute('dy',i?lh:0);if(!i)t.setAttribute('y',y);t.textContent=line;el.appendChild(t)});}
+function wrapAll(){document.querySelectorAll('text[data-wrap]').forEach(el=>wrapText(el,el.textContent));}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function colorScore(score){return score>78?'#83f29b':score>52?'#ffe066':'#ff6961'}
+function setText(id,t){const e=$(id); if(!e)return; if(e.hasAttribute('data-wrap'))wrapText(e,t); else e.textContent=t}
+function setAttrs(id,o){const e=$(id); if(e)Object.entries(o).forEach(([k,v])=>e.setAttribute(k,v))}
+const sliders={hp:{min:45,max:260,len:360,x:34,y:128,w:360,fill:'hpFill',knob:'hpKnob',val:'hpVal',fmt:v=>Math.round(v)+' hp'},engWeight:{min:120,max:620,len:360,x:34,y:248,w:360,fill:'engWeightFill',knob:'engWeightKnob',val:'engWeightVal',fmt:v=>Math.round(v)+' lb'},matWeight:{min:10,max:100,len:380,x:34,y:120,w:380,fill:'matWeightFill',knob:'matWeightKnob',val:'matWeightVal',fmt:v=>'density index '+Math.round(v)},matStrength:{min:10,max:100,len:380,x:34,y:240,w:380,fill:'matStrengthFill',knob:'matStrengthKnob',val:'matStrengthVal',fmt:v=>'strength index '+Math.round(v)}};
+function updateSlider(id){const c=sliders[id],v=S[id],p=(v-c.min)/(c.max-c.min),x=p*c.len; setAttrs(c.fill,{x2:x}); setAttrs(c.knob,{cx:x}); setText(c.val,c.fmt(v));}
+function sliderFromEvent(g,evt){const id=g.getAttribute('data-id'),c=sliders[id],pt=document.documentElement.createSVGPoint(); const src=evt.touches?evt.touches[0]:evt; pt.x=src.clientX; pt.y=src.clientY; const m=g.getScreenCTM().inverse(); const loc=pt.matrixTransform(m); const p=clamp(loc.x/c.len,0,1); S[id]=c.min+p*(c.max-c.min); updateSlider(id); updateAll();}
+document.querySelectorAll('.slider').forEach(g=>{let drag=false; const start=e=>{drag=true; sliderFromEvent(g,e); e.preventDefault()}; const move=e=>{if(drag){sliderFromEvent(g,e); e.preventDefault()}}; const end=()=>drag=false; g.addEventListener('mousedown',start); window.addEventListener('mousemove',move); window.addEventListener('mouseup',end); g.addEventListener('touchstart',start,{passive:false}); window.addEventListener('touchmove',move,{passive:false}); window.addEventListener('touchend',end);});
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));$('scene-'+t.dataset.tab).classList.add('active');}));
+const controlItems=[['collective','Collective pitch','All blades change pitch together for climb/descent.'],['cyclic','Cyclic pitch','Blade pitch changes around the circle to tilt the rotor disk.'],['swash','Swashplate','Transfers pilot input to spinning rotor blades.'],['tail','Tail rotor yaw','Helps point the nose and stop unwanted spin.'],['dampers','Dampers / hinges','Reduce vibration and control coupling.']];
+const cb=$('controlButtons'); controlItems.forEach((it,i)=>{const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','touchButton');g.setAttribute('transform',`translate(26,${72+i*54})`);g.dataset.id=it[0];g.innerHTML=`<rect rx="16" width="402" height="42" fill="#0a203a" stroke="#4b8fc1" stroke-width="2"/><text x="18" y="27" class="buttonText">+ ${it[1]}</text>`;g.addEventListener('click',()=>{S.control.has(it[0])?S.control.delete(it[0]):S.control.add(it[0]); updateControl();});cb.appendChild(g);});
+const torqueItems=[['none','No anti-torque','Demonstrate the spin problem'],['tail','Tail rotor','Side thrust cancels main-rotor torque'],['coax','Coaxial rotors','Two rotors spin opposite directions'],['fins','Fins + stabilizer','Helpful in forward flight, weak in hover']];
+const tb=$('torqueButtons'); torqueItems.forEach((it,i)=>{const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','touchButton');g.setAttribute('transform',`translate(26,${75+i*60})`);g.dataset.id=it[0];g.innerHTML=`<rect rx="17" width="402" height="46" fill="#0a203a" stroke="#4b8fc1" stroke-width="2"/><text x="18" y="30" class="buttonText">${it[1]}</text>`;g.addEventListener('click',()=>{S.torque=it[0]; updateTorque();});tb.appendChild(g);});
+function updatePower(){const total=520+S.engWeight; const pwr=S.hp/total; const score=clamp((pwr-.12)/(.34-.12)*100,0,100); setText('powerMath',pwr.toFixed(2)+' hp/lb → '+(score>72?'hover possible':score>45?'almost there':'not enough')); setAttrs('pwBar',{width:3.2*score,fill:colorScore(score)}); setText('pwText',pwr.toFixed(2)+' hp/lb'); setAttrs('engineBlock',{width:70+(S.hp-45)/215*70,height:40+(S.engWeight-120)/500*40,fill:S.engWeight>420?'#ff6961':S.hp>180?'#83f29b':'#ffad5a'}); setAttrs('liftArrow',{opacity:.25+score/130,'stroke-width':6+score/9}); setAttrs('weightArrow',{opacity:.35+S.engWeight/900,'stroke-width':7+S.engWeight/70}); const craft=$('powerBody'); craft.setAttribute('class',score>72?'float':score>45?'wobble':'shake'); $('mainRotorPower').setAttribute('class',score>52?'fastRotor':'rotor'); setText('powerVerdict',score>72?'LIFT-OFF!':score>45?'Almost flies':'Too weak/heavy'); $('powerVerdict').setAttribute('class','h2 '+(score>72?'good':score>45?'warn':'bad')); setText('powerTip',score>72?'You found a practical power-to-weight window.':'Increase strength or reduce engine mass. Early designs struggled here.');}
+function updateMaterials(){const specific=S.matStrength/(S.matWeight+8); const score=clamp((specific-.25)/(2.2-.25)*100,0,100); const heavy=S.matWeight>70, weak=S.matStrength<45; setAttrs('blade',{fill:score>74?'#bff7df':score>48?'#ffe8a0':'#d8e7f6',d:`M0 ${85+Math.max(0,S.matWeight-45)/4} C160 ${40+Math.max(0,S.matWeight-S.matStrength)/3} 350 ${45+Math.max(0,S.matWeight-S.matStrength)/2} 550 75 C585 80 588 115 552 120 C350 ${150+Math.max(0,S.matWeight-S.matStrength)/2} 160 ${145+Math.max(0,S.matWeight-S.matStrength)/3} 0 ${100+Math.max(0,S.matWeight-45)/4} Z`}); setAttrs('cracks',{opacity:weak?.95:0}); setText('bladeLabel',score>74?'Strong and light':score>48?'Promising, but risky':'Bends or breaks'); setText('matClass',score>74?'Composite-like sweet spot':heavy?'Old heavy structure':weak?'Too fragile':'Mixed early structure'); setText('matVerdict',score>74?'Succeeds: high strength-to-weight':'Fails: too heavy or too weak'); $('matVerdict').setAttribute('class','h2 '+(score>74?'good':score>48?'warn':'bad')); setText('matTip',score>74?'This mirrors why modern composites/alloys matter.':'Try lower density and higher strength/stiffness.');}
+function updateControl(){document.querySelectorAll('#controlButtons .touchButton').forEach(g=>{const on=S.control.has(g.dataset.id);g.querySelector('rect').setAttribute('fill',on?'#1d5b8f':'#0a203a');g.querySelector('rect').setAttribute('stroke',on?'#76dcff':'#4b8fc1');}); let score=10; if(S.control.has('collective'))score+=16;if(S.control.has('cyclic'))score+=23;if(S.control.has('swash'))score+=21;if(S.control.has('tail'))score+=18;if(S.control.has('dampers'))score+=12; score=clamp(score,0,100); setAttrs('controlBar',{width:3.92*score,fill:colorScore(score)}); setText('controlPct',score+'%'); ['swashViz','pitchViz','collectViz','damperViz'].forEach(id=>setAttrs(id,{opacity:0})); if(S.control.has('swash'))setAttrs('swashViz',{opacity:1}); if(S.control.has('cyclic'))setAttrs('pitchViz',{opacity:1}); if(S.control.has('collective'))setAttrs('collectViz',{opacity:1}); if(S.control.has('dampers'))setAttrs('damperViz',{opacity:1}); $('controlCraft').setAttribute('class',score>80?'float':score>55?'wobble':'shake'); setText('controlVerdict',score>80?'Controlled flight':score>55?'Partly controllable':'Unstable hop'); $('controlVerdict').setAttribute('class','h2 '+(score>80?'good':score>55?'warn':'bad')); setText('controlExplain',score>80?'The craft can climb, tilt, yaw, and damp vibration instead of merely hopping.':'Add cyclic + collective + swashplate + yaw control + damping.');}
+function updateTorque(){document.querySelectorAll('#torqueButtons .touchButton').forEach(g=>{const on=S.torque===g.dataset.id;g.querySelector('rect').setAttribute('fill',on?'#1d5b8f':'#0a203a');g.querySelector('rect').setAttribute('stroke',on?'#76dcff':'#4b8fc1');}); const score={none:8,tail:88,coax:92,fins:34}[S.torque]||8; setAttrs('torqueBar',{width:3.9*score,fill:colorScore(score)}); setText('torquePct',score+'%'); setAttrs('tailRotorViz',{opacity:S.torque==='tail'?1:0}); setAttrs('antiArrow',{opacity:S.torque==='tail'?1:0}); setAttrs('coaxRotor',{opacity:S.torque==='coax'?1:0}); setAttrs('singleRotor',{opacity:S.torque==='coax'?0:1}); setAttrs('spinArrow',{opacity:score>80?.18:.9}); $('torqueCraft').setAttribute('class',score>80?'float':score>45?'wobble':'shake'); setText('torqueVerdict',score>80?'Torque balanced':score>45?'Some stability, not enough':'Spins out'); $('torqueVerdict').setAttribute('class','h2 '+(score>80?'good':score>45?'warn':'bad')); setText('torqueExplain',S.torque==='tail'?'A tail rotor pushes sideways to oppose fuselage spin and control yaw.':S.torque==='coax'?'Counter-rotating rotors cancel much of each other’s torque.':S.torque==='fins'?'Fins help in forward motion, but hover still needs anti-torque control.':'Try a tail rotor or coaxial counter-rotating rotors to cancel torque.');}
+function updateAll(){updatePower(); updateMaterials(); updateControl(); updateTorque();}
+wrapAll(); Object.keys(sliders).forEach(updateSlider); updateAll();
+})();
+]]></script>
 </svg>
