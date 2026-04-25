@@ -6,6 +6,8 @@ const QuizEngine = {
   currentIndex: 0,
   score: 0,
   answers: [],
+  reviewQuestions: [],
+  reviewIndex: 0,
   containerId: 'quiz-container',
 
   init(containerId = 'quiz-container') {
@@ -41,6 +43,8 @@ const QuizEngine = {
     this.currentIndex = 0;
     this.score = 0;
     this.answers = [];
+    this.reviewQuestions = [];
+    this.reviewIndex = 0;
     this.renderQuestion();
   },
 
@@ -130,20 +134,29 @@ const QuizEngine = {
   },
 
   checkAnswer(q) {
+    const container = document.getElementById(this.containerId);
     let selected;
     if (q.type === 'multiple_choice') {
-      const sel = document.querySelector('.answer-option.selected input');
+      const sel = container.querySelector('.answer-option.selected input');
       selected = sel ? parseInt(sel.value) : -1;
     } else if (q.type === 'true_false') {
-      const sel = document.querySelector('.tf-btn.selected');
+      const sel = container.querySelector('.tf-btn.selected');
       selected = sel ? sel.dataset.value === 'true' : null;
     }
 
     const isCorrect = selected === q.correct;
     if (isCorrect) this.score++;
-    this.answers.push({ question: q.question, correct: isCorrect, selected, answer: q.correct });
+    this.answers.push({
+      question: q.question,
+      type: q.type,
+      options: q.options ? [...q.options] : null,
+      explanation: q.explanation || '',
+      correct: isCorrect,
+      selected,
+      answer: q.correct
+    });
 
-    const fb = document.getElementById('feedback-box');
+    const fb = container.querySelector('#feedback-box');
     fb.className = `feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
     fb.innerHTML = `
       <div style="font-size:1.5rem">${isCorrect ? '✅' : '❌'}</div>
@@ -155,20 +168,22 @@ const QuizEngine = {
 
     // Highlight options
     if (q.type === 'multiple_choice') {
-      document.querySelectorAll('.answer-option').forEach((opt, i) => {
+      container.querySelectorAll('.answer-option').forEach((opt, i) => {
         if (i === q.correct) opt.classList.add('correct');
         else if (i === selected && !isCorrect) opt.classList.add('incorrect');
+        opt.style.pointerEvents = 'none';
       });
     } else if (q.type === 'true_false') {
-      document.querySelectorAll('.tf-btn').forEach(btn => {
+      container.querySelectorAll('.tf-btn').forEach(btn => {
         const val = btn.dataset.value === 'true';
         if (val === q.correct) btn.classList.add('correct');
         else if (btn.classList.contains('selected') && !isCorrect) btn.classList.add('incorrect');
+        btn.disabled = true;
       });
     }
 
-    document.getElementById('quiz-submit').classList.add('hidden');
-    document.getElementById('quiz-next').classList.remove('hidden');
+    container.querySelector('#quiz-submit').classList.add('hidden');
+    container.querySelector('#quiz-next').classList.remove('hidden');
   },
 
   nextQuestion() {
@@ -188,10 +203,90 @@ const QuizEngine = {
     return 'study-path.html';
   },
 
+  formatAnswer(value) {
+    if (value === true) return 'True';
+    if (value === false) return 'False';
+    return value;
+  },
+
+  getAnswerLabel(item, value) {
+    if (item.type === 'true_false') return this.formatAnswer(value);
+    if (item.options && Number.isInteger(value) && value >= 0) return item.options[value];
+    return 'No answer selected';
+  },
+
+  showMissedReview() {
+    this.reviewQuestions = this.answers.filter(answer => !answer.correct);
+    this.reviewIndex = 0;
+    this.renderMissedReviewQuestion();
+  },
+
+  renderMissedReviewQuestion() {
+    const container = document.getElementById(this.containerId);
+    if (!container) return;
+    const item = this.reviewQuestions[this.reviewIndex];
+
+    if (!item) {
+      this.showResults();
+      return;
+    }
+
+    const selectedLabel = this.getAnswerLabel(item, item.selected);
+    const correctLabel = this.getAnswerLabel(item, item.answer);
+    const optionsHtml = item.type === 'multiple_choice' && item.options ? `
+      <div class="answer-options review-options">
+        ${item.options.map((opt, i) => `
+          <div class="answer-option ${i === item.answer ? 'correct' : ''} ${i === item.selected ? 'incorrect' : ''}">
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+    ` : `
+      <div class="tf-buttons review-options">
+        ${[true, false].map(val => `
+          <button class="tf-btn ${val === item.answer ? 'correct' : ''} ${val === item.selected ? 'incorrect' : ''}" disabled>${this.formatAnswer(val)}</button>
+        `).join('')}
+      </div>
+    `;
+
+    container.innerHTML = `
+      <div class="question-card missed-review-card">
+        <div class="quiz-header">
+          <div class="quiz-progress">
+            <span>Missed Question ${this.reviewIndex + 1} of ${this.reviewQuestions.length}</span>
+            <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${((this.reviewIndex + 1) / this.reviewQuestions.length) * 100}%"></div></div>
+          </div>
+        </div>
+        <div class="question-text"><span class="question-number">${this.reviewIndex + 1}</span>${item.question}</div>
+        ${optionsHtml}
+        <div class="feedback-box show feedback-incorrect">
+          <div style="font-size:1.5rem">↻</div>
+          <div>
+            <strong>Your answer:</strong> ${selectedLabel}<br>
+            <strong>Correct answer:</strong> ${correctLabel}
+            ${item.explanation ? `<p class="mt-2">${item.explanation}</p>` : ''}
+          </div>
+        </div>
+        <div class="flex justify-center gap-3 mt-4">
+          <button class="btn btn-secondary" id="review-back">Back to Results</button>
+          <button class="btn btn-primary" id="review-next">${this.reviewIndex + 1 === this.reviewQuestions.length ? 'Finish Review' : 'Next Missed Question'}</button>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#review-back').addEventListener('click', () => this.showResults());
+    container.querySelector('#review-next').addEventListener('click', () => {
+      this.reviewIndex++;
+      if (this.reviewIndex < this.reviewQuestions.length) this.renderMissedReviewQuestion();
+      else this.showResults();
+    });
+  },
+
   showResults() {
     const container = document.getElementById(this.containerId);
     const pct = Math.round((this.score / this.currentQuiz.length) * 100);
     const deg = (pct / 100) * 360;
+    const missedCount = this.answers.filter(answer => !answer.correct).length;
     let message = 'Keep practicing!';
     if (pct === 100) message = 'Perfect score! Outstanding!';
     else if (pct >= 80) message = 'Great job! Almost there!';
@@ -206,11 +301,15 @@ const QuizEngine = {
         <div class="score-message">${message}</div>
         <p>You got <strong>${this.score}</strong> out of <strong>${this.currentQuiz.length}</strong> correct.</p>
         <div class="flex justify-center gap-3 mt-4">
+          ${missedCount > 0 ? `<button class="btn btn-primary" id="review-missed">Review ${missedCount} Missed ${missedCount === 1 ? 'Question' : 'Questions'}</button>` : ''}
           <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
           <a href="${this.getStudyPathHref()}" class="btn btn-secondary">Back to Study Path</a>
         </div>
       </div>
     `;
+
+    const reviewBtn = container.querySelector('#review-missed');
+    if (reviewBtn) reviewBtn.addEventListener('click', () => this.showMissedReview());
 
     // Save score
     const data = App.getData();
